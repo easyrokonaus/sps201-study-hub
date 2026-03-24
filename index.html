@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SPS201 Study System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      margin: 0;
+      padding: 20px;
+      color: #1f2937;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    h1 {
+      margin-top: 0;
+      margin-bottom: 14px;
+    }
+
+    .dashboard {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .topic-btn {
+      border: 1px solid #cbd5e1;
+      background: #eef2ff;
+      color: #1e3a8a;
+      padding: 10px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.92rem;
+    }
+
+    .topic-btn.active {
+      background: #2563eb;
+      border-color: #2563eb;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    #progress {
+      margin: 6px 0 12px;
+      color: #475569;
+    }
+
+    .scenario {
+      background: #eef3ff;
+      border: 1px solid #c7d2fe;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .question {
+      font-size: 1.06rem;
+      font-weight: 700;
+      margin: 6px 0 10px;
+    }
+
+    .option {
+      border: 1px solid #d1d5db;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .option:hover {
+      background: #eef3ff;
+    }
+
+    .correct {
+      background: #d4edda;
+      border-color: #16a34a;
+    }
+
+    .wrong {
+      background: #f8d7da;
+      border-color: #dc2626;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    button {
+      padding: 10px 15px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    .next {
+      background: #3b6ef5;
+      color: #fff;
+    }
+
+    .clear {
+      background: #d1d5db;
+    }
+
+    #feedback {
+      margin-top: 12px;
+      font-weight: 700;
+    }
+
+    #explanation {
+      margin-top: 6px;
+      color: #374151;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>SPS201 Study System</h1>
+
+    <div class="dashboard" id="dashboard">
+      <button class="topic-btn active" data-topic="all">All Topics</button>
+      <button class="topic-btn" data-topic="policy">Policy & McClelland</button>
+      <button class="topic-btn" data-topic="harm">Harm Minimisation</button>
+      <button class="topic-btn" data-topic="screening">Screening Tools</button>
+      <button class="topic-btn" data-topic="treatment">Treatment & Rehab</button>
+      <button class="topic-btn" data-topic="stigma">Stigma & Behaviour</button>
+    </div>
+
+    <h4 id="progress"></h4>
+    <div id="scenario" class="scenario"></div>
+    <p id="question" class="question"></p>
+    <div id="options"></div>
+
+    <div class="actions">
+      <button class="clear" onclick="clearSelection()">Clear Selection</button>
+      <button class="next" onclick="nextQuestion()">Next</button>
+    </div>
+
+    <p id="feedback"></p>
+    <p id="explanation"></p>
+  </div>
+
+  <script>
+    const allQuestions = [
+      // POLICY & MCCLELLAND (20)
+      { topic: "policy", scenario: "McClelland argues that policy influence depends on access and resources.", question: "Why do business groups usually influence policy more than welfare groups?", options: ["They avoid ministers", "They have stronger access and resources", "They use no strategy", "They never lobby"], correct: 1, explanation: "Business groups often have more direct access, funding, and networks." },
+      { topic: "policy", scenario: "A welfare organisation receives government grants and still wants to criticise a new reform.", question: "What is the best description of this advocacy situation?", options: ["No advocacy is possible", "Careful strategic advocacy is needed", "Funding removes all risk", "Only unions can advocate"], correct: 1, explanation: "Organisations often balance advocacy goals with funding risk." },
+      { topic: "policy", scenario: "Quote: 'Peak bodies represent a membership base.'", question: "What is the core role of a peak body?", options: ["Run detox units only", "Represent many organisations", "Write legislation", "Replace government"], correct: 1, explanation: "Peak bodies coordinate and represent a sector, not just one service." },
+      { topic: "policy", scenario: "ACOSS submits policy briefs and media statements for national reforms.", question: "ACOSS is best described as:", options: ["A private hospital", "A welfare peak organisation", "A court service", "A police agency"], correct: 1, explanation: "ACOSS is a national peak body for community services." },
+      { topic: "policy", scenario: "A coalition of welfare services shares evidence with parliament.", question: "Which advocacy method is this?", options: ["Isolation strategy", "Collaborative policy advocacy", "Clinical detox", "Supply reduction policing"], correct: 1, explanation: "Working in coalitions increases influence and reach." },
+      { topic: "policy", scenario: "McClelland notes that credibility matters in public-interest advocacy.", question: "Which factor most improves policy credibility?", options: ["Rumours", "Strong research evidence", "No data", "Single anecdote only"], correct: 1, explanation: "Good-quality data makes advocacy more persuasive." },
+      { topic: "policy", scenario: "A spokesperson clearly explains poverty impacts on TV.", question: "This mostly strengthens:", options: ["Policy silence", "Public communication influence", "Clinical diagnosis", "Police powers"], correct: 1, explanation: "Effective spokespersons help shape public and policy debate." },
+      { topic: "policy", scenario: "Business leaders sit on advisory boards and shape decisions.", question: "This is an example of:", options: ["Moral persuasion only", "Institutional access influence", "Community protest only", "Detox planning"], correct: 1, explanation: "Board membership provides direct policy access." },
+      { topic: "policy", scenario: "Quote: 'Different policy actors hold unequal power.'", question: "What does this usually mean for welfare NGOs?", options: ["They always dominate policy", "They must use strategic alliances", "They need no evidence", "They avoid all lobbying"], correct: 1, explanation: "Less powerful actors often rely on alliances and strong evidence." },
+      { topic: "policy", scenario: "A student compares unions and welfare organisations in advocacy.", question: "Which statement is most accurate?", options: ["Unions mainly represent employed workers", "Unions represent only unemployed people", "Welfare peaks control wages policy", "Both have identical constituencies"], correct: 0, explanation: "Unions usually focus on workers' wages and conditions." },
+      { topic: "policy", scenario: "A welfare service uses stories plus statistics in submissions.", question: "Why combine these?", options: ["To reduce clarity", "To balance evidence and human impact", "To avoid policy detail", "To replace research"], correct: 1, explanation: "Data plus lived experience often improves persuasive impact." },
+      { topic: "policy", scenario: "A minister asks for costed alternatives before changing policy.", question: "What should advocates provide?", options: ["Only moral claims", "Evidence-based practical options", "No recommendations", "Clinical screening scores"], correct: 1, explanation: "Policy makers usually need workable, costed options." },
+      { topic: "policy", scenario: "A group avoids media completely during a reform debate.", question: "Likely consequence?", options: ["Higher visibility", "Lower public influence", "Guaranteed policy win", "No change in reach"], correct: 1, explanation: "Media silence usually reduces advocacy visibility." },
+      { topic: "policy", scenario: "Public-interest groups are fragmented and do not coordinate.", question: "What often happens to influence?", options: ["It grows strongly", "It weakens", "It becomes automatic", "It replaces government"], correct: 1, explanation: "Fragmentation usually reduces shared impact." },
+      { topic: "policy", scenario: "Quote: 'Policy windows can open suddenly.'", question: "Best advocacy response?", options: ["Wait for years", "Prepare evidence and act quickly", "Stop engaging", "Ignore stakeholders"], correct: 1, explanation: "Prepared groups can act when opportunities open." },
+      { topic: "policy", scenario: "A church-based welfare group supports rights-focused reform.", question: "This reflects which policy tradition?", options: ["Collective responsibility orientation", "Punitive-only orientation", "No social justice focus", "Market-only approach"], correct: 0, explanation: "Many faith welfare traditions support collective welfare principles." },
+      { topic: "policy", scenario: "An NGO is invited to parliamentary inquiry hearings.", question: "This invitation mainly indicates:", options: ["Policy exclusion", "Recognised policy legitimacy", "Clinical referral", "Legal prosecution"], correct: 1, explanation: "Inquiry participation shows recognised stakeholder status." },
+      { topic: "policy", scenario: "A business council and NGO both submit to government.", question: "Who usually has structural advantage?", options: ["Always NGOs", "Often business actors", "Neither ever", "Only local councils"], correct: 1, explanation: "Business actors often hold stronger structural access and resources." },
+      { topic: "policy", scenario: "A service changes language from 'clients' to 'people and families'.", question: "What advocacy benefit can this provide?", options: ["Less empathy", "More human-centred framing", "Less clarity", "No communication effect"], correct: 1, explanation: "Human-centred framing can build broader public support." },
+      { topic: "policy", scenario: "A welfare alliance maps stakeholders before campaigning.", question: "Why is stakeholder mapping useful?", options: ["It avoids planning", "It targets influence pathways", "It replaces evidence", "It removes coalition need"], correct: 1, explanation: "Mapping helps identify where decisions and influence sit." },
+
+      // HARM MINIMISATION (20)
+      { topic: "harm", scenario: "Quote: 'Not all people will stop using substances immediately.'", question: "What is the central goal of harm minimisation?", options: ["Punish use", "Reduce harm from use", "Ignore risk", "Ban counselling"], correct: 1, explanation: "Harm minimisation focuses on reducing health and social harm." },
+      { topic: "harm", scenario: "Australia's framework uses demand, supply and harm reduction.", question: "Which option is NOT one of these pillars?", options: ["Demand reduction", "Supply reduction", "Harm reduction", "Shame strategy"], correct: 3, explanation: "Shame is not a policy pillar." },
+      { topic: "harm", scenario: "A service provides clean injecting equipment.", question: "This is mainly:", options: ["Supply reduction", "Harm reduction", "Demand reduction", "Court diversion"], correct: 1, explanation: "Needle programs reduce blood-borne virus and injection harm." },
+      { topic: "harm", scenario: "Police dismantle a major trafficking network.", question: "This action best fits:", options: ["Demand reduction", "Supply reduction", "Harm reduction", "Brief intervention"], correct: 1, explanation: "It aims to reduce drug availability." },
+      { topic: "harm", scenario: "A school program builds refusal skills and health literacy.", question: "This mostly targets:", options: ["Supply reduction", "Demand reduction", "Only legal reform", "No prevention"], correct: 1, explanation: "Education can reduce demand by preventing risky uptake." },
+      { topic: "harm", scenario: "A client asks for naloxone training after a recent overdose event.", question: "Naloxone training is best viewed as:", options: ["Punitive response", "Overdose harm reduction", "Supply reduction", "Stigma intervention only"], correct: 1, explanation: "Naloxone is a direct overdose harm reduction strategy." },
+      { topic: "harm", scenario: "A clinic offers safer-use education without requiring abstinence.", question: "This reflects:", options: ["Person-centred harm minimisation", "Zero-tolerance only", "No treatment ethics", "Supply-only policy"], correct: 0, explanation: "It reduces risk while keeping engagement open." },
+      { topic: "harm", scenario: "A person drinks less per occasion and has fewer injuries.", question: "This is an example of:", options: ["No improvement", "Successful harm reduction outcome", "Supply reduction only", "Policy failure"], correct: 1, explanation: "Reduced injury and safer use indicate harm reduction success." },
+      { topic: "harm", scenario: "A local strategy combines policing, outreach, and education.", question: "This is best described as:", options: ["Single-pillar policy", "Integrated harm minimisation approach", "No public health role", "Clinical diagnosis model"], correct: 1, explanation: "Combining multiple pillars is core to Australian harm minimisation." },
+      { topic: "harm", scenario: "Quote: 'Abstinence may be a goal for some, but not all at first contact.'", question: "Best clinical implication?", options: ["Discharge non-abstinent clients", "Set staged goals and reduce harm", "Ignore change talk", "Avoid follow-up"], correct: 1, explanation: "Staged goals support engagement and safer outcomes." },
+      { topic: "harm", scenario: "A venue introduces responsible service of alcohol practices.", question: "This primarily reduces:", options: ["Policy advocacy only", "Immediate intoxication-related harms", "All demand permanently", "No known harms"], correct: 1, explanation: "Safer service policies reduce acute alcohol harm in settings." },
+      { topic: "harm", scenario: "A client swaps daily injecting for supervised treatment.", question: "This change suggests:", options: ["No risk reduction", "Reduced health and overdose risk", "Increased harms", "Only legal change"], correct: 1, explanation: "Moving to supervised treatment usually lowers major risks." },
+      { topic: "harm", scenario: "Community campaign warns about mixing depressants.", question: "This campaign mainly supports:", options: ["Supply control", "Harm reduction education", "Industrial relations", "No prevention"], correct: 1, explanation: "Risk education can prevent overdose and adverse events." },
+      { topic: "harm", scenario: "A clinician celebrates reduced use days, not just abstinence.", question: "This aligns with:", options: ["Punitive model", "Harm minimisation principles", "No accountability", "Policy neutrality"], correct: 1, explanation: "Recognising safer patterns supports realistic progress." },
+      { topic: "harm", scenario: "A region improves transport to treatment and outreach sites.", question: "Likely harm minimisation effect?", options: ["Reduced engagement", "Improved access and lower risk", "No change possible", "Higher stigma"], correct: 1, explanation: "Practical access often improves safer care engagement." },
+      { topic: "harm", scenario: "A person receives brief advice after risky drinking screening.", question: "This intervention contributes mostly to:", options: ["Demand reduction", "Supply reduction", "No prevention", "Legal sanction"], correct: 0, explanation: "Brief intervention can reduce future demand/risky use." },
+      { topic: "harm", scenario: "Quote: 'Harm minimisation includes social harms, not only medical harms.'", question: "Which is a social harm example?", options: ["Improved sleep", "Housing loss linked to use", "Better employment", "Lower conflict"], correct: 1, explanation: "Housing instability is a major social harm." },
+      { topic: "harm", scenario: "Peer workers share safer partying advice with students.", question: "This mainly represents:", options: ["No evidence approach", "Community harm reduction", "Supply enforcement", "Industrial strategy"], correct: 1, explanation: "Peer education can reduce risky consumption and harm." },
+      { topic: "harm", scenario: "A service tracks fewer emergency presentations after interventions.", question: "This most likely indicates:", options: ["Policy failure", "Reduced acute harm", "No meaningful change", "Higher stigma"], correct: 1, explanation: "Lower emergency presentations suggest lower severe harms." },
+      { topic: "harm", scenario: "AOD policy combines prevention, treatment, and law enforcement.", question: "This combination reflects:", options: ["One-dimensional policy", "Three-pillar harm minimisation", "Clinical-only model", "Media-only strategy"], correct: 1, explanation: "Australian AOD policy uses all pillars together." },
+
+      // SCREENING TOOLS (20)
+      { topic: "screening", scenario: "A GP uses a 10-item alcohol questionnaire.", question: "Which tool is this most likely?", options: ["AUDIT", "DASS-21", "CAGE-AID", "K10"], correct: 0, explanation: "AUDIT is a 10-item alcohol screening tool." },
+      { topic: "screening", scenario: "A worker asks: cut down, annoyed, guilty, eye-opener.", question: "This describes which screening tool?", options: ["ASSIST", "AUDIT", "CAGE-AID", "PHQ-9"], correct: 2, explanation: "Those four prompts are from CAGE-style screening." },
+      { topic: "screening", scenario: "A service needs one tool that screens multiple substances.", question: "Best choice?", options: ["AUDIT", "ASSIST", "CAGE-AID", "DASS-21"], correct: 1, explanation: "ASSIST screens across several substances." },
+      { topic: "screening", scenario: "Quote: 'Screening identifies risk; it does not confirm diagnosis.'", question: "What should happen after high-risk screening?", options: ["No further action", "Comprehensive assessment", "Immediate discharge", "Legal report only"], correct: 1, explanation: "High risk screening should lead to fuller clinical assessment." },
+      { topic: "screening", scenario: "A student scores moderate risk on AUDIT.", question: "Most appropriate first response?", options: ["Ignore result", "Brief intervention and follow-up", "Automatic inpatient rehab", "Police referral"], correct: 1, explanation: "Moderate risk often responds to brief advice and review." },
+      { topic: "screening", scenario: "A client has severe withdrawal signs during screening.", question: "Priority action?", options: ["Finish all forms first", "Urgent safety/medical assessment", "Schedule next month", "Provide handout only"], correct: 1, explanation: "Safety risk overrides routine screening workflow." },
+      { topic: "screening", scenario: "A clinician uses ASSIST and DASS-21 together.", question: "Why combine tools?", options: ["To avoid assessment", "To capture substance and emotional symptoms", "To diagnose instantly", "To replace interview"], correct: 1, explanation: "Combined tools broaden risk understanding across domains." },
+      { topic: "screening", scenario: "Client says answers might affect custody decisions.", question: "Best clinician response?", options: ["Dismiss concern", "Explain confidentiality and limits clearly", "Skip consent", "End interview"], correct: 1, explanation: "Clear consent and confidentiality discussion supports trust." },
+      { topic: "screening", scenario: "Screening score improves over 6 weeks.", question: "Most useful interpretation?", options: ["No progress", "Possible risk reduction trend", "Tool is invalid", "Treatment should stop immediately"], correct: 1, explanation: "Improved scores can indicate reduced risk when reviewed in context." },
+      { topic: "screening", scenario: "A client has low AUDIT but high ASSIST stimulant risk.", question: "Best conclusion?", options: ["No AOD risk at all", "Alcohol risk low, stimulant risk high", "Only mental health issue", "Screening conflict means error"], correct: 1, explanation: "Different tools may detect different substance risks." },
+      { topic: "screening", scenario: "Quote: 'Use plain language when asking screening items.'", question: "Why is plain language important?", options: ["Reduces validity", "Improves understanding and honest responses", "Replaces rapport", "Only for youth"], correct: 1, explanation: "Clear wording improves response quality." },
+      { topic: "screening", scenario: "AOD worker screens in a busy drop-in setting.", question: "Best practical approach?", options: ["No screening ever", "Brief validated tool with referral pathway", "Long diagnostic interview only", "Single yes/no question"], correct: 1, explanation: "Brief validated screening is practical and informative." },
+      { topic: "screening", scenario: "Client asks if screening can diagnose dependence.", question: "Best answer?", options: ["Yes, always", "No, screening estimates risk", "Only online tools diagnose", "Diagnosis is unnecessary"], correct: 1, explanation: "Screening indicates probability/risk, not full diagnosis." },
+      { topic: "screening", scenario: "A service introduces routine screening at intake.", question: "Main benefit?", options: ["Less early detection", "Earlier risk identification and triage", "No workflow change", "Eliminates need for clinicians"], correct: 1, explanation: "Routine screening helps identify needs earlier." },
+      { topic: "screening", scenario: "A client reports trauma and heavy use.", question: "What should screening be followed by?", options: ["No further steps", "Trauma-informed comprehensive assessment", "Immediate discharge", "Ignore trauma history"], correct: 1, explanation: "Complex presentations need integrated, trauma-informed assessment." },
+      { topic: "screening", scenario: "A student has high stress and increasing drinking.", question: "Which tool pair best fits this case?", options: ["AUDIT and DASS-21", "CAGE-AID and IQ test", "ASSIST only", "None"], correct: 0, explanation: "AUDIT addresses alcohol risk; DASS-21 captures emotional distress." },
+      { topic: "screening", scenario: "Client under-reports due to fear of judgement.", question: "What helps improve screening accuracy?", options: ["Confrontation", "Non-judgmental rapport and privacy", "Time pressure", "Leading questions"], correct: 1, explanation: "Safety and rapport increase honest disclosure." },
+      { topic: "screening", scenario: "A nurse repeats screening every month.", question: "Why can repeated screening help?", options: ["No value over time", "Tracks change and supports plan review", "Replaces treatment", "Guarantees abstinence"], correct: 1, explanation: "Regular screening helps monitor progress and risk shifts." },
+      { topic: "screening", scenario: "CAGE-AID returns positive responses.", question: "Most appropriate next step?", options: ["Ignore positives", "Discuss concerns and arrange fuller assessment", "Give punishment warning", "Close file"], correct: 1, explanation: "Positive screening should open supportive assessment and planning." },
+      { topic: "screening", scenario: "Service compares AUDIT scores before/after brief intervention.", question: "This is useful mainly for:", options: ["Evaluating risk change", "Diagnosing personality disorder", "Legal compliance only", "Medication dosing"], correct: 0, explanation: "Score changes can show shifts in alcohol risk." },
+
+      // TREATMENT & REHAB (20)
+      { topic: "treatment", scenario: "Quote: 'Withdrawal management alone is rarely enough for long-term recovery.'", question: "What does this imply?", options: ["Detox is complete treatment", "Aftercare and ongoing support are needed", "Counselling has no role", "Relapse prevention is unnecessary"], correct: 1, explanation: "Detox should be followed by ongoing treatment and supports." },
+      { topic: "treatment", scenario: "A client enters residential care with group work and relapse planning.", question: "This is best described as:", options: ["Screening", "Rehabilitation", "Emergency detox only", "Policy advocacy"], correct: 1, explanation: "Rehabilitation focuses on longer-term recovery skills." },
+      { topic: "treatment", scenario: "A person receives methadone to reduce opioid withdrawal and craving.", question: "This intervention is:", options: ["Pharmacotherapy", "Supply reduction", "Crisis counselling only", "No evidence care"], correct: 0, explanation: "Methadone is an evidence-based pharmacotherapy option." },
+      { topic: "treatment", scenario: "Client has repeated relapse after discharge with no follow-up.", question: "Most likely missing element?", options: ["Aftercare continuity", "Random drug facts", "Shorter sessions only", "No treatment gap"], correct: 0, explanation: "Continuity of care after discharge is crucial." },
+      { topic: "treatment", scenario: "AOD and mental health teams jointly plan care with consent.", question: "This model is:", options: ["Fragmented care", "Integrated dual-diagnosis care", "Punitive care", "Screening-only care"], correct: 1, explanation: "Integrated care treats co-occurring issues together." },
+      { topic: "treatment", scenario: "A clinician uses motivational interviewing with an ambivalent client.", question: "Main MI aim?", options: ["Confront and shame", "Elicit client's own reasons for change", "Avoid goals", "Force abstinence"], correct: 1, explanation: "MI builds internal motivation through collaborative dialogue." },
+      { topic: "treatment", scenario: "Client reports severe alcohol withdrawal confusion and tremor.", question: "Immediate treatment priority?", options: ["Wait one week", "Urgent medical withdrawal management", "Start long-term CBT first", "Ignore physical risk"], correct: 1, explanation: "Severe withdrawal signs require urgent medical care." },
+      { topic: "treatment", scenario: "A service offers telehealth for clients with transport barriers.", question: "This mainly improves:", options: ["Engagement and retention", "Stigma only", "Policy influence only", "Supply control"], correct: 0, explanation: "Flexible access can improve attendance and continuity." },
+      { topic: "treatment", scenario: "Client asks for goals other than immediate abstinence.", question: "Best response?", options: ["Refuse treatment", "Use staged person-centred goals", "Close case", "Use punishment"], correct: 1, explanation: "Staged goals support engagement and practical progress." },
+      { topic: "treatment", scenario: "Rehab plan includes trigger mapping and coping skills.", question: "This mostly supports:", options: ["Relapse prevention", "Supply enforcement", "Media advocacy", "No behaviour change"], correct: 0, explanation: "Trigger and coping planning is core relapse prevention work." },
+      { topic: "treatment", scenario: "Client with anxiety uses alcohol nightly to sleep.", question: "Best treatment focus?", options: ["Ignore anxiety", "Integrated sleep/anxiety and alcohol intervention", "Only legal advice", "No intervention"], correct: 1, explanation: "Combined treatment targets both drivers and use patterns." },
+      { topic: "treatment", scenario: "AOD worker coordinates GP, counsellor, and housing support.", question: "This is an example of:", options: ["Care coordination", "Policy lobbying only", "Single-modality care", "No case management"], correct: 0, explanation: "Coordinating services addresses complex recovery needs." },
+      { topic: "treatment", scenario: "Quote: 'Therapeutic alliance predicts engagement.'", question: "Which action best strengthens alliance?", options: ["Judgmental language", "Empathy and collaborative planning", "Threats of discharge", "Ignoring goals"], correct: 1, explanation: "Respectful collaboration increases trust and retention." },
+      { topic: "treatment", scenario: "Client in opioid treatment misses doses because of work shifts.", question: "Best service response?", options: ["Immediate discharge", "Problem-solve schedule and access barriers", "Lower care contact", "No review"], correct: 1, explanation: "Practical adjustments improve adherence and safety." },
+      { topic: "treatment", scenario: "A young person has cravings and unstable housing.", question: "Most appropriate treatment plan?", options: ["Counselling only", "Integrated psychosocial and practical support", "No support until housed", "Punitive contract"], correct: 1, explanation: "Recovery often needs both clinical and social support." },
+      { topic: "treatment", scenario: "Client asks if medication can support alcohol recovery.", question: "Best clinician response?", options: ["Medication never helps", "Discuss evidence-based options and referral", "Only willpower matters", "Delay discussion"], correct: 1, explanation: "Evidence-based medication may help some clients and should be discussed." },
+      { topic: "treatment", scenario: "AOD service uses brief intervention for low-risk clients.", question: "Why this approach?", options: ["Matches stepped-care principle", "Avoids all follow-up", "Replaces assessment", "Forces abstinence"], correct: 0, explanation: "Stepped care matches intervention intensity to need." },
+      { topic: "treatment", scenario: "Client relapses after family conflict but returns to treatment.", question: "Best clinician frame?", options: ["Treatment failure", "Learning opportunity and plan review", "Discharge now", "Ignore event"], correct: 1, explanation: "Relapse can guide improved prevention planning." },
+      { topic: "treatment", scenario: "A case plan includes strengths, risks, and protective factors.", question: "This reflects:", options: ["Person-centred formulation", "Punitive case management", "No recovery model", "Supply reduction"], correct: 0, explanation: "Balanced formulation supports targeted care planning." },
+      { topic: "treatment", scenario: "Client waits 6 weeks between detox and rehab intake.", question: "Main risk of this gap?", options: ["Lower relapse risk", "Higher relapse and disengagement risk", "Guaranteed recovery", "No effect"], correct: 1, explanation: "Care gaps can increase relapse and drop-out risk." },
+
+      // STIGMA & BEHAVIOUR (20)
+      { topic: "stigma", scenario: "Client says: 'I am a bad person, not someone with a health issue.'", question: "This belief most clearly reflects:", options: ["Self-stigma", "Protective coping", "High resilience", "No treatment need"], correct: 0, explanation: "Self-stigma is internalised negative judgment." },
+      { topic: "stigma", scenario: "A client avoids clinic because staff were previously judgmental.", question: "This barrier is mainly:", options: ["Public/professional stigma", "Increased trust", "High motivation", "No access issue"], correct: 0, explanation: "Stigma in services can reduce future help-seeking." },
+      { topic: "stigma", scenario: "Quote: 'Language shapes treatment engagement.'", question: "Which phrase is most supportive?", options: ["Addict", "Person experiencing AOD problems", "Hopeless case", "Non-compliant user"], correct: 1, explanation: "Person-first language reduces stigma and supports alliance." },
+      { topic: "stigma", scenario: "Family says, 'If we keep rescuing him, he will never change.'", question: "This concern relates most to:", options: ["Codependent rescuing patterns", "No family role", "Supply reduction", "Screening error"], correct: 0, explanation: "Over-rescuing can maintain unhealthy dynamics." },
+      { topic: "stigma", scenario: "In a meeting, one person blames, one rescues, one feels powerless.", question: "This pattern is:", options: ["5Ps formulation", "Drama triangle dynamic", "Harm minimisation triad", "Stepped care"], correct: 1, explanation: "Blame-rescue-victim roles reflect drama triangle dynamics." },
+      { topic: "stigma", scenario: "Client expects rejection at work because of past use.", question: "Most likely behavioural impact?", options: ["More job applications", "Withdrawal and reduced effort", "Higher confidence", "No emotional impact"], correct: 1, explanation: "Anticipated stigma can reduce action and hope." },
+      { topic: "stigma", scenario: "AOD worker validates client experience of discrimination.", question: "Likely immediate effect?", options: ["Lower trust", "Improved engagement and safety", "No relationship impact", "Increased blame"], correct: 1, explanation: "Validation helps rebuild trust after stigma experiences." },
+      { topic: "stigma", scenario: "Client says, 'Everyone will judge me if I go to rehab.'", question: "Best response approach?", options: ["Use shame to motivate", "Normalise concerns and problem-solve barriers", "Ignore fear", "Delay all treatment"], correct: 1, explanation: "Barrier-focused, empathetic responses improve help-seeking." },
+      { topic: "stigma", scenario: "Quote: 'Stigma affects recovery capital.'", question: "What does this mean?", options: ["Stigma can reduce social and practical supports", "Stigma improves housing", "Stigma increases employment", "Stigma has no effect"], correct: 0, explanation: "Stigma can limit access to key recovery resources." },
+      { topic: "stigma", scenario: "A person is repeatedly described as 'manipulative' by providers.", question: "Main risk of this label?", options: ["Better engagement", "Biased care and poorer alliance", "More person-centred care", "No service impact"], correct: 1, explanation: "Stigmatising labels can harm care quality and trust." },
+      { topic: "stigma", scenario: "A community campaign shares recovery stories publicly.", question: "This can reduce stigma by:", options: ["Increasing social distance", "Humanising lived experience", "Avoiding facts", "Reducing empathy"], correct: 1, explanation: "Recovery stories can challenge stereotypes and increase understanding." },
+      { topic: "stigma", scenario: "Client avoids methadone due to community myths.", question: "Best clinician action?", options: ["Dismiss concerns", "Provide accurate psychoeducation and discuss values", "Force treatment", "Stop discussing options"], correct: 1, explanation: "Accurate information helps counter stigma-based myths." },
+      { topic: "stigma", scenario: "A service updates forms to remove judgmental wording.", question: "This change mostly supports:", options: ["Stigma reduction and safer engagement", "No meaningful effect", "Supply control", "Only legal compliance"], correct: 0, explanation: "Language changes can make services feel safer and more inclusive." },
+      { topic: "stigma", scenario: "Client says, 'Relapse means I failed forever.'", question: "Best therapeutic reframe?", options: ["Relapse equals discharge", "Relapse can be a learning point", "Relapse is punishment-worthy", "Relapse should be ignored"], correct: 1, explanation: "A learning frame supports resilience and continued treatment." },
+      { topic: "stigma", scenario: "Worker identifies harsh self-talk in client sessions.", question: "Helpful intervention focus?", options: ["Increase criticism", "Build self-compassion and realistic self-view", "Avoid emotions", "Use only legal advice"], correct: 1, explanation: "Self-compassion can reduce shame and improve motivation." },
+      { topic: "stigma", scenario: "A mother avoids support due to fear of child protection judgment.", question: "This is primarily:", options: ["A perceived stigma-related barrier", "A protective factor", "No barrier", "High service trust"], correct: 0, explanation: "Fear of stigma and consequences can delay help-seeking." },
+      { topic: "stigma", scenario: "Team reviews language after client complaint about judgment.", question: "Best team goal?", options: ["Defend old language", "Adopt non-stigmatising practice standards", "Ignore feedback", "Reduce client contact"], correct: 1, explanation: "Practice standards can reduce stigma and improve care quality." },
+      { topic: "stigma", scenario: "Client from minority group reports repeated discrimination.", question: "Best care principle?", options: ["One-size-fits-all approach", "Culturally safe, trauma-informed practice", "Avoid culture discussion", "Only medication focus"], correct: 1, explanation: "Culturally safe care addresses layered stigma and trust issues." },
+      { topic: "stigma", scenario: "Quote: 'Belonging supports recovery.'", question: "Which intervention aligns most with this idea?", options: ["Increase isolation", "Peer support and community connection", "Limit social contact", "Avoid groups"], correct: 1, explanation: "Belonging and peer connection are protective in recovery." },
+      { topic: "stigma", scenario: "Client's employer offers phased return and support plan.", question: "Likely stigma-related impact?", options: ["Higher exclusion", "Reduced discrimination and better recovery chance", "No effect", "Increased shame"], correct: 1, explanation: "Supportive employment practices can reduce stigma harms." }
+    ];
+
+    const TOPIC_LABELS = {
+      all: "All Topics",
+      policy: "Policy & McClelland",
+      harm: "Harm Minimisation",
+      screening: "Screening Tools",
+      treatment: "Treatment & Rehab",
+      stigma: "Stigma & Behaviour"
+    };
+
+    const SESSION_SIZE = 20;
+    let activeTopic = "all";
+    let questions = [];
+    let current = 0;
+
+    function shuffle(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function getTopicPool(topic) {
+      if (topic === "all") return allQuestions;
+      return allQuestions.filter((q) => q.topic === topic);
+    }
+
+    function startSession(topic) {
+      activeTopic = topic;
+      const pool = getTopicPool(topic);
+      questions = shuffle(pool).slice(0, SESSION_SIZE);
+      current = 0;
+      updateTopicButtons();
+      loadQuestion();
+    }
+
+    function updateTopicButtons() {
+      document.querySelectorAll(".topic-btn").forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.topic === activeTopic);
+      });
+    }
+
+    function loadQuestion() {
+      const q = questions[current];
+      document.getElementById("progress").innerText = `${TOPIC_LABELS[activeTopic]} - Question ${current + 1}/${questions.length}`;
+      document.getElementById("scenario").innerText = q.scenario;
+      document.getElementById("question").innerText = q.question;
+
+      const optionsDiv = document.getElementById("options");
+      optionsDiv.innerHTML = "";
+      document.getElementById("feedback").innerText = "";
+      document.getElementById("explanation").innerText = "";
+
+      q.options.forEach((opt, i) => {
+        const div = document.createElement("div");
+        div.className = "option";
+        div.innerText = opt;
+        div.onclick = () => selectAnswer(i);
+        optionsDiv.appendChild(div);
+      });
+    }
+
+    function selectAnswer(i) {
+      const q = questions[current];
+      const opts = document.querySelectorAll(".option");
+
+      opts.forEach((o) => o.classList.remove("correct", "wrong"));
+
+      if (i === q.correct) {
+        opts[i].classList.add("correct");
+        document.getElementById("feedback").innerText = "Correct";
+        document.getElementById("feedback").style.color = "#15803d";
+      } else {
+        opts[i].classList.add("wrong");
+        opts[q.correct].classList.add("correct");
+        document.getElementById("feedback").innerText = "Incorrect";
+        document.getElementById("feedback").style.color = "#b91c1c";
+      }
+
+      document.getElementById("explanation").innerText = q.explanation;
+    }
+
+    function clearSelection() {
+      document.querySelectorAll(".option").forEach((o) => o.classList.remove("correct", "wrong"));
+      document.getElementById("feedback").innerText = "";
+      document.getElementById("explanation").innerText = "";
+    }
+
+    function nextQuestion() {
+      if (current < questions.length - 1) {
+        current++;
+        loadQuestion();
+      } else {
+        startSession(activeTopic);
+      }
+    }
+
+    document.getElementById("dashboard").addEventListener("click", (event) => {
+      const btn = event.target.closest(".topic-btn");
+      if (!btn) return;
+      startSession(btn.dataset.topic);
+    });
+
+    startSession("all");
+  </script>
+</body>
+</html>
