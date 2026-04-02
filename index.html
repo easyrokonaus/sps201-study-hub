@@ -27,6 +27,260 @@
       margin-bottom: 14px;
     }
 
+    .exam-mode-bar {
+      display: flex;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding: 10px 12px;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+    }
+
+    .mode-toggles {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .exam-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #0f172a;
+      user-select: none;
+    }
+
+    .exam-toggle input {
+      width: 1.1rem;
+      height: 1.1rem;
+      accent-color: #2563eb;
+      cursor: pointer;
+    }
+
+    .exam-toggle input:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .exam-mode-hint {
+      font-size: 0.82rem;
+      color: #64748b;
+      flex: 1 1 220px;
+      line-height: 1.45;
+    }
+
+    .quick-review-panel {
+      margin: 4px 0 12px;
+    }
+
+    .quick-review-correct-label {
+      margin: 0 0 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #64748b;
+    }
+
+    .quick-review-correct {
+      background: #ecfdf5;
+      border: 1px solid #6ee7b7;
+      padding: 14px 16px;
+      border-radius: 10px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #065f46;
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+
+    .quick-review-tap {
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 14px 16px;
+      border: 2px dashed #94a3b8;
+      border-radius: 10px;
+      background: #f8fafc;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #475569;
+      text-align: center;
+      font-family: inherit;
+    }
+
+    .quick-review-tap:hover {
+      background: #f1f5f9;
+      border-color: #64748b;
+      color: #334155;
+    }
+
+    .summary-quick-complete {
+      font-size: 1.1rem;
+      color: #0f172a;
+    }
+
+    .check-answer {
+      background: #0d9488;
+      color: #fff;
+    }
+
+    .check-answer:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .summary-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      background: rgba(15, 23, 42, 0.5);
+      box-sizing: border-box;
+    }
+
+    .summary-overlay[hidden] {
+      display: none !important;
+    }
+
+    .summary-modal {
+      background: #fff;
+      border-radius: 12px;
+      max-width: 440px;
+      width: 100%;
+      max-height: min(85vh, 560px);
+      overflow: auto;
+      padding: 22px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+      box-sizing: border-box;
+    }
+
+    .summary-modal h2 {
+      margin: 0 0 14px;
+      font-size: 1.2rem;
+      color: #0f172a;
+    }
+
+    .summary-score {
+      margin: 0 0 10px;
+      font-size: 1rem;
+      color: #475569;
+    }
+
+    .summary-score strong {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .summary-rating {
+      margin: 0 0 14px;
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 10px 14px;
+      border-radius: 8px;
+      line-height: 1.35;
+    }
+
+    .summary-rating-needs {
+      background: #fef2f2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+    }
+
+    .summary-rating-good {
+      background: #fffbeb;
+      color: #a16207;
+      border: 1px solid #fde68a;
+    }
+
+    .summary-rating-ready {
+      background: #ecfdf5;
+      color: #047857;
+      border: 1px solid #a7f3d0;
+    }
+
+    .summary-rating-hint {
+      margin: -8px 0 14px;
+      font-size: 0.78rem;
+      color: #94a3b8;
+      line-height: 1.4;
+    }
+
+    .summary-unanswered {
+      margin: 0 0 14px;
+      font-size: 0.86rem;
+      color: #b45309;
+      line-height: 1.4;
+    }
+
+    .summary-top-wrong-title {
+      margin: 16px 0 10px;
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .summary-top-wrong-list {
+      margin: 0 0 12px;
+      padding-left: 1.25rem;
+      font-size: 0.95rem;
+      color: #334155;
+      line-height: 1.55;
+    }
+
+    .summary-top-wrong-list li {
+      margin: 4px 0;
+    }
+
+    .summary-focus-msg {
+      margin: 0 0 4px;
+      font-size: 0.9rem;
+      color: #475569;
+      line-height: 1.45;
+    }
+
+    .summary-none {
+      margin: 8px 0 0;
+      color: #15803d;
+      font-weight: 600;
+      font-size: 0.92rem;
+    }
+
+    .summary-actions {
+      margin-top: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .summary-actions .practice-wrong {
+      background: #f59e0b;
+      color: #1c1917;
+      font-weight: 600;
+    }
+
+    .summary-actions .practice-wrong:hover {
+      filter: brightness(0.95);
+    }
+
+    .summary-actions .practice-wrong:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      filter: none;
+    }
+
     .dashboard {
       display: flex;
       flex-wrap: wrap;
@@ -56,21 +310,104 @@
       color: #475569;
     }
 
+    .question-card {
+      margin-bottom: 0;
+    }
+
+    .theme-badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .theme-badge-row.topic-below-question {
+      margin-top: 0;
+      margin-bottom: 16px;
+    }
+
+    .topic-caption-label {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: #64748b;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 999px;
+      line-height: 1.35;
+      max-width: 100%;
+      box-sizing: border-box;
+      word-break: break-word;
+      vertical-align: top;
+    }
+
+    .badge-harm {
+      background: #dcfce7;
+      color: #166534;
+      border: 1px solid #86efac;
+    }
+
+    .badge-stigma {
+      background: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fca5a5;
+    }
+
+    .badge-screening {
+      background: #dbeafe;
+      color: #1e40af;
+      border: 1px solid #93c5fd;
+    }
+
+    .badge-treatment {
+      background: #f3e8ff;
+      color: #6b21a8;
+      border: 1px solid #c4b5fd;
+    }
+
+    .badge-policy {
+      background: #ffedd5;
+      color: #9a3412;
+      border: 1px solid #fdba74;
+    }
+
+    .badge-mixed {
+      background: #f1f5f9;
+      color: #475569;
+      border: 1px solid #cbd5e1;
+    }
+
     .scenario {
-      background: #eef3ff;
-      border: 1px solid #c7d2fe;
-      padding: 10px;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      padding: 12px 14px;
       border-radius: 8px;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+      line-height: 1.55;
+      color: #64748b;
+    }
+
+    .scenario .scenario-keyword {
+      font-weight: 600;
+      color: #475569;
     }
 
     .question {
-      font-size: 1.06rem;
+      font-size: 1.22rem;
       font-weight: 700;
-      margin: 6px 0 10px;
+      margin: 0 0 8px;
+      color: #0f172a;
+      line-height: 1.35;
     }
 
     .option {
+      box-sizing: border-box;
       border: 1px solid #d1d5db;
       padding: 12px;
       margin: 8px 0;
@@ -80,6 +417,12 @@
 
     .option:hover {
       background: #eef3ff;
+    }
+
+    .option.selected {
+      background: #e0e7ff;
+      border-color: #6366f1;
+      box-shadow: 0 0 0 1px #6366f1;
     }
 
     .correct {
@@ -125,14 +468,155 @@
       margin-top: 6px;
       color: #374151;
     }
+
+    .cheat-sheet {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .cheat-sheet h2 {
+      margin: 0 0 12px;
+      font-size: 1.1rem;
+      color: #0f172a;
+    }
+
+    .cheat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+      gap: 12px;
+    }
+
+    .cheat-block {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 12px;
+    }
+
+    .cheat-block h3 {
+      margin: 0 0 8px;
+      font-size: 0.95rem;
+      color: #1e40af;
+    }
+
+    .cheat-block p,
+    .cheat-block ul {
+      margin: 0;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      color: #334155;
+    }
+
+    .cheat-block ul {
+      padding-left: 18px;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 12px;
+      }
+
+      .container {
+        padding: 14px;
+      }
+
+      .topic-btn {
+        flex: 1 1 calc(50% - 4px);
+        text-align: center;
+        font-size: 0.85rem;
+        padding: 9px 8px;
+      }
+
+      .dashboard {
+        gap: 6px;
+      }
+
+      .badge {
+        font-size: 0.72rem;
+        padding: 4px 10px;
+      }
+
+      .theme-badge-row.topic-below-question {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+
+      .theme-badge-row.topic-below-question .badge {
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+      }
+
+      .scenario {
+        font-size: 0.86rem;
+        padding: 10px 12px;
+        margin-bottom: 16px;
+      }
+
+      .question {
+        font-size: 1.1rem;
+        margin-bottom: 12px;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>SPS201 Study System</h1>
 
+    <div class="exam-mode-bar">
+      <div class="mode-toggles">
+        <label class="exam-toggle">
+          <input type="checkbox" id="exam-mode-toggle" aria-describedby="mode-bar-hint" />
+          <span>Exam Mode</span>
+        </label>
+        <label class="exam-toggle">
+          <input type="checkbox" id="quick-review-toggle" aria-describedby="mode-bar-hint" />
+          <span>Quick Review</span>
+        </label>
+      </div>
+      <span id="mode-bar-hint" class="exam-mode-hint">Study: cheat sheet on; tap an option for instant feedback.</span>
+    </div>
+
+    <section id="cheat-sheet" class="cheat-sheet" aria-label="Quick revision">
+      <h2>Quick Revision Cheat Sheet</h2>
+      <p style="margin:0 0 14px;font-size:0.9rem;color:#475569;"><strong>AOD exam focus:</strong> harm minimisation · stigma · screening tools · treatment · policy (McClelland).</p>
+      <div class="cheat-grid">
+        <div class="cheat-block">
+          <h3>Harm minimisation</h3>
+          <p>Australia uses <strong>three pillars</strong>: demand reduction, supply reduction, and harm reduction. Goal is to <strong>reduce harm</strong> even if use continues. Examples: brief intervention, needle programs, naloxone, safer settings.</p>
+        </div>
+        <div class="cheat-block">
+          <h3>Screening tools</h3>
+          <ul>
+            <li><strong>AUDIT</strong> — alcohol; 10 items; risk levels.</li>
+            <li><strong>ASSIST</strong> — several substances; guides next steps.</li>
+            <li><strong>CAGE / CAGE-AID</strong> — 4 questions (cut down, annoyed, guilty, eye-opener); AID adds drugs.</li>
+          </ul>
+          <p>Screening finds <strong>risk</strong>, not a full diagnosis.</p>
+        </div>
+        <div class="cheat-block">
+          <h3>Stigma</h3>
+          <p><strong>Public stigma</strong> — negative attitudes from others. <strong>Self-stigma</strong> — internalised shame. Stigma can <strong>reduce help-seeking</strong>. Use person-first language and trauma-informed care.</p>
+        </div>
+        <div class="cheat-block">
+          <h3>Treatment &amp; rehab</h3>
+          <p><strong>Detox / withdrawal management</strong> — medical support to stop safely. <strong>Rehab</strong> — longer programs with skills and relapse prevention. <strong>Pharmacotherapy</strong> — e.g. opioid treatment medications. Detox alone is rarely enough; plan <strong>aftercare</strong>.</p>
+        </div>
+        <div class="cheat-block">
+          <h3>Policy (McClelland)</h3>
+          <p>Influence depends on <strong>access, resources, and relationships</strong>. Business often has strong access. <strong>Peak bodies</strong> represent many organisations. Welfare groups may balance <strong>advocacy with funding</strong>. Coalitions and evidence strengthen advocacy.</p>
+        </div>
+      </div>
+    </section>
+
     <div class="dashboard" id="dashboard">
       <button class="topic-btn active" data-topic="all">All Topics</button>
+      <button class="topic-btn" data-topic="exam">Exam Practice</button>
       <button class="topic-btn" data-topic="policy">Policy & McClelland</button>
       <button class="topic-btn" data-topic="harm">Harm Minimisation</button>
       <button class="topic-btn" data-topic="screening">Screening Tools</button>
@@ -141,17 +625,47 @@
     </div>
 
     <h4 id="progress"></h4>
-    <div id="scenario" class="scenario"></div>
-    <p id="question" class="question"></p>
+    <div class="question-card">
+      <div id="scenario" class="scenario"></div>
+      <p id="question" class="question"></p>
+      <div id="theme-badge-row" class="theme-badge-row topic-below-question" aria-label="Question topic"></div>
+    </div>
     <div id="options"></div>
 
     <div class="actions">
-      <button class="clear" onclick="clearSelection()">Clear Selection</button>
-      <button class="next" onclick="nextQuestion()">Next</button>
+      <button type="button" id="check-answer-btn" class="check-answer" onclick="checkAnswer()" style="display: none" disabled>Check Answer</button>
+      <button type="button" class="clear" onclick="clearSelection()">Clear Selection</button>
+      <button type="button" class="next" onclick="nextQuestion()">Next</button>
     </div>
 
     <p id="feedback"></p>
     <p id="explanation"></p>
+  </div>
+
+  <div
+    id="session-summary-overlay"
+    class="summary-overlay"
+    hidden
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="summary-title"
+  >
+    <div class="summary-modal">
+      <h2 id="summary-title">Quiz complete</h2>
+      <div id="summary-body"></div>
+      <div class="summary-actions">
+        <button
+          type="button"
+          id="practice-wrong-btn"
+          class="practice-wrong"
+          onclick="startPracticeWrongQuestions()"
+          hidden
+        >
+          Practice Wrong Questions
+        </button>
+        <button type="button" class="next" onclick="closeSummaryAndRestart()">New session</button>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -264,11 +778,68 @@
       { topic: "stigma", scenario: "Team reviews language after client complaint about judgment.", question: "Best team goal?", options: ["Defend old language", "Adopt non-stigmatising practice standards", "Ignore feedback", "Reduce client contact"], correct: 1, explanation: "Practice standards can reduce stigma and improve care quality." },
       { topic: "stigma", scenario: "Client from minority group reports repeated discrimination.", question: "Best care principle?", options: ["One-size-fits-all approach", "Culturally safe, trauma-informed practice", "Avoid culture discussion", "Only medication focus"], correct: 1, explanation: "Culturally safe care addresses layered stigma and trust issues." },
       { topic: "stigma", scenario: "Quote: 'Belonging supports recovery.'", question: "Which intervention aligns most with this idea?", options: ["Increase isolation", "Peer support and community connection", "Limit social contact", "Avoid groups"], correct: 1, explanation: "Belonging and peer connection are protective in recovery." },
-      { topic: "stigma", scenario: "Client's employer offers phased return and support plan.", question: "Likely stigma-related impact?", options: ["Higher exclusion", "Reduced discrimination and better recovery chance", "No effect", "Increased shame"], correct: 1, explanation: "Supportive employment practices can reduce stigma harms." }
+      { topic: "stigma", scenario: "Client's employer offers phased return and support plan.", question: "Likely stigma-related impact?", options: ["Higher exclusion", "Reduced discrimination and better recovery chance", "No effect", "Increased shame"], correct: 1, explanation: "Supportive employment practices can reduce stigma harms." },
+
+      // EXAM PRACTICE — short scenario + clear question + 4 options + brief explanation
+      { topic: "exam", scenario: "[Harm minimisation] National AOD policy uses three pillars. You need to name them for an exam.", question: "What are the three pillars?", options: ["Detox, rehab, and police", "Demand, supply, and harm reduction", "Punish, treat, ignore", "Federal, state, and local government"], correct: 1, explanation: "Correct: Demand, supply, and harm reduction. Why: these are the three pillars of harm minimisation. Others: first mixes services with pillars; third drops balance; last is levels of government." },
+      { topic: "exam", scenario: "[Harm minimisation] A needle and syringe program gives out clean equipment. The goal is to protect health.", question: "This program is mainly:", options: ["Supply reduction", "Harm reduction", "Demand reduction only", "Criminal sentencing"], correct: 1, explanation: "Correct: Harm reduction. Why: it lowers infection and injury risk. Others: supply cuts drug flow; demand targets starting use; sentencing is punishment." },
+      { topic: "exam", scenario: "[Harm minimisation] Police seize a large illegal drug shipment before it is sold.", question: "This action best fits:", options: ["Harm reduction", "Supply reduction", "Screening", "Brief intervention"], correct: 1, explanation: "Correct: Supply reduction. Why: it reduces how much drug reaches the market. Others: harm reduction helps people use more safely; screening and brief intervention are clinical." },
+      { topic: "exam", scenario: "[Harm minimisation] A school teaches refusal skills and health facts to students.", question: "This mainly supports:", options: ["Supply reduction", "Demand reduction", "Harm reduction only", "Detox"], correct: 1, explanation: "Correct: Demand reduction. Why: prevention lowers risky uptake and use. Others: supply is police and borders; harm-only and detox do not match a school prevention class." },
+      { topic: "exam", scenario: "[Harm minimisation] Staff teach locals how to use naloxone after opioid overdoses in the area.", question: "This is best called:", options: ["Alcohol screening", "Overdose harm reduction", "Supply reduction", "Peak body work"], correct: 1, explanation: "Correct: Overdose harm reduction. Why: naloxone reverses opioid overdose. Others: AUDIT is for alcohol; supply cuts availability; peaks lobby on policy." },
+      { topic: "exam", scenario: "[Harm minimisation] A pub trains staff in responsible service of alcohol (RSA).", question: "RSA mainly aims to:", options: ["Replace all treatment", "Cut harm from drinking in the venue", "Diagnose alcohol dependence", "Lobby parliament"], correct: 1, explanation: "Correct: Cut harm from drinking in the venue. Why: RSA reduces intoxication and injuries on site. Others: RSA is not treatment or diagnosis; it is not law-making." },
+      { topic: "exam", scenario: "[Harm minimisation] A client drinks on fewer days and has fewer injuries. They still drink sometimes.", question: "In harm minimisation terms, this shows:", options: ["No real change", "Harm can fall without total abstinence", "Supply reduction worked", "Treatment failed"], correct: 1, explanation: "Correct: Harm can fall without total abstinence. Why: fewer injuries means lower harm. Others: change is real; supply is unrelated; harm is down so not a simple failure." },
+      { topic: "exam", scenario: "[Harm minimisation] After a risky-drinking screen, the GP gives short advice in one visit.", question: "Brief intervention mainly supports:", options: ["Safer drinking and demand reduction", "Police raids", "Court penalties", "Drug purity tests"], correct: 0, explanation: "Correct: Safer drinking and demand reduction. Why: brief advice targets risky use. Others: raids, courts, and lab tests are not brief intervention." },
+      { topic: "exam", scenario: "[Harm minimisation] A worker says not everyone stops using drugs on the first visit.", question: "Harm minimisation means you can:", options: ["Ignore all risk", "Still reduce harm while use continues", "Stop all counselling", "Rely only on punishment"], correct: 1, explanation: "Correct: Still reduce harm while use continues. Why: staged change is allowed. Others: risk still matters; counselling helps; harm minimisation is not punishment-only." },
+      { topic: "exam", scenario: "[Harm minimisation] Mixing opioids with alcohol or benzodiazepines can kill. A poster warns the public.", question: "This poster is mainly:", options: ["Harm reduction education", "Supply reduction", "A diagnostic test", "A media ban"], correct: 0, explanation: "Correct: Harm reduction education. Why: it warns about overdose risk. Others: supply is about drug availability; posters do not diagnose; no ban is shown." },
+
+      { topic: "exam", scenario: "[Screening] A GP uses a standard 10-item questionnaire about alcohol.", question: "The tool is most likely:", options: ["AUDIT", "ASSIST", "CAGE-AID", "DASS-21"], correct: 0, explanation: "Correct: AUDIT. Why: AUDIT has 10 alcohol items. Others: ASSIST covers many drugs; CAGE has four questions; DASS is mood and stress." },
+      { topic: "exam", scenario: "[Screening] A worker asks four questions: Cut down? Annoyed? Guilty? Eye-opener?", question: "This matches:", options: ["AUDIT", "CAGE or CAGE-AID", "ASSIST only", "An IQ test"], correct: 1, explanation: "Correct: CAGE or CAGE-AID. Why: those four questions are the CAGE set. Others: AUDIT is longer; ASSIST is broader; IQ is unrelated." },
+      { topic: "exam", scenario: "[Screening] You need one short tool that screens several types of drugs.", question: "Best pick:", options: ["AUDIT only", "ASSIST", "CAGE only", "A blood test only"], correct: 1, explanation: "Correct: ASSIST. Why: ASSIST covers multiple drug classes. Others: AUDIT focuses on alcohol; CAGE is very short; blood is not the usual first screen." },
+      { topic: "exam", scenario: "[Screening] A client scores in the high-risk band on a screen.", question: "What should usually happen next?", options: ["Nothing", "More assessment and a care plan", "Automatic police report", "Close the file"], correct: 1, explanation: "Correct: More assessment and a care plan. Why: screening finds risk, not the final plan. Others: doing nothing or closing abandons care; police are not automatic." },
+      { topic: "exam", scenario: "[Screening] A student asks if their score means they are dependent.", question: "Best reply:", options: ["Yes, always", "Risk is shown; dependence needs fuller assessment", "Screens are useless", "Only a lawyer can say"], correct: 1, explanation: "Correct: Risk is shown; dependence needs fuller assessment. Why: screening is not a full diagnosis. Others: “always” is wrong; screens help; lawyers do not diagnose." },
+      { topic: "exam", scenario: "[Screening] AUDIT is moderate. ASSIST shows high risk for stimulants.", question: "This best means:", options: ["No drug issues", "Alcohol may be moderate risk; stimulants may be high", "The tools always disagree", "Only cannabis matters"], correct: 1, explanation: "Correct: Alcohol may be moderate risk; stimulants may be high. Why: each tool picks up different patterns. Others: stimulant risk is real; tools measure different things." },
+      { topic: "exam", scenario: "[Screening] A client drinks heavily and feels very stressed. You use AUDIT and DASS-21.", question: "Why use both?", options: ["To avoid talking", "To see alcohol risk and mood or stress", "To skip consent", "To give a legal diagnosis"], correct: 1, explanation: "Correct: To see alcohol risk and mood or stress. Why: AUDIT is for alcohol; DASS-21 is for distress. Others: you still talk and need consent; diagnosis is clinical and broader." },
+      { topic: "exam", scenario: "[Screening] A parent worries their answers could affect custody.", question: "You should:", options: ["Ignore the worry", "Explain consent, privacy, and legal limits", "Promise total secrecy", "End the session"], correct: 1, explanation: "Correct: Explain consent, privacy, and legal limits. Why: honest limits build trust. Others: ignoring hurts trust; total secrecy may be untrue; ending may abandon duty." },
+      { topic: "exam", scenario: "[Screening] A person has bad shakes and confusion after stopping alcohol. You were about to run a screen.", question: "What comes first?", options: ["Finish every question on the form", "Urgent medical check for withdrawal", "Book next month", "Give a leaflet only"], correct: 1, explanation: "Correct: Urgent medical check for withdrawal. Why: severe withdrawal is dangerous. Others: forms wait; delay is unsafe; a leaflet is not enough alone." },
+      { topic: "exam", scenario: "[Screening] You add DASS-21 beside an AOD screen for a client.", question: "DASS-21 measures:", options: ["Alcohol units per week", "Depression, anxiety, and stress", "Drug purity", "Political views"], correct: 1, explanation: "Correct: Depression, anxiety, and stress. Why: DASS-21 is a mood and stress scale. Others: it does not count drinks, test drugs, or measure politics." },
+
+      { topic: "exam", scenario: "[Treatment] A person may get severe alcohol withdrawal. They enter detox.", question: "Detox mainly aims to:", options: ["Fix personality in one week", "Keep withdrawal safe and medically stable", "Promise lifelong abstinence", "Write government policy"], correct: 1, explanation: "Correct: Keep withdrawal safe and medically stable. Why: detox handles acute withdrawal. Others: deep change takes time; abstinence is not guaranteed; policy is separate." },
+      { topic: "exam", scenario: "[Treatment] A residential program runs groups, counselling, and relapse skills for weeks.", question: "This is best called:", options: ["Screening", "Rehabilitation", "Supply reduction", "Peak advocacy"], correct: 1, explanation: "Correct: Rehabilitation. Why: rehab builds longer-term skills. Others: screening is assessment; supply and peaks are not this program." },
+      { topic: "exam", scenario: "[Treatment] A doctor prescribes methadone for opioid dependence.", question: "This is an example of:", options: ["Harm reduction only", "Pharmacotherapy", "Punishment", "Media work"], correct: 1, explanation: "Correct: Pharmacotherapy. Why: medication treats dependence. Others: it may also reduce harm, but the key label is medication treatment; not punishment or media." },
+      { topic: "exam", scenario: "[Treatment] Mental health and AOD teams share one care plan. The client agrees.", question: "This model is:", options: ["Care with no contact between teams", "Integrated dual diagnosis care", "Screening only", "Supply reduction"], correct: 1, explanation: "Correct: Integrated dual diagnosis care. Why: both conditions are planned together. Others: split teams miss links; screening is only assessment; supply is policy." },
+      { topic: "exam", scenario: "[Treatment] A client is unsure about change. The clinician uses motivational interviewing (MI).", question: "MI mainly tries to:", options: ["Shame the person", "Elicit the person’s own reasons for change", "Avoid all goals", "Lecture on abstinence only"], correct: 1, explanation: "Correct: Elicit the person’s own reasons for change. Why: MI is collaborative. Others: shame backfires; goals matter; MI is not a one-way lecture." },
+      { topic: "exam", scenario: "[Treatment] Stepped care is used in an AOD service.", question: "Stepped care means:", options: ["Same care for everyone", "Match care level to need", "Hospital only", "No brief help"], correct: 1, explanation: "Correct: Match care level to need. Why: use the lightest effective step first. Others: one size fits all is wrong; brief help exists; hospital is not always needed." },
+      { topic: "exam", scenario: "[Treatment] Research links a strong alliance to better engagement.", question: "Alliance is built best by:", options: ["Threats", "Empathy and shared planning", "Ignoring the client’s views", "Rushing discharge"], correct: 1, explanation: "Correct: Empathy and shared planning. Why: trust grows with respect. Others: threats and ignoring views harm trust; rushing weakens care." },
+      { topic: "exam", scenario: "[Treatment] A client uses again during counselling.", question: "A helpful view is:", options: ["They have failed for good", "Review triggers and update the plan", "Discharge them now", "Pretend it did not happen"], correct: 1, explanation: "Correct: Review triggers and update the plan. Why: slips inform care. Others: harsh labels and instant discharge often harm outcomes; ignoring the slip misses a chance to help." },
+      { topic: "exam", scenario: "[Treatment] Detox ends. There is no follow-up for several weeks.", question: "The main risk is:", options: ["Lower relapse risk", "Higher relapse and drop-out", "Guaranteed recovery", "No change"], correct: 1, explanation: "Correct: Higher relapse and drop-out. Why: gaps leave people without support. Others: risk rises, not falls; recovery is not guaranteed." },
+      { topic: "exam", scenario: "[Treatment] A service says it uses trauma-informed AOD care.", question: "What should come first?", options: ["Safety, choice, and trust", "Forced telling of trauma on day one", "Ignoring trauma", "Punishment"], correct: 0, explanation: "Correct: Safety, choice, and trust. Why: trauma-informed care starts with safety. Others: forced disclosure can harm; ignoring trauma is unsafe; punishment is the wrong frame." },
+
+      { topic: "exam", scenario: "[Stigma] A client says, ‘I am a failure because I use substances.’", question: "This thought fits:", options: ["High self-efficacy", "Self-stigma", "Public stigma only", "No barrier to care"], correct: 1, explanation: "Correct: Self-stigma. Why: shame is turned inward. Others: self-efficacy is confidence; public stigma is about others; it still blocks care." },
+      { topic: "exam", scenario: "[Stigma] Someone will not go to a service. They expect staff to be rude and judge them.", question: "This is mainly:", options: ["Self-stigma only", "Public or professional stigma (feared or real)", "Recovery capital", "Harm reduction"], correct: 1, explanation: "Correct: Public or professional stigma (feared or real). Why: they fear judgment from others. Others: self-blame may exist but the fear is about staff; other labels do not fit." },
+      { topic: "exam", scenario: "[Stigma] A worker says ‘person with AOD issues’ instead of ‘addict.’", question: "Person-first language helps:", options: ["Increase shame", "Protect dignity and lower stigma", "Skip assessment", "Speed up court"], correct: 1, explanation: "Correct: Protect dignity and lower stigma. Why: respectful words support engagement. Others: it should not add shame; assessment still happens; courts are separate." },
+      { topic: "exam", scenario: "[Stigma] Stigma makes many people put off getting help.", question: "The main health effect is often:", options: ["Faster care", "Slower access and worse outcomes", "No effect", "It only helps families"], correct: 1, explanation: "Correct: Slower access and worse outcomes. Why: stigma blocks help-seeking. Others: care is usually slower, not faster; families are not the only issue." },
+      { topic: "exam", scenario: "[Stigma] A family always pays fines so the person never feels the consequence.", question: "This pattern is often called:", options: ["A healthy boundary", "Codependent rescuing", "Supply reduction", "AUDIT"], correct: 1, explanation: "Correct: Codependent rescuing. Why: over-protection can block change. Others: healthy boundaries differ; supply and AUDIT are unrelated ideas." },
+      { topic: "exam", scenario: "[Stigma] In a family meeting people swap roles: blame, rescue, and feeling helpless.", question: "This fits:", options: ["The 5Ps only", "The drama triangle", "The three policy pillars", "Stepped care"], correct: 1, explanation: "Correct: The drama triangle. Why: victim, rescuer, and persecutor roles rotate. Others: 5Ps is formulation; pillars are policy; stepped care is treatment levels." },
+      { topic: "exam", scenario: "[Stigma] The media shares real recovery stories with the public.", question: "This can reduce stigma by:", options: ["Spreading stereotypes", "Humanising lived experience", "Closing all services", "Replacing doctors"], correct: 1, explanation: "Correct: Humanising lived experience. Why: stories challenge myths. Others: stereotypes harm; services stay; doctors are still needed." },
+      { topic: "exam", scenario: "[Stigma] You work with an Aboriginal client. The service aims for culturally safe care.", question: "This should include:", options: ["Ignoring culture", "Respecting culture and working with community", "One fixed plan for all", "Police-only referral"], correct: 1, explanation: "Correct: Respecting culture and working with community. Why: cultural safety needs respect and partnership. Others: ignore, rigid, or police-only paths harm trust." },
+      { topic: "exam", scenario: "[Stigma] A client joins a peer support group in recovery.", question: "Peers mainly offer:", options: ["Isolation", "Shared experience and belonging", "Court trials", "Drug testing only"], correct: 1, explanation: "Correct: Shared experience and belonging. Why: peers reduce loneliness. Others: isolation is the opposite; peers are not courts or labs." },
+      { topic: "exam", scenario: "[Stigma] After treatment, an employer offers a phased return to work and support.", question: "This can:", options: ["Increase exclusion", "Lower discrimination and aid recovery", "Replace clinical care", "Cause relapse for sure"], correct: 1, explanation: "Correct: Lower discrimination and aid recovery. Why: fair work support fights stigma. Others: it aims to include, not exclude; it adds to care; relapse is not certain." },
+
+      { topic: "exam", scenario: "[Policy — McClelland] Small welfare NGOs and big business both want policy change. Business often wins more.", question: "One main reason is:", options: ["Business never meets ministers", "More money, networks, and access to power", "Business avoids boards", "Business cannot lobby"], correct: 1, explanation: "Correct: More money, networks, and access to power. Why: McClelland links influence to resources and access. Others: business often has strong access; all three distractors are false." },
+      { topic: "exam", scenario: "[Policy — McClelland] ACOSS speaks on welfare for many member organisations.", question: "ACOSS is best described as:", options: ["A government department", "A peak body for the sector", "A private hospital", "A police unit"], correct: 1, explanation: "Correct: A peak body for the sector. Why: peaks speak for many groups. Others: ACOSS is not government, a hospital, or police." },
+      { topic: "exam", scenario: "[Policy — McClelland] An NGO gets government funding and also criticises a policy.", question: "This shows:", options: ["Advocacy is impossible", "Tension between speaking out and keeping funds", "Funding removes all risk", "Peaks are illegal"], correct: 1, explanation: "Correct: Tension between speaking out and keeping funds. Why: income can be tied to government. Others: advocacy still happens; risk remains; peaks are lawful." },
+      { topic: "exam", scenario: "[Policy — McClelland] Business leaders sit on a government advisory board.", question: "This is an example of:", options: ["Strike action only", "Institutional access and influence", "CAGE screening", "Detox"], correct: 1, explanation: "Correct: Institutional access and influence. Why: boards give direct policy access. Others: strikes are different; CAGE and detox are clinical." },
+      { topic: "exam", scenario: "[Policy — McClelland] Compare unions with community welfare NGOs.", question: "Which statement is most accurate?", options: ["Unions mainly represent people in paid work", "Unions only represent unemployed people", "NGOs set wages for all workers", "They are the same"], correct: 0, explanation: "Correct: Unions mainly represent people in paid work. Why: unions focus on workers’ conditions. Others: the other options misdescribe unions and NGOs." },
+      { topic: "exam", scenario: "[Policy — McClelland] Several NGOs co-write one submission to parliament.", question: "This is:", options: ["Detox", "Coalition or joint advocacy", "A drug raid", "ASSIST scoring"], correct: 1, explanation: "Correct: Coalition or joint advocacy. Why: acting together strengthens voice. Others: detox, raids, and ASSIST are not policy submissions." },
+      { topic: "exam", scenario: "[Policy — McClelland] A submission uses both statistics and personal stories.", question: "Why use both?", options: ["To hide evidence", "Facts plus human impact persuade better", "To avoid ethics", "To replace the law"], correct: 1, explanation: "Correct: Facts plus human impact persuade better. Why: data and lived experience reach different audiences. Others: the distractors misstate the aim." },
+      { topic: "exam", scenario: "[Policy — McClelland] A rare chance opens to change a law. Advocates have been waiting.", question: "A policy ‘window’ means you should:", options: ["Ignore it", "Act soon with clear evidence", "Wait many years", "Rely on rumours"], correct: 1, explanation: "Correct: Act soon with clear evidence. Why: windows close fast. Others: ignoring or delaying misses the chance; rumours are weak." },
+      { topic: "exam", scenario: "[Policy — McClelland] Many NGOs lobby alone on the same issue. They do not coordinate.", question: "Their influence is likely:", options: ["Stronger than if united", "Weaker than coordinated advocacy", "Unchanged", "They replace government"], correct: 1, explanation: "Correct: Weaker than coordinated advocacy. Why: split messages dilute power. Others: unity is usually stronger; they do not replace government." },
+      { topic: "exam", scenario: "[Policy — McClelland] A minister asks for workable options with costs.", question: "Advocates should offer:", options: ["Slogans only", "Practical, evidence-based options", "Nothing", "Screen scores only"], correct: 1, explanation: "Correct: Practical, evidence-based options. Why: ministers need plans that can work. Others: slogans and raw scores are not enough; silence helps no one." }
     ];
 
     const TOPIC_LABELS = {
       all: "All Topics",
+      exam: "Exam Practice",
       policy: "Policy & McClelland",
       harm: "Harm Minimisation",
       screening: "Screening Tools",
@@ -280,6 +851,131 @@
     let activeTopic = "all";
     let questions = [];
     let current = 0;
+    /** When set, progress line uses this instead of TOPIC_LABELS[activeTopic] (e.g. wrong-answer drill). */
+    let progressTopicLabel = null;
+
+    let examMode = false;
+    let examAnswerRevealed = false;
+    let selectedOptionIndex = null;
+
+    let quickReviewMode = false;
+    let quickReviewExplanationRevealed = false;
+
+    /** Theme label -> wrong count (first scored reveal per question only) */
+    let wrongByTheme = {};
+    /** null = not scored; 'c' = correct; 'w' = wrong */
+    let sessionOutcomes = [];
+
+    function resetSessionTracking() {
+      wrongByTheme = {};
+      sessionOutcomes = [];
+    }
+
+    /**
+     * Lock outcome on first reveal (correct or wrong). Clear + retry does not rescored.
+     */
+    function recordQuestionOutcome(isCorrect) {
+      const prev = sessionOutcomes[current];
+      if (prev === "c" || prev === "w") return;
+      sessionOutcomes[current] = isCorrect ? "c" : "w";
+      if (!isCorrect) {
+        const theme = getThemeAndScenario(questions[current]);
+        const label = theme.label;
+        wrongByTheme[label] = (wrongByTheme[label] || 0) + 1;
+      }
+    }
+
+    /** Same bands as 0–10 / 11–15 / 16–20 on a 20-question quiz, scaled by ratio. */
+    function getScoreRating(correct, total) {
+      if (total === 0) {
+        return { text: "", className: "" };
+      }
+      const goodMin = Math.ceil(0.55 * total);
+      const readyMin = Math.ceil(0.8 * total);
+      if (correct >= readyMin) {
+        return { text: "Exam ready", className: "summary-rating-ready" };
+      }
+      if (correct >= goodMin) {
+        return { text: "Good", className: "summary-rating-good" };
+      }
+      return { text: "Needs improvement", className: "summary-rating-needs" };
+    }
+
+    function showSessionSummary() {
+      const overlay = document.getElementById("session-summary-overlay");
+      const body = document.getElementById("summary-body");
+      const practiceBtn = document.getElementById("practice-wrong-btn");
+      const total = questions.length;
+
+      if (quickReviewMode) {
+        body.innerHTML = `
+          <p class="summary-score summary-quick-complete">Quick review complete</p>
+          <p class="summary-focus-msg">You skimmed <strong>${total}</strong> questions with correct answers and explanations.</p>
+        `;
+        practiceBtn.hidden = true;
+        practiceBtn.disabled = true;
+        overlay.hidden = false;
+        return;
+      }
+
+      const correct = sessionOutcomes.filter((o) => o === "c").length;
+      const unanswered = sessionOutcomes.filter((o) => o === null).length;
+      const rating = getScoreRating(correct, total);
+
+      let html = `<p class="summary-score">Score: <strong>${correct}/${total}</strong></p>`;
+      if (rating.text) {
+        html += `<p class="summary-rating ${rating.className}">${escapeHtml(rating.text)}</p>`;
+        html +=
+          '<p class="summary-rating-hint">Guide for a 20-question quiz: 0–10 = Needs improvement · 11–15 = Good · 16–20 = Exam ready. Shorter or longer sessions use the same split (about 55% / 80% correct).</p>';
+      }
+      if (unanswered > 0) {
+        html += `<p class="summary-unanswered">${unanswered} question(s) had no answer checked — they are not counted as correct.</p>`;
+      }
+
+      const entries = Object.entries(wrongByTheme).filter(([, n]) => n > 0);
+      const sorted = [...entries].sort(
+        (a, b) => b[1] - a[1] || a[0].localeCompare(b[0])
+      );
+      if (entries.length === 0) {
+        html +=
+          '<p class="summary-none">No wrong answers — all topics look strong.</p>';
+      } else {
+        html +=
+          '<p class="summary-top-wrong-title">You got these topics wrong most:</p>';
+        html += '<ul class="summary-top-wrong-list">';
+        for (const [label, n] of sorted) {
+          html += `<li>${escapeHtml(label)} (${n})</li>`;
+        }
+        html += "</ul>";
+        html +=
+          '<p class="summary-focus-msg">Focus on these topics before next attempt.</p>';
+      }
+
+      body.innerHTML = html;
+
+      const wrongCount = sessionOutcomes.filter((o) => o === "w").length;
+      practiceBtn.hidden = wrongCount === 0;
+      practiceBtn.disabled = wrongCount === 0;
+
+      overlay.hidden = false;
+    }
+
+    function startPracticeWrongQuestions() {
+      const wrongPool = questions.filter((_, i) => sessionOutcomes[i] === "w");
+      if (wrongPool.length === 0) return;
+      document.getElementById("session-summary-overlay").hidden = true;
+      progressTopicLabel = "Practice wrong answers";
+      questions = shuffle(wrongPool);
+      wrongByTheme = {};
+      sessionOutcomes = new Array(questions.length).fill(null);
+      current = 0;
+      loadQuestion();
+    }
+
+    function closeSummaryAndRestart() {
+      document.getElementById("session-summary-overlay").hidden = true;
+      startSession(activeTopic);
+    }
 
     function shuffle(arr) {
       const copy = [...arr];
@@ -296,9 +992,18 @@
     }
 
     function startSession(topic) {
+      document.getElementById("session-summary-overlay").hidden = true;
+      progressTopicLabel = null;
       activeTopic = topic;
+      resetSessionTracking();
       const pool = getTopicPool(topic);
-      questions = shuffle(pool).slice(0, SESSION_SIZE);
+      const shuffled = shuffle(pool);
+      const count =
+        topic === "exam"
+          ? shuffled.length
+          : Math.min(SESSION_SIZE, shuffled.length);
+      questions = shuffled.slice(0, count);
+      sessionOutcomes = new Array(questions.length).fill(null);
       current = 0;
       updateTopicButtons();
       loadQuestion();
@@ -310,16 +1015,236 @@
       });
     }
 
+    function escapeHtml(text) {
+      const div = document.createElement("div");
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function escapeRegExp(s) {
+      return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    }
+
+    /** Curated exam clues only — longest phrases first for regex alternation */
+    const SCENARIO_KEYWORD_PHRASES = [
+      "motivational interviewing",
+      "responsible service of alcohol",
+      "needle and syringe",
+      "withdrawal management",
+      "brief intervention",
+      "harm minimisation",
+      "harm reduction",
+      "supply reduction",
+      "demand reduction",
+      "recovery capital",
+      "dual diagnosis",
+      "trauma-informed",
+      "policy influence",
+      "policy window",
+      "daily drinking",
+      "peak organisation",
+      "advisory boards",
+      "advisory board",
+      "peak body",
+      "culturally safe",
+      "cultural safety",
+      "codependent rescuing",
+      "self-stigma",
+      "drama triangle",
+      "CAGE-AID",
+      "McClelland",
+      "DASS-21",
+      "pharmacotherapy",
+      "rehabilitation",
+      "confidentiality",
+      "naloxone",
+      "methadone",
+      "overdose",
+      "opioids",
+      "opioid",
+      "withdrawal",
+      "relapse",
+      "stigma",
+      "screening",
+      "advocacy",
+      "AUDIT",
+      "ASSIST",
+      "CAGE",
+      "detox",
+      "RSA",
+      "consent"
+    ];
+
+    let scenarioKeywordPattern = null;
+
+    function getScenarioKeywordRegex() {
+      if (scenarioKeywordPattern) return scenarioKeywordPattern;
+      const sorted = [...SCENARIO_KEYWORD_PHRASES].sort(
+        (a, b) => b.length - a.length
+      );
+      const body = sorted
+        .map((kw) => {
+          const esc = escapeRegExp(kw);
+          return /\s/.test(kw)
+            ? `(?<![\\w])${esc}(?![\\w])`
+            : `\\b${esc}\\b`;
+        })
+        .join("|");
+      scenarioKeywordPattern = new RegExp(`(${body})`, "gi");
+      return scenarioKeywordPattern;
+    }
+
+    function highlightScenarioKeywords(text) {
+      const safe = escapeHtml(text);
+      return safe.replace(
+        getScenarioKeywordRegex(),
+        '<strong class="scenario-keyword">$1</strong>'
+      );
+    }
+
+    /**
+     * Theme from leading [Tag] in scenario (exam items), else from q.topic.
+     * Returns badge class key, display label, and scenario text without duplicate tag.
+     */
+    function getThemeAndScenario(q) {
+      const bracketMatch = q.scenario.match(/^\s*\[([^\]]+)\]\s*(.*)$/);
+      if (bracketMatch) {
+        const inner = bracketMatch[1].toLowerCase();
+        const rest = bracketMatch[2].trim();
+        let badgeKey = "mixed";
+        let label = "Topic";
+        if (inner.includes("harm")) {
+          badgeKey = "harm";
+          label = "Harm Minimisation";
+        } else if (inner.includes("policy")) {
+          badgeKey = "policy";
+          label = "Policy";
+        } else if (inner.includes("screening")) {
+          badgeKey = "screening";
+          label = "Screening";
+        } else if (inner.includes("stigma")) {
+          badgeKey = "stigma";
+          label = "Stigma";
+        } else if (inner.includes("treatment")) {
+          badgeKey = "treatment";
+          label = "Treatment";
+        }
+        return {
+          badgeKey,
+          label,
+          scenarioText: rest || q.scenario
+        };
+      }
+
+      const byTopic = {
+        harm: { badgeKey: "harm", label: "Harm Minimisation" },
+        screening: { badgeKey: "screening", label: "Screening" },
+        treatment: { badgeKey: "treatment", label: "Treatment" },
+        stigma: { badgeKey: "stigma", label: "Stigma" },
+        policy: { badgeKey: "policy", label: "Policy" },
+        exam: { badgeKey: "mixed", label: "Exam" },
+        all: { badgeKey: "mixed", label: "Mixed" }
+      };
+      const t = byTopic[q.topic] || { badgeKey: "mixed", label: "Topic" };
+      return { badgeKey: t.badgeKey, label: t.label, scenarioText: q.scenario };
+    }
+
+    function syncModeBar() {
+      const cheat = document.getElementById("cheat-sheet");
+      const checkBtn = document.getElementById("check-answer-btn");
+      const hint = document.getElementById("mode-bar-hint");
+      const examToggle = document.getElementById("exam-mode-toggle");
+      const quickToggle = document.getElementById("quick-review-toggle");
+
+      cheat.hidden = examMode && !quickReviewMode;
+      const showCheck = examMode && !quickReviewMode;
+      checkBtn.style.display = showCheck ? "inline-block" : "none";
+      if (!showCheck) {
+        checkBtn.disabled = true;
+      } else {
+        checkBtn.disabled = selectedOptionIndex === null || examAnswerRevealed;
+      }
+
+      examToggle.disabled = quickReviewMode;
+      quickToggle.disabled = examMode;
+
+      if (quickReviewMode) {
+        hint.textContent =
+          "Quick review: only the correct answer is shown. Tap the dashed box to reveal the explanation.";
+      } else if (examMode) {
+        hint.textContent =
+          "Exam mode: cheat sheet hidden. Choose an answer, then tap Check Answer for feedback.";
+      } else {
+        hint.textContent =
+          "Study: cheat sheet on; tap an option for instant feedback.";
+      }
+    }
+
+    function updateCheckAnswerButton() {
+      const checkBtn = document.getElementById("check-answer-btn");
+      if (!examMode || quickReviewMode) return;
+      checkBtn.disabled = selectedOptionIndex === null || examAnswerRevealed;
+    }
+
+    function revealQuickReviewExplanation() {
+      if (!quickReviewMode || quickReviewExplanationRevealed) return;
+      quickReviewExplanationRevealed = true;
+      const q = questions[current];
+      document.getElementById("explanation").innerText = q.explanation;
+      const tap = document.getElementById("quick-review-tap");
+      if (tap) tap.hidden = true;
+    }
+
     function loadQuestion() {
       const q = questions[current];
-      document.getElementById("progress").innerText = `${TOPIC_LABELS[activeTopic]} - Question ${current + 1}/${questions.length}`;
-      document.getElementById("scenario").innerText = q.scenario;
+      examAnswerRevealed = false;
+      selectedOptionIndex = null;
+      quickReviewExplanationRevealed = false;
+
+      const progressLabel = progressTopicLabel ?? TOPIC_LABELS[activeTopic];
+      const modeSuffix = quickReviewMode ? " · Quick review" : "";
+      document.getElementById("progress").innerText = `${progressLabel} — Question ${current + 1} of ${questions.length}${modeSuffix}`;
+
+      const theme = getThemeAndScenario(q);
+      const badgeClass =
+        theme.badgeKey === "mixed" ? "badge-mixed" : `badge-${theme.badgeKey}`;
+      document.getElementById("theme-badge-row").innerHTML = `<span class="topic-caption-label">Topic:</span> <span class="badge ${badgeClass}" role="status">${escapeHtml(theme.label)}</span>`;
+      document.getElementById("scenario").innerHTML =
+        highlightScenarioKeywords(theme.scenarioText);
       document.getElementById("question").innerText = q.question;
 
       const optionsDiv = document.getElementById("options");
       optionsDiv.innerHTML = "";
       document.getElementById("feedback").innerText = "";
       document.getElementById("explanation").innerText = "";
+
+      document.querySelector(".actions .clear").innerText = quickReviewMode
+        ? "Hide explanation"
+        : "Clear Selection";
+
+      if (quickReviewMode) {
+        const panel = document.createElement("div");
+        panel.className = "quick-review-panel";
+        const lab = document.createElement("p");
+        lab.className = "quick-review-correct-label";
+        lab.textContent = "Correct answer";
+        const ans = document.createElement("div");
+        ans.className = "quick-review-correct";
+        ans.textContent = q.options[q.correct];
+        const tap = document.createElement("button");
+        tap.type = "button";
+        tap.className = "quick-review-tap";
+        tap.id = "quick-review-tap";
+        tap.textContent = "Tap to show explanation";
+        tap.addEventListener("click", revealQuickReviewExplanation);
+        panel.appendChild(lab);
+        panel.appendChild(ans);
+        panel.appendChild(tap);
+        optionsDiv.appendChild(panel);
+        updateCheckAnswerButton();
+        syncModeBar();
+        return;
+      }
 
       q.options.forEach((opt, i) => {
         const div = document.createElement("div");
@@ -328,32 +1253,88 @@
         div.onclick = () => selectAnswer(i);
         optionsDiv.appendChild(div);
       });
+
+      updateCheckAnswerButton();
+      syncModeBar();
     }
 
     function selectAnswer(i) {
+      if (quickReviewMode) return;
       const q = questions[current];
       const opts = document.querySelectorAll(".option");
 
-      opts.forEach((o) => o.classList.remove("correct", "wrong"));
+      if (examMode) {
+        if (examAnswerRevealed) return;
+        opts.forEach((o) => o.classList.remove("selected", "correct", "wrong"));
+        opts[i].classList.add("selected");
+        selectedOptionIndex = i;
+        document.getElementById("feedback").innerText = "";
+        document.getElementById("explanation").innerText = "";
+        updateCheckAnswerButton();
+        return;
+      }
+
+      opts.forEach((o) => o.classList.remove("correct", "wrong", "selected"));
 
       if (i === q.correct) {
         opts[i].classList.add("correct");
         document.getElementById("feedback").innerText = "Correct";
         document.getElementById("feedback").style.color = "#15803d";
+        recordQuestionOutcome(true);
       } else {
         opts[i].classList.add("wrong");
         opts[q.correct].classList.add("correct");
         document.getElementById("feedback").innerText = "Incorrect";
         document.getElementById("feedback").style.color = "#b91c1c";
+        recordQuestionOutcome(false);
       }
 
       document.getElementById("explanation").innerText = q.explanation;
     }
 
+    function checkAnswer() {
+      if (!examMode || quickReviewMode || examAnswerRevealed || selectedOptionIndex === null) return;
+      const q = questions[current];
+      const opts = document.querySelectorAll(".option");
+
+      examAnswerRevealed = true;
+      const i = selectedOptionIndex;
+      opts.forEach((o) => o.classList.remove("selected"));
+
+      if (i === q.correct) {
+        opts[i].classList.add("correct");
+        document.getElementById("feedback").innerText = "Correct";
+        document.getElementById("feedback").style.color = "#15803d";
+        recordQuestionOutcome(true);
+      } else {
+        opts[i].classList.add("wrong");
+        opts[q.correct].classList.add("correct");
+        document.getElementById("feedback").innerText = "Incorrect";
+        document.getElementById("feedback").style.color = "#b91c1c";
+        recordQuestionOutcome(false);
+      }
+
+      document.getElementById("explanation").innerText = q.explanation;
+      updateCheckAnswerButton();
+    }
+
     function clearSelection() {
-      document.querySelectorAll(".option").forEach((o) => o.classList.remove("correct", "wrong"));
+      if (quickReviewMode) {
+        quickReviewExplanationRevealed = false;
+        document.getElementById("explanation").innerText = "";
+        const tap = document.getElementById("quick-review-tap");
+        if (tap) tap.hidden = false;
+        return;
+      }
+      const opts = document.querySelectorAll(".option");
+      opts.forEach((o) => o.classList.remove("correct", "wrong", "selected"));
       document.getElementById("feedback").innerText = "";
       document.getElementById("explanation").innerText = "";
+      if (examMode) {
+        examAnswerRevealed = false;
+        selectedOptionIndex = null;
+        updateCheckAnswerButton();
+      }
     }
 
     function nextQuestion() {
@@ -361,7 +1342,7 @@
         current++;
         loadQuestion();
       } else {
-        startSession(activeTopic);
+        showSessionSummary();
       }
     }
 
@@ -371,6 +1352,27 @@
       startSession(btn.dataset.topic);
     });
 
+    document.getElementById("exam-mode-toggle").addEventListener("change", (e) => {
+      examMode = e.target.checked;
+      if (examMode) {
+        quickReviewMode = false;
+        document.getElementById("quick-review-toggle").checked = false;
+      }
+      syncModeBar();
+      loadQuestion();
+    });
+
+    document.getElementById("quick-review-toggle").addEventListener("change", (e) => {
+      quickReviewMode = e.target.checked;
+      if (quickReviewMode) {
+        examMode = false;
+        document.getElementById("exam-mode-toggle").checked = false;
+      }
+      syncModeBar();
+      loadQuestion();
+    });
+
+    syncModeBar();
     startSession("all");
   </script>
 </body>
