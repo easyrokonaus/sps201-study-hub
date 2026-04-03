@@ -2,1378 +2,1274 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SPS201 Study System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SPS201 AOD Exam Prep</title>
   <style>
+    :root {
+      --bg: #f4f6f8;
+      --card: #fff;
+      --text: #1e293b;
+      --muted: #64748b;
+      --accent: #0d9488;
+      --accent-dim: #ccfbf1;
+      --danger: #dc2626;
+      --danger-bg: #fef2f2;
+      --ok: #16a34a;
+      --ok-bg: #f0fdf4;
+      --border: #e2e8f0;
+      --radius: 12px;
+      --shadow: 0 4px 24px rgba(15, 23, 42, 0.08);
+    }
+    * { box-sizing: border-box; }
     body {
-      font-family: Arial, sans-serif;
-      background: #f5f7fb;
       margin: 0;
-      padding: 20px;
-      color: #1f2937;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      min-height: 100vh;
     }
-
-    .container {
-      max-width: 900px;
-      margin: auto;
-      background: #fff;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    .app {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 16px 16px 48px;
     }
-
     h1 {
-      margin-top: 0;
-      margin-bottom: 14px;
-    }
-
-    .exam-mode-bar {
-      display: flex;
-      align-items: flex-start;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 16px;
-      padding: 10px 12px;
-      background: #f1f5f9;
-      border: 1px solid #e2e8f0;
-      border-radius: 10px;
-    }
-
-    .mode-toggles {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .exam-toggle {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      cursor: pointer;
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: #0f172a;
-      user-select: none;
-    }
-
-    .exam-toggle input {
-      width: 1.1rem;
-      height: 1.1rem;
-      accent-color: #2563eb;
-      cursor: pointer;
-    }
-
-    .exam-toggle input:disabled {
-      opacity: 0.45;
-      cursor: not-allowed;
-    }
-
-    .exam-mode-hint {
-      font-size: 0.82rem;
-      color: #64748b;
-      flex: 1 1 220px;
-      line-height: 1.45;
-    }
-
-    .quick-review-panel {
-      margin: 4px 0 12px;
-    }
-
-    .quick-review-correct-label {
-      margin: 0 0 6px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: #64748b;
-    }
-
-    .quick-review-correct {
-      background: #ecfdf5;
-      border: 1px solid #6ee7b7;
-      padding: 14px 16px;
-      border-radius: 10px;
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: #065f46;
-      line-height: 1.4;
-      margin-bottom: 12px;
-    }
-
-    .quick-review-tap {
-      display: block;
-      width: 100%;
-      box-sizing: border-box;
-      padding: 14px 16px;
-      border: 2px dashed #94a3b8;
-      border-radius: 10px;
-      background: #f8fafc;
-      cursor: pointer;
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: #475569;
-      text-align: center;
-      font-family: inherit;
-    }
-
-    .quick-review-tap:hover {
-      background: #f1f5f9;
-      border-color: #64748b;
-      color: #334155;
-    }
-
-    .summary-quick-complete {
-      font-size: 1.1rem;
-      color: #0f172a;
-    }
-
-    .check-answer {
-      background: #0d9488;
-      color: #fff;
-    }
-
-    .check-answer:disabled {
-      opacity: 0.45;
-      cursor: not-allowed;
-    }
-
-    .summary-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 2000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-      background: rgba(15, 23, 42, 0.5);
-      box-sizing: border-box;
-    }
-
-    .summary-overlay[hidden] {
-      display: none !important;
-    }
-
-    .summary-modal {
-      background: #fff;
-      border-radius: 12px;
-      max-width: 440px;
-      width: 100%;
-      max-height: min(85vh, 560px);
-      overflow: auto;
-      padding: 22px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
-      box-sizing: border-box;
-    }
-
-    .summary-modal h2 {
-      margin: 0 0 14px;
-      font-size: 1.2rem;
-      color: #0f172a;
-    }
-
-    .summary-score {
-      margin: 0 0 10px;
-      font-size: 1rem;
-      color: #475569;
-    }
-
-    .summary-score strong {
-      font-size: 1.45rem;
-      font-weight: 800;
-      color: #0f172a;
-    }
-
-    .summary-rating {
-      margin: 0 0 14px;
-      font-size: 1rem;
+      font-size: 1.35rem;
       font-weight: 700;
-      padding: 10px 14px;
-      border-radius: 8px;
-      line-height: 1.35;
-    }
-
-    .summary-rating-needs {
-      background: #fef2f2;
-      color: #991b1b;
-      border: 1px solid #fecaca;
-    }
-
-    .summary-rating-good {
-      background: #fffbeb;
-      color: #a16207;
-      border: 1px solid #fde68a;
-    }
-
-    .summary-rating-ready {
-      background: #ecfdf5;
-      color: #047857;
-      border: 1px solid #a7f3d0;
-    }
-
-    .summary-rating-hint {
-      margin: -8px 0 14px;
-      font-size: 0.78rem;
-      color: #94a3b8;
-      line-height: 1.4;
-    }
-
-    .summary-unanswered {
-      margin: 0 0 14px;
-      font-size: 0.86rem;
-      color: #b45309;
-      line-height: 1.4;
-    }
-
-    .summary-top-wrong-title {
-      margin: 16px 0 10px;
-      font-size: 0.98rem;
-      font-weight: 700;
-      color: #0f172a;
-    }
-
-    .summary-top-wrong-list {
-      margin: 0 0 12px;
-      padding-left: 1.25rem;
-      font-size: 0.95rem;
-      color: #334155;
-      line-height: 1.55;
-    }
-
-    .summary-top-wrong-list li {
-      margin: 4px 0;
-    }
-
-    .summary-focus-msg {
       margin: 0 0 4px;
-      font-size: 0.9rem;
-      color: #475569;
-      line-height: 1.45;
+      letter-spacing: -0.02em;
     }
-
-    .summary-none {
-      margin: 8px 0 0;
-      color: #15803d;
-      font-weight: 600;
-      font-size: 0.92rem;
+    .subtitle { color: var(--muted); font-size: 0.875rem; margin-bottom: 20px; }
+    .panel {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      padding: 16px;
+      margin-bottom: 16px;
+      transition: opacity 0.2s ease, transform 0.2s ease;
     }
-
-    .summary-actions {
-      margin-top: 8px;
+    .panel.fade { opacity: 0.85; transform: translateY(2px); }
+    .row {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
+      align-items: center;
     }
-
-    .summary-actions .practice-wrong {
-      background: #f59e0b;
-      color: #1c1917;
+    .row label { font-size: 0.8rem; color: var(--muted); font-weight: 600; width: 100%; }
+    select, button {
+      font: inherit;
+      border-radius: 8px;
+    }
+    select {
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      flex: 1;
+      min-width: 140px;
+    }
+    .mode-btns { display: flex; flex-wrap: wrap; gap: 8px; }
+    .mode-btns button {
+      padding: 8px 14px;
+      border: 1px solid var(--border);
+      background: #fff;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+    .mode-btns button.active {
+      background: var(--accent-dim);
+      border-color: var(--accent);
+      color: #0f766e;
       font-weight: 600;
     }
-
-    .summary-actions .practice-wrong:hover {
-      filter: brightness(0.95);
-    }
-
-    .summary-actions .practice-wrong:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-      filter: none;
-    }
-
-    .dashboard {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-
-    .topic-btn {
-      border: 1px solid #cbd5e1;
-      background: #eef2ff;
-      color: #1e3a8a;
-      padding: 10px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 0.92rem;
-    }
-
-    .topic-btn.active {
-      background: #2563eb;
-      border-color: #2563eb;
+    .btn-primary {
+      background: var(--accent);
       color: #fff;
-      font-weight: 700;
+      border: none;
+      padding: 10px 18px;
+      font-weight: 600;
+      cursor: pointer;
     }
-
-    #progress {
-      margin: 6px 0 12px;
-      color: #475569;
+    .btn-primary:disabled { opacity: 0.45; cursor: not-allowed; }
+    .btn-secondary {
+      background: #fff;
+      border: 1px solid var(--border);
+      padding: 10px 16px;
+      cursor: pointer;
     }
-
-    .question-card {
-      margin-bottom: 0;
+    .btn-secondary:disabled { opacity: 0.45; cursor: not-allowed; }
+    .progress-bar {
+      height: 6px;
+      background: var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+      margin: 12px 0 8px;
     }
-
-    .theme-badge-row {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 8px;
+    .progress-bar > div {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 3px;
+      transition: width 0.25s ease;
     }
-
-    .theme-badge-row.topic-below-question {
-      margin-top: 0;
-      margin-bottom: 16px;
-    }
-
-    .topic-caption-label {
-      font-size: 0.82rem;
-      font-weight: 500;
-      color: #64748b;
-    }
-
+    .meta { font-size: 0.8rem; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
     .badge {
       display: inline-block;
-      font-size: 0.78rem;
+      font-size: 0.65rem;
       font-weight: 700;
-      padding: 5px 12px;
-      border-radius: 999px;
-      line-height: 1.35;
-      max-width: 100%;
-      box-sizing: border-box;
-      word-break: break-word;
-      vertical-align: top;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: #e0f2fe;
+      color: #0369a1;
     }
-
-    .badge-harm {
-      background: #dcfce7;
-      color: #166534;
-      border: 1px solid #86efac;
-    }
-
-    .badge-stigma {
-      background: #fee2e2;
-      color: #991b1b;
-      border: 1px solid #fca5a5;
-    }
-
-    .badge-screening {
-      background: #dbeafe;
-      color: #1e40af;
-      border: 1px solid #93c5fd;
-    }
-
-    .badge-treatment {
-      background: #f3e8ff;
-      color: #6b21a8;
-      border: 1px solid #c4b5fd;
-    }
-
-    .badge-policy {
-      background: #ffedd5;
-      color: #9a3412;
-      border: 1px solid #fdba74;
-    }
-
-    .badge-mixed {
-      background: #f1f5f9;
-      color: #475569;
-      border: 1px solid #cbd5e1;
-    }
-
-    .scenario {
-      background: #f1f5f9;
-      border: 1px solid #e2e8f0;
-      padding: 12px 14px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      font-size: 0.9rem;
-      line-height: 1.55;
-      color: #64748b;
-    }
-
-    .scenario .scenario-keyword {
-      font-weight: 600;
-      color: #475569;
-    }
-
-    .question {
-      font-size: 1.22rem;
-      font-weight: 700;
-      margin: 0 0 8px;
-      color: #0f172a;
-      line-height: 1.35;
-    }
-
-    .option {
-      box-sizing: border-box;
-      border: 1px solid #d1d5db;
-      padding: 12px;
-      margin: 8px 0;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    .option:hover {
-      background: #eef3ff;
-    }
-
-    .option.selected {
-      background: #e0e7ff;
-      border-color: #6366f1;
-      box-shadow: 0 0 0 1px #6366f1;
-    }
-
-    .correct {
-      background: #d4edda;
-      border-color: #16a34a;
-    }
-
-    .wrong {
-      background: #f8d7da;
-      border-color: #dc2626;
-    }
-
-    .actions {
+    .badge-cat-harm { background: #d1fae5; color: #047857; }
+    .badge-cat-screening { background: #dbeafe; color: #1d4ed8; }
+    .badge-cat-stigma { background: #fce7f3; color: #9d174d; }
+    .badge-cat-models { background: #ede9fe; color: #5b21b6; }
+    .badge-cat-stages { background: #ffedd5; color: #c2410c; }
+    .badge-cat-trauma { background: #fef3c7; color: #b45309; }
+    .badge-cat-dual { background: #e0e7ff; color: #4338ca; }
+    .badge-cat-treatment { background: #ccfbf1; color: #0f766e; }
+    .badge-cat-case { background: #f1f5f9; color: #334155; }
+    .badge-cat-dsm { background: #fecaca; color: #991b1b; }
+    .badge-cat-drugs { background: #a5f3fc; color: #0e7490; }
+    .exam-timer-bar {
       display: flex;
-      gap: 10px;
+      justify-content: space-between;
+      align-items: center;
       flex-wrap: wrap;
-      margin-top: 12px;
-    }
-
-    button {
-      padding: 10px 15px;
+      gap: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      padding: 8px 12px;
       border-radius: 8px;
-      border: none;
-      cursor: pointer;
-      font-size: 0.95rem;
+      background: #f1f5f9;
+      border: 1px solid var(--border);
     }
-
-    .next {
-      background: #3b6ef5;
-      color: #fff;
-    }
-
-    .clear {
-      background: #d1d5db;
-    }
-
-    #feedback {
+    .exam-timer-bar.warn { background: #fef3c7; border-color: #f59e0b; }
+    .exam-timer-bar.critical { background: #fee2e2; border-color: var(--danger); animation: pulse 1.2s ease infinite; }
+    @keyframes pulse { 50% { opacity: 0.92; } }
+    .exam-timer-bar[hidden] { display: none !important; }
+    .why-not { font-size: 0.88rem; margin: 8px 0 0; color: var(--text); }
+    .model-block {
       margin-top: 12px;
-      font-weight: 700;
-    }
-
-    #explanation {
-      margin-top: 6px;
-      color: #374151;
-    }
-
-    .cheat-sheet {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 20px;
-    }
-
-    .cheat-sheet h2 {
-      margin: 0 0 12px;
-      font-size: 1.1rem;
-      color: #0f172a;
-    }
-
-    .cheat-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
-      gap: 12px;
-    }
-
-    .cheat-block {
-      background: #fff;
-      border: 1px solid #e5e7eb;
-      border-radius: 8px;
       padding: 12px;
+      background: #f8fafc;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-size: 0.92rem;
     }
-
-    .cheat-block h3 {
-      margin: 0 0 8px;
+    .model-block mark.kterm {
+      background: #fef08a;
+      color: #713f12;
+      padding: 0 2px;
+      border-radius: 2px;
+      font-weight: 600;
+    }
+    #btn-retry-wrong { background: #7c3aed; color: #fff; border: none; }
+    #btn-retry-wrong:disabled { opacity: 0.45; }
+    .focus-tip { font-size: 0.9rem; color: var(--text); margin-top: 12px; padding: 10px; background: #ecfeff; border-radius: 8px; border: 1px solid #a5f3fc; }
+    .scenario-box {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px;
+      margin-bottom: 16px;
       font-size: 0.95rem;
-      color: #1e40af;
     }
-
-    .cheat-block p,
-    .cheat-block ul {
-      margin: 0;
+    .scenario-box h3 { margin: 0 0 8px; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+    .case-answer-guide {
+      background: #eef2f6;
+      border: 1px solid #d8dee6;
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
       font-size: 0.88rem;
-      line-height: 1.5;
+      line-height: 1.65;
       color: #334155;
     }
-
-    .cheat-block ul {
-      padding-left: 18px;
+    .case-answer-guide h4 {
+      margin: 0 0 8px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #64748b;
     }
-
-    @media (max-width: 600px) {
-      body {
-        padding: 12px;
-      }
-
-      .container {
-        padding: 14px;
-      }
-
-      .topic-btn {
-        flex: 1 1 calc(50% - 4px);
-        text-align: center;
-        font-size: 0.85rem;
-        padding: 9px 8px;
-      }
-
-      .dashboard {
-        gap: 6px;
-      }
-
-      .badge {
-        font-size: 0.72rem;
-        padding: 4px 10px;
-      }
-
-      .theme-badge-row.topic-below-question {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 6px;
-      }
-
-      .theme-badge-row.topic-below-question .badge {
-        width: 100%;
-        text-align: center;
-        box-sizing: border-box;
-      }
-
-      .scenario {
-        font-size: 0.86rem;
-        padding: 10px 12px;
-        margin-bottom: 16px;
-      }
-
-      .question {
-        font-size: 1.1rem;
-        margin-bottom: 12px;
-      }
+    .case-answer-guide .guide-lines {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.85rem;
+    }
+    .case-answer-guide .guide-lines li { margin: 2px 0; }
+    .case-answer-guide .guide-hint {
+      margin: 10px 0 0;
+      font-size: 0.8rem;
+      color: #64748b;
+      font-style: italic;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    .question-text { font-size: 1.05rem; font-weight: 600; margin-bottom: 14px; }
+    .options { display: flex; flex-direction: column; gap: 8px; }
+    .opt {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px 14px;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      text-align: left;
+      width: 100%;
+      font-size: 0.95rem;
+      background: #fff;
+    }
+    .opt:hover:not(:disabled) { border-color: #99f6e4; }
+    .opt:disabled { cursor: default; }
+    .opt.selected { border-color: var(--accent); background: var(--accent-dim); }
+    .opt.correct { border-color: var(--ok); background: var(--ok-bg); }
+    .opt.wrong { border-color: var(--danger); background: var(--danger-bg); }
+    .opt-index { font-weight: 700; color: var(--muted); min-width: 1.25rem; }
+    .short-input {
+      width: 100%;
+      min-height: 100px;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font: inherit;
+      resize: vertical;
+    }
+    .short-hint { font-size: 0.8rem; color: var(--muted); margin-top: 8px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; align-items: center; }
+    .feedback {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      display: none;
+    }
+    .feedback.show { display: block; }
+    .feedback.ok { background: var(--ok-bg); border: 1px solid #bbf7d0; }
+    .feedback.bad { background: var(--danger-bg); border: 1px solid #fecaca; }
+    .feedback.neutral { background: #f8fafc; border: 1px solid var(--border); }
+    .score-strip {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.45);
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 24px 16px;
+      overflow-y: auto;
+      z-index: 100;
+    }
+    .overlay[hidden] { display: none; }
+    .modal {
+      background: var(--card);
+      border-radius: var(--radius);
+      max-width: 520px;
+      width: 100%;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      margin-top: 8vh;
+    }
+    .modal h2 { margin: 0 0 12px; font-size: 1.2rem; }
+    .weak-list { margin: 12px 0; padding-left: 20px; }
+    .weak-list li { margin: 4px 0; }
+    .start-screen .panel { text-align: center; }
+    .start-screen p { color: var(--muted); font-size: 0.9rem; }
+    @media (min-width: 640px) {
+      h1 { font-size: 1.5rem; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>SPS201 Study System</h1>
+  <div class="app">
+    <h1>SPS201 AOD Exam Prep</h1>
+    <p class="subtitle">Short answer · Case study · Mixed — Study, Exam, or Quick Review</p>
 
-    <div class="exam-mode-bar">
-      <div class="mode-toggles">
-        <label class="exam-toggle">
-          <input type="checkbox" id="exam-mode-toggle" aria-describedby="mode-bar-hint" />
-          <span>Exam Mode</span>
-        </label>
-        <label class="exam-toggle">
-          <input type="checkbox" id="quick-review-toggle" aria-describedby="mode-bar-hint" />
-          <span>Quick Review</span>
-        </label>
+    <div id="start-screen" class="start-screen">
+      <div class="panel">
+        <div class="row">
+          <label for="topic-select">Topic</label>
+          <select id="topic-select" aria-label="Select topic">
+            <option value="part1">Part I (Short Answer)</option>
+            <option value="part2">Part II (Case Study)</option>
+            <option value="mixed">Mixed Exam</option>
+          </select>
+        </div>
+        <div class="row" style="margin-top:14px;">
+          <label>Mode</label>
+          <div class="mode-btns" id="mode-btns" role="group" aria-label="Study mode">
+            <button type="button" data-mode="study" class="active">Study Mode</button>
+            <button type="button" data-mode="exam">Exam Mode</button>
+            <button type="button" data-mode="quick">Quick Review</button>
+          </div>
+        </div>
+        <p style="margin:16px 0 12px;">Study: check when ready. Exam: 120-minute timer, no previous questions after start, auto-submit when time ends; check before Next. Quick Review: model answers only (not scored).</p>
+        <button type="button" class="btn-primary" id="btn-start" style="width:100%;">Start session</button>
       </div>
-      <span id="mode-bar-hint" class="exam-mode-hint">Study: cheat sheet on; tap an option for instant feedback.</span>
     </div>
 
-    <section id="cheat-sheet" class="cheat-sheet" aria-label="Quick revision">
-      <h2>Quick Revision Cheat Sheet</h2>
-      <p style="margin:0 0 14px;font-size:0.9rem;color:#475569;"><strong>AOD exam focus:</strong> harm minimisation · stigma · screening tools · treatment · policy (McClelland).</p>
-      <div class="cheat-grid">
-        <div class="cheat-block">
-          <h3>Harm minimisation</h3>
-          <p>Australia uses <strong>three pillars</strong>: demand reduction, supply reduction, and harm reduction. Goal is to <strong>reduce harm</strong> even if use continues. Examples: brief intervention, needle programs, naloxone, safer settings.</p>
+    <div id="quiz-screen" hidden>
+      <div class="panel">
+        <div id="exam-timer-wrap" class="exam-timer-bar" hidden>
+          <span>Exam time remaining</span>
+          <span id="exam-timer-display">120:00</span>
         </div>
-        <div class="cheat-block">
-          <h3>Screening tools</h3>
-          <ul>
-            <li><strong>AUDIT</strong> — alcohol; 10 items; risk levels.</li>
-            <li><strong>ASSIST</strong> — several substances; guides next steps.</li>
-            <li><strong>CAGE / CAGE-AID</strong> — 4 questions (cut down, annoyed, guilty, eye-opener); AID adds drugs.</li>
+        <div class="score-strip">
+          <span id="score-live">Score: 0 / 0</span>
+          <span id="progress-text">Question 1 of 15</span>
+        </div>
+        <div class="progress-bar"><div id="progress-fill" style="width:0%"></div></div>
+        <div class="meta">
+          <span class="badge" id="topic-badge">Harm minimisation</span>
+          <span id="part-label">Part I</span>
+        </div>
+      </div>
+
+      <div class="panel" id="question-panel">
+        <div id="case-scenario-wrap" hidden>
+          <div class="scenario-box">
+            <h3>Case scenario</h3>
+            <p id="case-scenario-text"></p>
+          </div>
+        </div>
+        <p class="question-text" id="question-text"></p>
+        <div id="case-answer-guide" class="case-answer-guide" hidden>
+          <h4>Written exam — answer structure (Part II)</h4>
+          <ul class="guide-lines" aria-label="Suggested answer structure">
+            <li>Issues:</li>
+            <li>Assessment:</li>
+            <li>Stage:</li>
+            <li>Treatment:</li>
+            <li>Referral:</li>
+            <li>Approach:</li>
           </ul>
-          <p>Screening finds <strong>risk</strong>, not a full diagnosis.</p>
+          <p class="guide-hint">Use this structure to organise your answer for full marks</p>
         </div>
-        <div class="cheat-block">
-          <h3>Stigma</h3>
-          <p><strong>Public stigma</strong> — negative attitudes from others. <strong>Self-stigma</strong> — internalised shame. Stigma can <strong>reduce help-seeking</strong>. Use person-first language and trauma-informed care.</p>
+        <div id="mcq-wrap"></div>
+        <div id="short-wrap" hidden>
+          <textarea class="short-input" id="short-text" placeholder="Type your answer…" aria-label="Your answer"></textarea>
+          <p class="short-hint">Exam tip: use key terms from lectures. Marking accepts partial ideas and minor spelling slips; you always get the full model answer after checking.</p>
         </div>
-        <div class="cheat-block">
-          <h3>Treatment &amp; rehab</h3>
-          <p><strong>Detox / withdrawal management</strong> — medical support to stop safely. <strong>Rehab</strong> — longer programs with skills and relapse prevention. <strong>Pharmacotherapy</strong> — e.g. opioid treatment medications. Detox alone is rarely enough; plan <strong>aftercare</strong>.</p>
-        </div>
-        <div class="cheat-block">
-          <h3>Policy (McClelland)</h3>
-          <p>Influence depends on <strong>access, resources, and relationships</strong>. Business often has strong access. <strong>Peak bodies</strong> represent many organisations. Welfare groups may balance <strong>advocacy with funding</strong>. Coalitions and evidence strengthen advocacy.</p>
+        <div class="feedback" id="feedback" role="status"></div>
+        <div class="actions">
+          <button type="button" class="btn-primary" id="btn-check">Check Answer</button>
+          <button type="button" class="btn-secondary" id="btn-clear">Clear selection</button>
+          <button type="button" class="btn-secondary" id="btn-retry-wrong" hidden>Retry wrong question</button>
+          <button type="button" class="btn-secondary" id="btn-prev">Previous</button>
+          <button type="button" class="btn-secondary" id="btn-next">Next</button>
         </div>
       </div>
-    </section>
-
-    <div class="dashboard" id="dashboard">
-      <button class="topic-btn active" data-topic="all">All Topics</button>
-      <button class="topic-btn" data-topic="exam">Exam Practice</button>
-      <button class="topic-btn" data-topic="policy">Policy & McClelland</button>
-      <button class="topic-btn" data-topic="harm">Harm Minimisation</button>
-      <button class="topic-btn" data-topic="screening">Screening Tools</button>
-      <button class="topic-btn" data-topic="treatment">Treatment & Rehab</button>
-      <button class="topic-btn" data-topic="stigma">Stigma & Behaviour</button>
     </div>
 
-    <h4 id="progress"></h4>
-    <div class="question-card">
-      <div id="scenario" class="scenario"></div>
-      <p id="question" class="question"></p>
-      <div id="theme-badge-row" class="theme-badge-row topic-below-question" aria-label="Question topic"></div>
-    </div>
-    <div id="options"></div>
-
-    <div class="actions">
-      <button type="button" id="check-answer-btn" class="check-answer" onclick="checkAnswer()" style="display: none" disabled>Check Answer</button>
-      <button type="button" class="clear" onclick="clearSelection()">Clear Selection</button>
-      <button type="button" class="next" onclick="nextQuestion()">Next</button>
-    </div>
-
-    <p id="feedback"></p>
-    <p id="explanation"></p>
-  </div>
-
-  <div
-    id="session-summary-overlay"
-    class="summary-overlay"
-    hidden
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="summary-title"
-  >
-    <div class="summary-modal">
-      <h2 id="summary-title">Quiz complete</h2>
-      <div id="summary-body"></div>
-      <div class="summary-actions">
-        <button
-          type="button"
-          id="practice-wrong-btn"
-          class="practice-wrong"
-          onclick="startPracticeWrongQuestions()"
-          hidden
-        >
-          Practice Wrong Questions
-        </button>
-        <button type="button" class="next" onclick="closeSummaryAndRestart()">New session</button>
+    <div id="summary-overlay" class="overlay" hidden role="dialog" aria-modal="true" aria-labelledby="summary-title">
+      <div class="modal">
+        <h2 id="summary-title">Session complete</h2>
+        <p id="summary-score"></p>
+        <p id="summary-time-note" hidden></p>
+        <div id="summary-focus-tip" class="focus-tip" hidden></div>
+        <div id="summary-weak-wrap">
+          <p><strong>Review these topics:</strong></p>
+          <ul class="weak-list" id="summary-weak"></ul>
+        </div>
+        <div class="actions" style="margin-top:20px;">
+          <button type="button" class="btn-primary" id="btn-practice-wrong">Practice Wrong Questions</button>
+          <button type="button" class="btn-secondary" id="btn-new-session">New session</button>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
-    const allQuestions = [
-      // POLICY & MCCLELLAND (20)
-      { topic: "policy", scenario: "McClelland argues that policy influence depends on access and resources.", question: "Why do business groups usually influence policy more than welfare groups?", options: ["They avoid ministers", "They have stronger access and resources", "They use no strategy", "They never lobby"], correct: 1, explanation: "Business groups often have more direct access, funding, and networks." },
-      { topic: "policy", scenario: "A welfare organisation receives government grants and still wants to criticise a new reform.", question: "What is the best description of this advocacy situation?", options: ["No advocacy is possible", "Careful strategic advocacy is needed", "Funding removes all risk", "Only unions can advocate"], correct: 1, explanation: "Organisations often balance advocacy goals with funding risk." },
-      { topic: "policy", scenario: "Quote: 'Peak bodies represent a membership base.'", question: "What is the core role of a peak body?", options: ["Run detox units only", "Represent many organisations", "Write legislation", "Replace government"], correct: 1, explanation: "Peak bodies coordinate and represent a sector, not just one service." },
-      { topic: "policy", scenario: "ACOSS submits policy briefs and media statements for national reforms.", question: "ACOSS is best described as:", options: ["A private hospital", "A welfare peak organisation", "A court service", "A police agency"], correct: 1, explanation: "ACOSS is a national peak body for community services." },
-      { topic: "policy", scenario: "A coalition of welfare services shares evidence with parliament.", question: "Which advocacy method is this?", options: ["Isolation strategy", "Collaborative policy advocacy", "Clinical detox", "Supply reduction policing"], correct: 1, explanation: "Working in coalitions increases influence and reach." },
-      { topic: "policy", scenario: "McClelland notes that credibility matters in public-interest advocacy.", question: "Which factor most improves policy credibility?", options: ["Rumours", "Strong research evidence", "No data", "Single anecdote only"], correct: 1, explanation: "Good-quality data makes advocacy more persuasive." },
-      { topic: "policy", scenario: "A spokesperson clearly explains poverty impacts on TV.", question: "This mostly strengthens:", options: ["Policy silence", "Public communication influence", "Clinical diagnosis", "Police powers"], correct: 1, explanation: "Effective spokespersons help shape public and policy debate." },
-      { topic: "policy", scenario: "Business leaders sit on advisory boards and shape decisions.", question: "This is an example of:", options: ["Moral persuasion only", "Institutional access influence", "Community protest only", "Detox planning"], correct: 1, explanation: "Board membership provides direct policy access." },
-      { topic: "policy", scenario: "Quote: 'Different policy actors hold unequal power.'", question: "What does this usually mean for welfare NGOs?", options: ["They always dominate policy", "They must use strategic alliances", "They need no evidence", "They avoid all lobbying"], correct: 1, explanation: "Less powerful actors often rely on alliances and strong evidence." },
-      { topic: "policy", scenario: "A student compares unions and welfare organisations in advocacy.", question: "Which statement is most accurate?", options: ["Unions mainly represent employed workers", "Unions represent only unemployed people", "Welfare peaks control wages policy", "Both have identical constituencies"], correct: 0, explanation: "Unions usually focus on workers' wages and conditions." },
-      { topic: "policy", scenario: "A welfare service uses stories plus statistics in submissions.", question: "Why combine these?", options: ["To reduce clarity", "To balance evidence and human impact", "To avoid policy detail", "To replace research"], correct: 1, explanation: "Data plus lived experience often improves persuasive impact." },
-      { topic: "policy", scenario: "A minister asks for costed alternatives before changing policy.", question: "What should advocates provide?", options: ["Only moral claims", "Evidence-based practical options", "No recommendations", "Clinical screening scores"], correct: 1, explanation: "Policy makers usually need workable, costed options." },
-      { topic: "policy", scenario: "A group avoids media completely during a reform debate.", question: "Likely consequence?", options: ["Higher visibility", "Lower public influence", "Guaranteed policy win", "No change in reach"], correct: 1, explanation: "Media silence usually reduces advocacy visibility." },
-      { topic: "policy", scenario: "Public-interest groups are fragmented and do not coordinate.", question: "What often happens to influence?", options: ["It grows strongly", "It weakens", "It becomes automatic", "It replaces government"], correct: 1, explanation: "Fragmentation usually reduces shared impact." },
-      { topic: "policy", scenario: "Quote: 'Policy windows can open suddenly.'", question: "Best advocacy response?", options: ["Wait for years", "Prepare evidence and act quickly", "Stop engaging", "Ignore stakeholders"], correct: 1, explanation: "Prepared groups can act when opportunities open." },
-      { topic: "policy", scenario: "A church-based welfare group supports rights-focused reform.", question: "This reflects which policy tradition?", options: ["Collective responsibility orientation", "Punitive-only orientation", "No social justice focus", "Market-only approach"], correct: 0, explanation: "Many faith welfare traditions support collective welfare principles." },
-      { topic: "policy", scenario: "An NGO is invited to parliamentary inquiry hearings.", question: "This invitation mainly indicates:", options: ["Policy exclusion", "Recognised policy legitimacy", "Clinical referral", "Legal prosecution"], correct: 1, explanation: "Inquiry participation shows recognised stakeholder status." },
-      { topic: "policy", scenario: "A business council and NGO both submit to government.", question: "Who usually has structural advantage?", options: ["Always NGOs", "Often business actors", "Neither ever", "Only local councils"], correct: 1, explanation: "Business actors often hold stronger structural access and resources." },
-      { topic: "policy", scenario: "A service changes language from 'clients' to 'people and families'.", question: "What advocacy benefit can this provide?", options: ["Less empathy", "More human-centred framing", "Less clarity", "No communication effect"], correct: 1, explanation: "Human-centred framing can build broader public support." },
-      { topic: "policy", scenario: "A welfare alliance maps stakeholders before campaigning.", question: "Why is stakeholder mapping useful?", options: ["It avoids planning", "It targets influence pathways", "It replaces evidence", "It removes coalition need"], correct: 1, explanation: "Mapping helps identify where decisions and influence sit." },
+    /** @typedef {{ id:string, part:'part1'|'part2', topic:string, type:'mcq'|'short', prompt:string, options?:string[], correct?:number, keywords?:string[], model?:string, explanation:string }} Part1Q */
+    /** @typedef {{ id:string, scenario:string, sub: Part1Q[] }} CaseStudy */
 
-      // HARM MINIMISATION (20)
-      { topic: "harm", scenario: "Quote: 'Not all people will stop using substances immediately.'", question: "What is the central goal of harm minimisation?", options: ["Punish use", "Reduce harm from use", "Ignore risk", "Ban counselling"], correct: 1, explanation: "Harm minimisation focuses on reducing health and social harm." },
-      { topic: "harm", scenario: "Australia's framework uses demand, supply and harm reduction.", question: "Which option is NOT one of these pillars?", options: ["Demand reduction", "Supply reduction", "Harm reduction", "Shame strategy"], correct: 3, explanation: "Shame is not a policy pillar." },
-      { topic: "harm", scenario: "A service provides clean injecting equipment.", question: "This is mainly:", options: ["Supply reduction", "Harm reduction", "Demand reduction", "Court diversion"], correct: 1, explanation: "Needle programs reduce blood-borne virus and injection harm." },
-      { topic: "harm", scenario: "Police dismantle a major trafficking network.", question: "This action best fits:", options: ["Demand reduction", "Supply reduction", "Harm reduction", "Brief intervention"], correct: 1, explanation: "It aims to reduce drug availability." },
-      { topic: "harm", scenario: "A school program builds refusal skills and health literacy.", question: "This mostly targets:", options: ["Supply reduction", "Demand reduction", "Only legal reform", "No prevention"], correct: 1, explanation: "Education can reduce demand by preventing risky uptake." },
-      { topic: "harm", scenario: "A client asks for naloxone training after a recent overdose event.", question: "Naloxone training is best viewed as:", options: ["Punitive response", "Overdose harm reduction", "Supply reduction", "Stigma intervention only"], correct: 1, explanation: "Naloxone is a direct overdose harm reduction strategy." },
-      { topic: "harm", scenario: "A clinic offers safer-use education without requiring abstinence.", question: "This reflects:", options: ["Person-centred harm minimisation", "Zero-tolerance only", "No treatment ethics", "Supply-only policy"], correct: 0, explanation: "It reduces risk while keeping engagement open." },
-      { topic: "harm", scenario: "A person drinks less per occasion and has fewer injuries.", question: "This is an example of:", options: ["No improvement", "Successful harm reduction outcome", "Supply reduction only", "Policy failure"], correct: 1, explanation: "Reduced injury and safer use indicate harm reduction success." },
-      { topic: "harm", scenario: "A local strategy combines policing, outreach, and education.", question: "This is best described as:", options: ["Single-pillar policy", "Integrated harm minimisation approach", "No public health role", "Clinical diagnosis model"], correct: 1, explanation: "Combining multiple pillars is core to Australian harm minimisation." },
-      { topic: "harm", scenario: "Quote: 'Abstinence may be a goal for some, but not all at first contact.'", question: "Best clinical implication?", options: ["Discharge non-abstinent clients", "Set staged goals and reduce harm", "Ignore change talk", "Avoid follow-up"], correct: 1, explanation: "Staged goals support engagement and safer outcomes." },
-      { topic: "harm", scenario: "A venue introduces responsible service of alcohol practices.", question: "This primarily reduces:", options: ["Policy advocacy only", "Immediate intoxication-related harms", "All demand permanently", "No known harms"], correct: 1, explanation: "Safer service policies reduce acute alcohol harm in settings." },
-      { topic: "harm", scenario: "A client swaps daily injecting for supervised treatment.", question: "This change suggests:", options: ["No risk reduction", "Reduced health and overdose risk", "Increased harms", "Only legal change"], correct: 1, explanation: "Moving to supervised treatment usually lowers major risks." },
-      { topic: "harm", scenario: "Community campaign warns about mixing depressants.", question: "This campaign mainly supports:", options: ["Supply control", "Harm reduction education", "Industrial relations", "No prevention"], correct: 1, explanation: "Risk education can prevent overdose and adverse events." },
-      { topic: "harm", scenario: "A clinician celebrates reduced use days, not just abstinence.", question: "This aligns with:", options: ["Punitive model", "Harm minimisation principles", "No accountability", "Policy neutrality"], correct: 1, explanation: "Recognising safer patterns supports realistic progress." },
-      { topic: "harm", scenario: "A region improves transport to treatment and outreach sites.", question: "Likely harm minimisation effect?", options: ["Reduced engagement", "Improved access and lower risk", "No change possible", "Higher stigma"], correct: 1, explanation: "Practical access often improves safer care engagement." },
-      { topic: "harm", scenario: "A person receives brief advice after risky drinking screening.", question: "This intervention contributes mostly to:", options: ["Demand reduction", "Supply reduction", "No prevention", "Legal sanction"], correct: 0, explanation: "Brief intervention can reduce future demand/risky use." },
-      { topic: "harm", scenario: "Quote: 'Harm minimisation includes social harms, not only medical harms.'", question: "Which is a social harm example?", options: ["Improved sleep", "Housing loss linked to use", "Better employment", "Lower conflict"], correct: 1, explanation: "Housing instability is a major social harm." },
-      { topic: "harm", scenario: "Peer workers share safer partying advice with students.", question: "This mainly represents:", options: ["No evidence approach", "Community harm reduction", "Supply enforcement", "Industrial strategy"], correct: 1, explanation: "Peer education can reduce risky consumption and harm." },
-      { topic: "harm", scenario: "A service tracks fewer emergency presentations after interventions.", question: "This most likely indicates:", options: ["Policy failure", "Reduced acute harm", "No meaningful change", "Higher stigma"], correct: 1, explanation: "Lower emergency presentations suggest lower severe harms." },
-      { topic: "harm", scenario: "AOD policy combines prevention, treatment, and law enforcement.", question: "This combination reflects:", options: ["One-dimensional policy", "Three-pillar harm minimisation", "Clinical-only model", "Media-only strategy"], correct: 1, explanation: "Australian AOD policy uses all pillars together." },
-
-      // SCREENING TOOLS (20)
-      { topic: "screening", scenario: "A GP uses a 10-item alcohol questionnaire.", question: "Which tool is this most likely?", options: ["AUDIT", "DASS-21", "CAGE-AID", "K10"], correct: 0, explanation: "AUDIT is a 10-item alcohol screening tool." },
-      { topic: "screening", scenario: "A worker asks: cut down, annoyed, guilty, eye-opener.", question: "This describes which screening tool?", options: ["ASSIST", "AUDIT", "CAGE-AID", "PHQ-9"], correct: 2, explanation: "Those four prompts are from CAGE-style screening." },
-      { topic: "screening", scenario: "A service needs one tool that screens multiple substances.", question: "Best choice?", options: ["AUDIT", "ASSIST", "CAGE-AID", "DASS-21"], correct: 1, explanation: "ASSIST screens across several substances." },
-      { topic: "screening", scenario: "Quote: 'Screening identifies risk; it does not confirm diagnosis.'", question: "What should happen after high-risk screening?", options: ["No further action", "Comprehensive assessment", "Immediate discharge", "Legal report only"], correct: 1, explanation: "High risk screening should lead to fuller clinical assessment." },
-      { topic: "screening", scenario: "A student scores moderate risk on AUDIT.", question: "Most appropriate first response?", options: ["Ignore result", "Brief intervention and follow-up", "Automatic inpatient rehab", "Police referral"], correct: 1, explanation: "Moderate risk often responds to brief advice and review." },
-      { topic: "screening", scenario: "A client has severe withdrawal signs during screening.", question: "Priority action?", options: ["Finish all forms first", "Urgent safety/medical assessment", "Schedule next month", "Provide handout only"], correct: 1, explanation: "Safety risk overrides routine screening workflow." },
-      { topic: "screening", scenario: "A clinician uses ASSIST and DASS-21 together.", question: "Why combine tools?", options: ["To avoid assessment", "To capture substance and emotional symptoms", "To diagnose instantly", "To replace interview"], correct: 1, explanation: "Combined tools broaden risk understanding across domains." },
-      { topic: "screening", scenario: "Client says answers might affect custody decisions.", question: "Best clinician response?", options: ["Dismiss concern", "Explain confidentiality and limits clearly", "Skip consent", "End interview"], correct: 1, explanation: "Clear consent and confidentiality discussion supports trust." },
-      { topic: "screening", scenario: "Screening score improves over 6 weeks.", question: "Most useful interpretation?", options: ["No progress", "Possible risk reduction trend", "Tool is invalid", "Treatment should stop immediately"], correct: 1, explanation: "Improved scores can indicate reduced risk when reviewed in context." },
-      { topic: "screening", scenario: "A client has low AUDIT but high ASSIST stimulant risk.", question: "Best conclusion?", options: ["No AOD risk at all", "Alcohol risk low, stimulant risk high", "Only mental health issue", "Screening conflict means error"], correct: 1, explanation: "Different tools may detect different substance risks." },
-      { topic: "screening", scenario: "Quote: 'Use plain language when asking screening items.'", question: "Why is plain language important?", options: ["Reduces validity", "Improves understanding and honest responses", "Replaces rapport", "Only for youth"], correct: 1, explanation: "Clear wording improves response quality." },
-      { topic: "screening", scenario: "AOD worker screens in a busy drop-in setting.", question: "Best practical approach?", options: ["No screening ever", "Brief validated tool with referral pathway", "Long diagnostic interview only", "Single yes/no question"], correct: 1, explanation: "Brief validated screening is practical and informative." },
-      { topic: "screening", scenario: "Client asks if screening can diagnose dependence.", question: "Best answer?", options: ["Yes, always", "No, screening estimates risk", "Only online tools diagnose", "Diagnosis is unnecessary"], correct: 1, explanation: "Screening indicates probability/risk, not full diagnosis." },
-      { topic: "screening", scenario: "A service introduces routine screening at intake.", question: "Main benefit?", options: ["Less early detection", "Earlier risk identification and triage", "No workflow change", "Eliminates need for clinicians"], correct: 1, explanation: "Routine screening helps identify needs earlier." },
-      { topic: "screening", scenario: "A client reports trauma and heavy use.", question: "What should screening be followed by?", options: ["No further steps", "Trauma-informed comprehensive assessment", "Immediate discharge", "Ignore trauma history"], correct: 1, explanation: "Complex presentations need integrated, trauma-informed assessment." },
-      { topic: "screening", scenario: "A student has high stress and increasing drinking.", question: "Which tool pair best fits this case?", options: ["AUDIT and DASS-21", "CAGE-AID and IQ test", "ASSIST only", "None"], correct: 0, explanation: "AUDIT addresses alcohol risk; DASS-21 captures emotional distress." },
-      { topic: "screening", scenario: "Client under-reports due to fear of judgement.", question: "What helps improve screening accuracy?", options: ["Confrontation", "Non-judgmental rapport and privacy", "Time pressure", "Leading questions"], correct: 1, explanation: "Safety and rapport increase honest disclosure." },
-      { topic: "screening", scenario: "A nurse repeats screening every month.", question: "Why can repeated screening help?", options: ["No value over time", "Tracks change and supports plan review", "Replaces treatment", "Guarantees abstinence"], correct: 1, explanation: "Regular screening helps monitor progress and risk shifts." },
-      { topic: "screening", scenario: "CAGE-AID returns positive responses.", question: "Most appropriate next step?", options: ["Ignore positives", "Discuss concerns and arrange fuller assessment", "Give punishment warning", "Close file"], correct: 1, explanation: "Positive screening should open supportive assessment and planning." },
-      { topic: "screening", scenario: "Service compares AUDIT scores before/after brief intervention.", question: "This is useful mainly for:", options: ["Evaluating risk change", "Diagnosing personality disorder", "Legal compliance only", "Medication dosing"], correct: 0, explanation: "Score changes can show shifts in alcohol risk." },
-
-      // TREATMENT & REHAB (20)
-      { topic: "treatment", scenario: "Quote: 'Withdrawal management alone is rarely enough for long-term recovery.'", question: "What does this imply?", options: ["Detox is complete treatment", "Aftercare and ongoing support are needed", "Counselling has no role", "Relapse prevention is unnecessary"], correct: 1, explanation: "Detox should be followed by ongoing treatment and supports." },
-      { topic: "treatment", scenario: "A client enters residential care with group work and relapse planning.", question: "This is best described as:", options: ["Screening", "Rehabilitation", "Emergency detox only", "Policy advocacy"], correct: 1, explanation: "Rehabilitation focuses on longer-term recovery skills." },
-      { topic: "treatment", scenario: "A person receives methadone to reduce opioid withdrawal and craving.", question: "This intervention is:", options: ["Pharmacotherapy", "Supply reduction", "Crisis counselling only", "No evidence care"], correct: 0, explanation: "Methadone is an evidence-based pharmacotherapy option." },
-      { topic: "treatment", scenario: "Client has repeated relapse after discharge with no follow-up.", question: "Most likely missing element?", options: ["Aftercare continuity", "Random drug facts", "Shorter sessions only", "No treatment gap"], correct: 0, explanation: "Continuity of care after discharge is crucial." },
-      { topic: "treatment", scenario: "AOD and mental health teams jointly plan care with consent.", question: "This model is:", options: ["Fragmented care", "Integrated dual-diagnosis care", "Punitive care", "Screening-only care"], correct: 1, explanation: "Integrated care treats co-occurring issues together." },
-      { topic: "treatment", scenario: "A clinician uses motivational interviewing with an ambivalent client.", question: "Main MI aim?", options: ["Confront and shame", "Elicit client's own reasons for change", "Avoid goals", "Force abstinence"], correct: 1, explanation: "MI builds internal motivation through collaborative dialogue." },
-      { topic: "treatment", scenario: "Client reports severe alcohol withdrawal confusion and tremor.", question: "Immediate treatment priority?", options: ["Wait one week", "Urgent medical withdrawal management", "Start long-term CBT first", "Ignore physical risk"], correct: 1, explanation: "Severe withdrawal signs require urgent medical care." },
-      { topic: "treatment", scenario: "A service offers telehealth for clients with transport barriers.", question: "This mainly improves:", options: ["Engagement and retention", "Stigma only", "Policy influence only", "Supply control"], correct: 0, explanation: "Flexible access can improve attendance and continuity." },
-      { topic: "treatment", scenario: "Client asks for goals other than immediate abstinence.", question: "Best response?", options: ["Refuse treatment", "Use staged person-centred goals", "Close case", "Use punishment"], correct: 1, explanation: "Staged goals support engagement and practical progress." },
-      { topic: "treatment", scenario: "Rehab plan includes trigger mapping and coping skills.", question: "This mostly supports:", options: ["Relapse prevention", "Supply enforcement", "Media advocacy", "No behaviour change"], correct: 0, explanation: "Trigger and coping planning is core relapse prevention work." },
-      { topic: "treatment", scenario: "Client with anxiety uses alcohol nightly to sleep.", question: "Best treatment focus?", options: ["Ignore anxiety", "Integrated sleep/anxiety and alcohol intervention", "Only legal advice", "No intervention"], correct: 1, explanation: "Combined treatment targets both drivers and use patterns." },
-      { topic: "treatment", scenario: "AOD worker coordinates GP, counsellor, and housing support.", question: "This is an example of:", options: ["Care coordination", "Policy lobbying only", "Single-modality care", "No case management"], correct: 0, explanation: "Coordinating services addresses complex recovery needs." },
-      { topic: "treatment", scenario: "Quote: 'Therapeutic alliance predicts engagement.'", question: "Which action best strengthens alliance?", options: ["Judgmental language", "Empathy and collaborative planning", "Threats of discharge", "Ignoring goals"], correct: 1, explanation: "Respectful collaboration increases trust and retention." },
-      { topic: "treatment", scenario: "Client in opioid treatment misses doses because of work shifts.", question: "Best service response?", options: ["Immediate discharge", "Problem-solve schedule and access barriers", "Lower care contact", "No review"], correct: 1, explanation: "Practical adjustments improve adherence and safety." },
-      { topic: "treatment", scenario: "A young person has cravings and unstable housing.", question: "Most appropriate treatment plan?", options: ["Counselling only", "Integrated psychosocial and practical support", "No support until housed", "Punitive contract"], correct: 1, explanation: "Recovery often needs both clinical and social support." },
-      { topic: "treatment", scenario: "Client asks if medication can support alcohol recovery.", question: "Best clinician response?", options: ["Medication never helps", "Discuss evidence-based options and referral", "Only willpower matters", "Delay discussion"], correct: 1, explanation: "Evidence-based medication may help some clients and should be discussed." },
-      { topic: "treatment", scenario: "AOD service uses brief intervention for low-risk clients.", question: "Why this approach?", options: ["Matches stepped-care principle", "Avoids all follow-up", "Replaces assessment", "Forces abstinence"], correct: 0, explanation: "Stepped care matches intervention intensity to need." },
-      { topic: "treatment", scenario: "Client relapses after family conflict but returns to treatment.", question: "Best clinician frame?", options: ["Treatment failure", "Learning opportunity and plan review", "Discharge now", "Ignore event"], correct: 1, explanation: "Relapse can guide improved prevention planning." },
-      { topic: "treatment", scenario: "A case plan includes strengths, risks, and protective factors.", question: "This reflects:", options: ["Person-centred formulation", "Punitive case management", "No recovery model", "Supply reduction"], correct: 0, explanation: "Balanced formulation supports targeted care planning." },
-      { topic: "treatment", scenario: "Client waits 6 weeks between detox and rehab intake.", question: "Main risk of this gap?", options: ["Lower relapse risk", "Higher relapse and disengagement risk", "Guaranteed recovery", "No effect"], correct: 1, explanation: "Care gaps can increase relapse and drop-out risk." },
-
-      // STIGMA & BEHAVIOUR (20)
-      { topic: "stigma", scenario: "Client says: 'I am a bad person, not someone with a health issue.'", question: "This belief most clearly reflects:", options: ["Self-stigma", "Protective coping", "High resilience", "No treatment need"], correct: 0, explanation: "Self-stigma is internalised negative judgment." },
-      { topic: "stigma", scenario: "A client avoids clinic because staff were previously judgmental.", question: "This barrier is mainly:", options: ["Public/professional stigma", "Increased trust", "High motivation", "No access issue"], correct: 0, explanation: "Stigma in services can reduce future help-seeking." },
-      { topic: "stigma", scenario: "Quote: 'Language shapes treatment engagement.'", question: "Which phrase is most supportive?", options: ["Addict", "Person experiencing AOD problems", "Hopeless case", "Non-compliant user"], correct: 1, explanation: "Person-first language reduces stigma and supports alliance." },
-      { topic: "stigma", scenario: "Family says, 'If we keep rescuing him, he will never change.'", question: "This concern relates most to:", options: ["Codependent rescuing patterns", "No family role", "Supply reduction", "Screening error"], correct: 0, explanation: "Over-rescuing can maintain unhealthy dynamics." },
-      { topic: "stigma", scenario: "In a meeting, one person blames, one rescues, one feels powerless.", question: "This pattern is:", options: ["5Ps formulation", "Drama triangle dynamic", "Harm minimisation triad", "Stepped care"], correct: 1, explanation: "Blame-rescue-victim roles reflect drama triangle dynamics." },
-      { topic: "stigma", scenario: "Client expects rejection at work because of past use.", question: "Most likely behavioural impact?", options: ["More job applications", "Withdrawal and reduced effort", "Higher confidence", "No emotional impact"], correct: 1, explanation: "Anticipated stigma can reduce action and hope." },
-      { topic: "stigma", scenario: "AOD worker validates client experience of discrimination.", question: "Likely immediate effect?", options: ["Lower trust", "Improved engagement and safety", "No relationship impact", "Increased blame"], correct: 1, explanation: "Validation helps rebuild trust after stigma experiences." },
-      { topic: "stigma", scenario: "Client says, 'Everyone will judge me if I go to rehab.'", question: "Best response approach?", options: ["Use shame to motivate", "Normalise concerns and problem-solve barriers", "Ignore fear", "Delay all treatment"], correct: 1, explanation: "Barrier-focused, empathetic responses improve help-seeking." },
-      { topic: "stigma", scenario: "Quote: 'Stigma affects recovery capital.'", question: "What does this mean?", options: ["Stigma can reduce social and practical supports", "Stigma improves housing", "Stigma increases employment", "Stigma has no effect"], correct: 0, explanation: "Stigma can limit access to key recovery resources." },
-      { topic: "stigma", scenario: "A person is repeatedly described as 'manipulative' by providers.", question: "Main risk of this label?", options: ["Better engagement", "Biased care and poorer alliance", "More person-centred care", "No service impact"], correct: 1, explanation: "Stigmatising labels can harm care quality and trust." },
-      { topic: "stigma", scenario: "A community campaign shares recovery stories publicly.", question: "This can reduce stigma by:", options: ["Increasing social distance", "Humanising lived experience", "Avoiding facts", "Reducing empathy"], correct: 1, explanation: "Recovery stories can challenge stereotypes and increase understanding." },
-      { topic: "stigma", scenario: "Client avoids methadone due to community myths.", question: "Best clinician action?", options: ["Dismiss concerns", "Provide accurate psychoeducation and discuss values", "Force treatment", "Stop discussing options"], correct: 1, explanation: "Accurate information helps counter stigma-based myths." },
-      { topic: "stigma", scenario: "A service updates forms to remove judgmental wording.", question: "This change mostly supports:", options: ["Stigma reduction and safer engagement", "No meaningful effect", "Supply control", "Only legal compliance"], correct: 0, explanation: "Language changes can make services feel safer and more inclusive." },
-      { topic: "stigma", scenario: "Client says, 'Relapse means I failed forever.'", question: "Best therapeutic reframe?", options: ["Relapse equals discharge", "Relapse can be a learning point", "Relapse is punishment-worthy", "Relapse should be ignored"], correct: 1, explanation: "A learning frame supports resilience and continued treatment." },
-      { topic: "stigma", scenario: "Worker identifies harsh self-talk in client sessions.", question: "Helpful intervention focus?", options: ["Increase criticism", "Build self-compassion and realistic self-view", "Avoid emotions", "Use only legal advice"], correct: 1, explanation: "Self-compassion can reduce shame and improve motivation." },
-      { topic: "stigma", scenario: "A mother avoids support due to fear of child protection judgment.", question: "This is primarily:", options: ["A perceived stigma-related barrier", "A protective factor", "No barrier", "High service trust"], correct: 0, explanation: "Fear of stigma and consequences can delay help-seeking." },
-      { topic: "stigma", scenario: "Team reviews language after client complaint about judgment.", question: "Best team goal?", options: ["Defend old language", "Adopt non-stigmatising practice standards", "Ignore feedback", "Reduce client contact"], correct: 1, explanation: "Practice standards can reduce stigma and improve care quality." },
-      { topic: "stigma", scenario: "Client from minority group reports repeated discrimination.", question: "Best care principle?", options: ["One-size-fits-all approach", "Culturally safe, trauma-informed practice", "Avoid culture discussion", "Only medication focus"], correct: 1, explanation: "Culturally safe care addresses layered stigma and trust issues." },
-      { topic: "stigma", scenario: "Quote: 'Belonging supports recovery.'", question: "Which intervention aligns most with this idea?", options: ["Increase isolation", "Peer support and community connection", "Limit social contact", "Avoid groups"], correct: 1, explanation: "Belonging and peer connection are protective in recovery." },
-      { topic: "stigma", scenario: "Client's employer offers phased return and support plan.", question: "Likely stigma-related impact?", options: ["Higher exclusion", "Reduced discrimination and better recovery chance", "No effect", "Increased shame"], correct: 1, explanation: "Supportive employment practices can reduce stigma harms." },
-
-      // EXAM PRACTICE — short scenario + clear question + 4 options + brief explanation
-      { topic: "exam", scenario: "[Harm minimisation] National AOD policy uses three pillars. You need to name them for an exam.", question: "What are the three pillars?", options: ["Detox, rehab, and police", "Demand, supply, and harm reduction", "Punish, treat, ignore", "Federal, state, and local government"], correct: 1, explanation: "Correct: Demand, supply, and harm reduction. Why: these are the three pillars of harm minimisation. Others: first mixes services with pillars; third drops balance; last is levels of government." },
-      { topic: "exam", scenario: "[Harm minimisation] A needle and syringe program gives out clean equipment. The goal is to protect health.", question: "This program is mainly:", options: ["Supply reduction", "Harm reduction", "Demand reduction only", "Criminal sentencing"], correct: 1, explanation: "Correct: Harm reduction. Why: it lowers infection and injury risk. Others: supply cuts drug flow; demand targets starting use; sentencing is punishment." },
-      { topic: "exam", scenario: "[Harm minimisation] Police seize a large illegal drug shipment before it is sold.", question: "This action best fits:", options: ["Harm reduction", "Supply reduction", "Screening", "Brief intervention"], correct: 1, explanation: "Correct: Supply reduction. Why: it reduces how much drug reaches the market. Others: harm reduction helps people use more safely; screening and brief intervention are clinical." },
-      { topic: "exam", scenario: "[Harm minimisation] A school teaches refusal skills and health facts to students.", question: "This mainly supports:", options: ["Supply reduction", "Demand reduction", "Harm reduction only", "Detox"], correct: 1, explanation: "Correct: Demand reduction. Why: prevention lowers risky uptake and use. Others: supply is police and borders; harm-only and detox do not match a school prevention class." },
-      { topic: "exam", scenario: "[Harm minimisation] Staff teach locals how to use naloxone after opioid overdoses in the area.", question: "This is best called:", options: ["Alcohol screening", "Overdose harm reduction", "Supply reduction", "Peak body work"], correct: 1, explanation: "Correct: Overdose harm reduction. Why: naloxone reverses opioid overdose. Others: AUDIT is for alcohol; supply cuts availability; peaks lobby on policy." },
-      { topic: "exam", scenario: "[Harm minimisation] A pub trains staff in responsible service of alcohol (RSA).", question: "RSA mainly aims to:", options: ["Replace all treatment", "Cut harm from drinking in the venue", "Diagnose alcohol dependence", "Lobby parliament"], correct: 1, explanation: "Correct: Cut harm from drinking in the venue. Why: RSA reduces intoxication and injuries on site. Others: RSA is not treatment or diagnosis; it is not law-making." },
-      { topic: "exam", scenario: "[Harm minimisation] A client drinks on fewer days and has fewer injuries. They still drink sometimes.", question: "In harm minimisation terms, this shows:", options: ["No real change", "Harm can fall without total abstinence", "Supply reduction worked", "Treatment failed"], correct: 1, explanation: "Correct: Harm can fall without total abstinence. Why: fewer injuries means lower harm. Others: change is real; supply is unrelated; harm is down so not a simple failure." },
-      { topic: "exam", scenario: "[Harm minimisation] After a risky-drinking screen, the GP gives short advice in one visit.", question: "Brief intervention mainly supports:", options: ["Safer drinking and demand reduction", "Police raids", "Court penalties", "Drug purity tests"], correct: 0, explanation: "Correct: Safer drinking and demand reduction. Why: brief advice targets risky use. Others: raids, courts, and lab tests are not brief intervention." },
-      { topic: "exam", scenario: "[Harm minimisation] A worker says not everyone stops using drugs on the first visit.", question: "Harm minimisation means you can:", options: ["Ignore all risk", "Still reduce harm while use continues", "Stop all counselling", "Rely only on punishment"], correct: 1, explanation: "Correct: Still reduce harm while use continues. Why: staged change is allowed. Others: risk still matters; counselling helps; harm minimisation is not punishment-only." },
-      { topic: "exam", scenario: "[Harm minimisation] Mixing opioids with alcohol or benzodiazepines can kill. A poster warns the public.", question: "This poster is mainly:", options: ["Harm reduction education", "Supply reduction", "A diagnostic test", "A media ban"], correct: 0, explanation: "Correct: Harm reduction education. Why: it warns about overdose risk. Others: supply is about drug availability; posters do not diagnose; no ban is shown." },
-
-      { topic: "exam", scenario: "[Screening] A GP uses a standard 10-item questionnaire about alcohol.", question: "The tool is most likely:", options: ["AUDIT", "ASSIST", "CAGE-AID", "DASS-21"], correct: 0, explanation: "Correct: AUDIT. Why: AUDIT has 10 alcohol items. Others: ASSIST covers many drugs; CAGE has four questions; DASS is mood and stress." },
-      { topic: "exam", scenario: "[Screening] A worker asks four questions: Cut down? Annoyed? Guilty? Eye-opener?", question: "This matches:", options: ["AUDIT", "CAGE or CAGE-AID", "ASSIST only", "An IQ test"], correct: 1, explanation: "Correct: CAGE or CAGE-AID. Why: those four questions are the CAGE set. Others: AUDIT is longer; ASSIST is broader; IQ is unrelated." },
-      { topic: "exam", scenario: "[Screening] You need one short tool that screens several types of drugs.", question: "Best pick:", options: ["AUDIT only", "ASSIST", "CAGE only", "A blood test only"], correct: 1, explanation: "Correct: ASSIST. Why: ASSIST covers multiple drug classes. Others: AUDIT focuses on alcohol; CAGE is very short; blood is not the usual first screen." },
-      { topic: "exam", scenario: "[Screening] A client scores in the high-risk band on a screen.", question: "What should usually happen next?", options: ["Nothing", "More assessment and a care plan", "Automatic police report", "Close the file"], correct: 1, explanation: "Correct: More assessment and a care plan. Why: screening finds risk, not the final plan. Others: doing nothing or closing abandons care; police are not automatic." },
-      { topic: "exam", scenario: "[Screening] A student asks if their score means they are dependent.", question: "Best reply:", options: ["Yes, always", "Risk is shown; dependence needs fuller assessment", "Screens are useless", "Only a lawyer can say"], correct: 1, explanation: "Correct: Risk is shown; dependence needs fuller assessment. Why: screening is not a full diagnosis. Others: “always” is wrong; screens help; lawyers do not diagnose." },
-      { topic: "exam", scenario: "[Screening] AUDIT is moderate. ASSIST shows high risk for stimulants.", question: "This best means:", options: ["No drug issues", "Alcohol may be moderate risk; stimulants may be high", "The tools always disagree", "Only cannabis matters"], correct: 1, explanation: "Correct: Alcohol may be moderate risk; stimulants may be high. Why: each tool picks up different patterns. Others: stimulant risk is real; tools measure different things." },
-      { topic: "exam", scenario: "[Screening] A client drinks heavily and feels very stressed. You use AUDIT and DASS-21.", question: "Why use both?", options: ["To avoid talking", "To see alcohol risk and mood or stress", "To skip consent", "To give a legal diagnosis"], correct: 1, explanation: "Correct: To see alcohol risk and mood or stress. Why: AUDIT is for alcohol; DASS-21 is for distress. Others: you still talk and need consent; diagnosis is clinical and broader." },
-      { topic: "exam", scenario: "[Screening] A parent worries their answers could affect custody.", question: "You should:", options: ["Ignore the worry", "Explain consent, privacy, and legal limits", "Promise total secrecy", "End the session"], correct: 1, explanation: "Correct: Explain consent, privacy, and legal limits. Why: honest limits build trust. Others: ignoring hurts trust; total secrecy may be untrue; ending may abandon duty." },
-      { topic: "exam", scenario: "[Screening] A person has bad shakes and confusion after stopping alcohol. You were about to run a screen.", question: "What comes first?", options: ["Finish every question on the form", "Urgent medical check for withdrawal", "Book next month", "Give a leaflet only"], correct: 1, explanation: "Correct: Urgent medical check for withdrawal. Why: severe withdrawal is dangerous. Others: forms wait; delay is unsafe; a leaflet is not enough alone." },
-      { topic: "exam", scenario: "[Screening] You add DASS-21 beside an AOD screen for a client.", question: "DASS-21 measures:", options: ["Alcohol units per week", "Depression, anxiety, and stress", "Drug purity", "Political views"], correct: 1, explanation: "Correct: Depression, anxiety, and stress. Why: DASS-21 is a mood and stress scale. Others: it does not count drinks, test drugs, or measure politics." },
-
-      { topic: "exam", scenario: "[Treatment] A person may get severe alcohol withdrawal. They enter detox.", question: "Detox mainly aims to:", options: ["Fix personality in one week", "Keep withdrawal safe and medically stable", "Promise lifelong abstinence", "Write government policy"], correct: 1, explanation: "Correct: Keep withdrawal safe and medically stable. Why: detox handles acute withdrawal. Others: deep change takes time; abstinence is not guaranteed; policy is separate." },
-      { topic: "exam", scenario: "[Treatment] A residential program runs groups, counselling, and relapse skills for weeks.", question: "This is best called:", options: ["Screening", "Rehabilitation", "Supply reduction", "Peak advocacy"], correct: 1, explanation: "Correct: Rehabilitation. Why: rehab builds longer-term skills. Others: screening is assessment; supply and peaks are not this program." },
-      { topic: "exam", scenario: "[Treatment] A doctor prescribes methadone for opioid dependence.", question: "This is an example of:", options: ["Harm reduction only", "Pharmacotherapy", "Punishment", "Media work"], correct: 1, explanation: "Correct: Pharmacotherapy. Why: medication treats dependence. Others: it may also reduce harm, but the key label is medication treatment; not punishment or media." },
-      { topic: "exam", scenario: "[Treatment] Mental health and AOD teams share one care plan. The client agrees.", question: "This model is:", options: ["Care with no contact between teams", "Integrated dual diagnosis care", "Screening only", "Supply reduction"], correct: 1, explanation: "Correct: Integrated dual diagnosis care. Why: both conditions are planned together. Others: split teams miss links; screening is only assessment; supply is policy." },
-      { topic: "exam", scenario: "[Treatment] A client is unsure about change. The clinician uses motivational interviewing (MI).", question: "MI mainly tries to:", options: ["Shame the person", "Elicit the person’s own reasons for change", "Avoid all goals", "Lecture on abstinence only"], correct: 1, explanation: "Correct: Elicit the person’s own reasons for change. Why: MI is collaborative. Others: shame backfires; goals matter; MI is not a one-way lecture." },
-      { topic: "exam", scenario: "[Treatment] Stepped care is used in an AOD service.", question: "Stepped care means:", options: ["Same care for everyone", "Match care level to need", "Hospital only", "No brief help"], correct: 1, explanation: "Correct: Match care level to need. Why: use the lightest effective step first. Others: one size fits all is wrong; brief help exists; hospital is not always needed." },
-      { topic: "exam", scenario: "[Treatment] Research links a strong alliance to better engagement.", question: "Alliance is built best by:", options: ["Threats", "Empathy and shared planning", "Ignoring the client’s views", "Rushing discharge"], correct: 1, explanation: "Correct: Empathy and shared planning. Why: trust grows with respect. Others: threats and ignoring views harm trust; rushing weakens care." },
-      { topic: "exam", scenario: "[Treatment] A client uses again during counselling.", question: "A helpful view is:", options: ["They have failed for good", "Review triggers and update the plan", "Discharge them now", "Pretend it did not happen"], correct: 1, explanation: "Correct: Review triggers and update the plan. Why: slips inform care. Others: harsh labels and instant discharge often harm outcomes; ignoring the slip misses a chance to help." },
-      { topic: "exam", scenario: "[Treatment] Detox ends. There is no follow-up for several weeks.", question: "The main risk is:", options: ["Lower relapse risk", "Higher relapse and drop-out", "Guaranteed recovery", "No change"], correct: 1, explanation: "Correct: Higher relapse and drop-out. Why: gaps leave people without support. Others: risk rises, not falls; recovery is not guaranteed." },
-      { topic: "exam", scenario: "[Treatment] A service says it uses trauma-informed AOD care.", question: "What should come first?", options: ["Safety, choice, and trust", "Forced telling of trauma on day one", "Ignoring trauma", "Punishment"], correct: 0, explanation: "Correct: Safety, choice, and trust. Why: trauma-informed care starts with safety. Others: forced disclosure can harm; ignoring trauma is unsafe; punishment is the wrong frame." },
-
-      { topic: "exam", scenario: "[Stigma] A client says, ‘I am a failure because I use substances.’", question: "This thought fits:", options: ["High self-efficacy", "Self-stigma", "Public stigma only", "No barrier to care"], correct: 1, explanation: "Correct: Self-stigma. Why: shame is turned inward. Others: self-efficacy is confidence; public stigma is about others; it still blocks care." },
-      { topic: "exam", scenario: "[Stigma] Someone will not go to a service. They expect staff to be rude and judge them.", question: "This is mainly:", options: ["Self-stigma only", "Public or professional stigma (feared or real)", "Recovery capital", "Harm reduction"], correct: 1, explanation: "Correct: Public or professional stigma (feared or real). Why: they fear judgment from others. Others: self-blame may exist but the fear is about staff; other labels do not fit." },
-      { topic: "exam", scenario: "[Stigma] A worker says ‘person with AOD issues’ instead of ‘addict.’", question: "Person-first language helps:", options: ["Increase shame", "Protect dignity and lower stigma", "Skip assessment", "Speed up court"], correct: 1, explanation: "Correct: Protect dignity and lower stigma. Why: respectful words support engagement. Others: it should not add shame; assessment still happens; courts are separate." },
-      { topic: "exam", scenario: "[Stigma] Stigma makes many people put off getting help.", question: "The main health effect is often:", options: ["Faster care", "Slower access and worse outcomes", "No effect", "It only helps families"], correct: 1, explanation: "Correct: Slower access and worse outcomes. Why: stigma blocks help-seeking. Others: care is usually slower, not faster; families are not the only issue." },
-      { topic: "exam", scenario: "[Stigma] A family always pays fines so the person never feels the consequence.", question: "This pattern is often called:", options: ["A healthy boundary", "Codependent rescuing", "Supply reduction", "AUDIT"], correct: 1, explanation: "Correct: Codependent rescuing. Why: over-protection can block change. Others: healthy boundaries differ; supply and AUDIT are unrelated ideas." },
-      { topic: "exam", scenario: "[Stigma] In a family meeting people swap roles: blame, rescue, and feeling helpless.", question: "This fits:", options: ["The 5Ps only", "The drama triangle", "The three policy pillars", "Stepped care"], correct: 1, explanation: "Correct: The drama triangle. Why: victim, rescuer, and persecutor roles rotate. Others: 5Ps is formulation; pillars are policy; stepped care is treatment levels." },
-      { topic: "exam", scenario: "[Stigma] The media shares real recovery stories with the public.", question: "This can reduce stigma by:", options: ["Spreading stereotypes", "Humanising lived experience", "Closing all services", "Replacing doctors"], correct: 1, explanation: "Correct: Humanising lived experience. Why: stories challenge myths. Others: stereotypes harm; services stay; doctors are still needed." },
-      { topic: "exam", scenario: "[Stigma] You work with an Aboriginal client. The service aims for culturally safe care.", question: "This should include:", options: ["Ignoring culture", "Respecting culture and working with community", "One fixed plan for all", "Police-only referral"], correct: 1, explanation: "Correct: Respecting culture and working with community. Why: cultural safety needs respect and partnership. Others: ignore, rigid, or police-only paths harm trust." },
-      { topic: "exam", scenario: "[Stigma] A client joins a peer support group in recovery.", question: "Peers mainly offer:", options: ["Isolation", "Shared experience and belonging", "Court trials", "Drug testing only"], correct: 1, explanation: "Correct: Shared experience and belonging. Why: peers reduce loneliness. Others: isolation is the opposite; peers are not courts or labs." },
-      { topic: "exam", scenario: "[Stigma] After treatment, an employer offers a phased return to work and support.", question: "This can:", options: ["Increase exclusion", "Lower discrimination and aid recovery", "Replace clinical care", "Cause relapse for sure"], correct: 1, explanation: "Correct: Lower discrimination and aid recovery. Why: fair work support fights stigma. Others: it aims to include, not exclude; it adds to care; relapse is not certain." },
-
-      { topic: "exam", scenario: "[Policy — McClelland] Small welfare NGOs and big business both want policy change. Business often wins more.", question: "One main reason is:", options: ["Business never meets ministers", "More money, networks, and access to power", "Business avoids boards", "Business cannot lobby"], correct: 1, explanation: "Correct: More money, networks, and access to power. Why: McClelland links influence to resources and access. Others: business often has strong access; all three distractors are false." },
-      { topic: "exam", scenario: "[Policy — McClelland] ACOSS speaks on welfare for many member organisations.", question: "ACOSS is best described as:", options: ["A government department", "A peak body for the sector", "A private hospital", "A police unit"], correct: 1, explanation: "Correct: A peak body for the sector. Why: peaks speak for many groups. Others: ACOSS is not government, a hospital, or police." },
-      { topic: "exam", scenario: "[Policy — McClelland] An NGO gets government funding and also criticises a policy.", question: "This shows:", options: ["Advocacy is impossible", "Tension between speaking out and keeping funds", "Funding removes all risk", "Peaks are illegal"], correct: 1, explanation: "Correct: Tension between speaking out and keeping funds. Why: income can be tied to government. Others: advocacy still happens; risk remains; peaks are lawful." },
-      { topic: "exam", scenario: "[Policy — McClelland] Business leaders sit on a government advisory board.", question: "This is an example of:", options: ["Strike action only", "Institutional access and influence", "CAGE screening", "Detox"], correct: 1, explanation: "Correct: Institutional access and influence. Why: boards give direct policy access. Others: strikes are different; CAGE and detox are clinical." },
-      { topic: "exam", scenario: "[Policy — McClelland] Compare unions with community welfare NGOs.", question: "Which statement is most accurate?", options: ["Unions mainly represent people in paid work", "Unions only represent unemployed people", "NGOs set wages for all workers", "They are the same"], correct: 0, explanation: "Correct: Unions mainly represent people in paid work. Why: unions focus on workers’ conditions. Others: the other options misdescribe unions and NGOs." },
-      { topic: "exam", scenario: "[Policy — McClelland] Several NGOs co-write one submission to parliament.", question: "This is:", options: ["Detox", "Coalition or joint advocacy", "A drug raid", "ASSIST scoring"], correct: 1, explanation: "Correct: Coalition or joint advocacy. Why: acting together strengthens voice. Others: detox, raids, and ASSIST are not policy submissions." },
-      { topic: "exam", scenario: "[Policy — McClelland] A submission uses both statistics and personal stories.", question: "Why use both?", options: ["To hide evidence", "Facts plus human impact persuade better", "To avoid ethics", "To replace the law"], correct: 1, explanation: "Correct: Facts plus human impact persuade better. Why: data and lived experience reach different audiences. Others: the distractors misstate the aim." },
-      { topic: "exam", scenario: "[Policy — McClelland] A rare chance opens to change a law. Advocates have been waiting.", question: "A policy ‘window’ means you should:", options: ["Ignore it", "Act soon with clear evidence", "Wait many years", "Rely on rumours"], correct: 1, explanation: "Correct: Act soon with clear evidence. Why: windows close fast. Others: ignoring or delaying misses the chance; rumours are weak." },
-      { topic: "exam", scenario: "[Policy — McClelland] Many NGOs lobby alone on the same issue. They do not coordinate.", question: "Their influence is likely:", options: ["Stronger than if united", "Weaker than coordinated advocacy", "Unchanged", "They replace government"], correct: 1, explanation: "Correct: Weaker than coordinated advocacy. Why: split messages dilute power. Others: unity is usually stronger; they do not replace government." },
-      { topic: "exam", scenario: "[Policy — McClelland] A minister asks for workable options with costs.", question: "Advocates should offer:", options: ["Slogans only", "Practical, evidence-based options", "Nothing", "Screen scores only"], correct: 1, explanation: "Correct: Practical, evidence-based options. Why: ministers need plans that can work. Others: slogans and raw scores are not enough; silence helps no one." }
+    const PART1_POOL = [
+      { id: "p1", part: "part1", topic: "Harm minimisation", type: "mcq", prompt: "What is the main goal of harm minimisation in AOD policy?", options: ["Punish all drug use harshly", "Reduce harms from use even if use continues", "Replace all treatment with police action", "Ignore health risks"], correct: 1, explanation: "Correct: reduce harms even if use continues. Why: engagement and safety come first. Wrong: punishment-only, policing-only, or ignoring risk are not harm minimisation." },
+      { id: "p2", part: "part1", topic: "Harm minimisation", type: "mcq", prompt: "Which set best matches Australia's three pillars?", options: ["Detox, rehab, courts", "Demand, supply, and harm reduction", "Abstinence, punishment, isolation", "Federal, state, local"], correct: 1, explanation: "Correct: demand, supply, harm reduction. Why: national AOD framework. Wrong: first mixes services with pillars; others are not the three pillars." },
+      { id: "p3", part: "part1", topic: "Harm minimisation", type: "mcq", prompt: "A needle and syringe program mainly illustrates:", options: ["Supply reduction", "Harm reduction", "Demand reduction only", "Diagnosis"], correct: 1, explanation: "Correct: harm reduction. Why: reduces infection and injury. Wrong: supply cuts availability; demand targets uptake; NSPs do not diagnose." },
+      { id: "p4", part: "part1", topic: "Harm minimisation", type: "mcq", prompt: "Brief intervention after risky drinking screening mainly supports:", options: ["Harm and demand-side change", "Only criminal charges", "Drug purity testing", "Media bans"], correct: 0, explanation: "Correct: safer use and demand reduction. Why: short advice changes behaviour. Wrong: legal/lab/media distractors are off-topic." },
+      { id: "p5", part: "part1", topic: "Stigma", type: "mcq", prompt: "A client says 'I am worthless because I use drugs.' This best reflects:", options: ["Public stigma only", "Self-stigma", "Recovery capital", "Supply reduction"], correct: 1, explanation: "Correct: self-stigma (internalised shame). Wrong: public stigma is others' attitudes; recovery capital is supports; supply is policy." },
+      { id: "p6", part: "part1", topic: "Stigma", type: "mcq", prompt: "Person-first language in AOD mainly aims to:", options: ["Increase shame", "Reduce stigma and improve engagement", "Replace assessment", "Speed up police referral"], correct: 1, explanation: "Correct: less stigma, better alliance. Wrong: shame hurts care; language does not replace assessment or mandate police." },
+      { id: "p7", part: "part1", topic: "Stigma", type: "mcq", prompt: "Fear that staff will judge you is mainly a barrier from:", options: ["Self-stigma only", "Anticipated or experienced public/professional stigma", "Harm reduction", "AUDIT scoring"], correct: 1, explanation: "Correct: stigma from services/community. Wrong: self-blame may exist but fear of others fits public/professional stigma." },
+      { id: "p8", part: "part1", topic: "Screening tools", type: "mcq", prompt: "AUDIT is best described as:", options: ["A 10-item alcohol risk screen", "A depression-only tool", "A legal drug test", "A 4-question drug screen"], correct: 0, explanation: "Correct: 10-item alcohol screen. Wrong: DASS is mood; AUDIT is not legal testing; CAGE is 4 questions." },
+      { id: "p9", part: "part1", topic: "Screening tools", type: "mcq", prompt: "Cut down, annoyed, guilty, eye-opener — this matches:", options: ["ASSIST", "CAGE / CAGE-AID", "AUDIT only", "K10"], correct: 1, explanation: "Correct: CAGE family. Wrong: ASSIST is multi-drug; AUDIT is longer alcohol; K10 is distress." },
+      { id: "p10", part: "part1", topic: "Screening tools", type: "mcq", prompt: "ASSIST is most useful when you need to:", options: ["Screen alcohol only", "Screen several substances and risk levels", "Diagnose personality disorder", "Measure IQ"], correct: 1, explanation: "Correct: multi-substance risk. Wrong: AUDIT focuses on alcohol; ASSIST is not personality or IQ." },
+      { id: "p11", part: "part1", topic: "Screening tools", type: "mcq", prompt: "DASS-21 primarily measures:", options: ["Alcohol dependence", "Depression, anxiety, and stress", "Cannabis only", "Withdrawal severity"], correct: 1, explanation: "Correct: mood and stress symptoms. Wrong: not an AOD dependence tool alone; not substance-specific." },
+      { id: "p12", part: "part1", topic: "Screening tools", type: "mcq", prompt: "A high-risk screening score means you should:", options: ["Close the file", "Arrange fuller assessment and care planning", "Diagnose dependence immediately without interview", "Report to police automatically"], correct: 1, explanation: "Correct: screen → assess → plan. Wrong: abandoning care, instant diagnosis, or auto police are errors." },
+      { id: "p13", part: "part1", topic: "Models of addiction", type: "mcq", prompt: "The disease model of addiction emphasises:", options: ["Addiction as a chronic health condition", "Only moral weakness", "Only peer pressure", "Only housing"], correct: 0, explanation: "Correct: chronic condition framing reduces blame and supports treatment. Wrong: oversingle-factor answers miss complexity." },
+      { id: "p14", part: "part1", topic: "Models of addiction", type: "mcq", prompt: "Social learning theory highlights:", options: ["Only genetics", "Learning, modelling, and reinforcement", "Only liver damage", "Court diversion only"], correct: 1, explanation: "Correct: behaviour shaped by environment and learning. Wrong: not genetics-only or purely medical/legal." },
+      { id: "p15", part: "part1", topic: "Models of addiction", type: "mcq", prompt: "Biopsychosocial model means:", options: ["Biology only", "Biological, psychological, and social factors together", "Social media only", "Psychology only"], correct: 1, explanation: "Correct: multiple interacting factors. Wrong: single-domain answers are too narrow." },
+      { id: "p16", part: "part1", topic: "Stages of change", type: "mcq", prompt: "A client drinks daily and says 'I don't have a problem.' Likely stage:", options: ["Action", "Pre-contemplation", "Maintenance", "Relapse"], correct: 1, explanation: "Correct: pre-contemplation — no problem insight. Wrong: action/maintenance imply change; relapse is not a stage label here." },
+      { id: "p17", part: "part1", topic: "Stages of change", type: "mcq", prompt: "Best first approach for someone ambivalent about change:", options: ["Confrontation and demands", "Motivational interviewing", "Immediate discharge", "Police referral"], correct: 1, explanation: "Correct: MI builds readiness. Wrong: confrontation often backfires; discharge/police are not first-line clinical responses." },
+      { id: "p18", part: "part1", topic: "Stages of change", type: "mcq", prompt: "Relapse in recovery is best framed as:", options: ["Permanent failure", "Information for plan review and learning", "Proof treatment never works", "Reason to stop all care"], correct: 1, explanation: "Correct: learning point. Wrong: harsh all-or-nothing frames harm outcomes." },
+      { id: "p19", part: "part1", topic: "Trauma-informed care", type: "mcq", prompt: "A core principle of trauma-informed care is:", options: ["Forced trauma disclosure on day one", "Safety, trust, choice, and collaboration", "Ignoring trauma history", "Punishment for symptoms"], correct: 1, explanation: "Correct: safety and empowerment. Wrong: forced disclosure and ignoring trauma are unsafe; punishment is not TIC." },
+      { id: "p20", part: "part1", topic: "Trauma-informed care", type: "mcq", prompt: "Why avoid re-traumatisation in AOD services?", options: ["It improves trust and engagement", "It speeds police reports", "It replaces screening", "It is not important"], correct: 0, explanation: "Correct: trust and retention. Wrong: other options misunderstand clinical duty." },
+      { id: "p21", part: "part1", topic: "Dual diagnosis", type: "mcq", prompt: "Dual diagnosis means:", options: ["Two physical illnesses only", "Co-occurring AOD and mental health conditions", "Two different drugs only", "Two workers only"], correct: 1, explanation: "Correct: AOD + mental health together. Wrong: not purely physical, not just polydrug, not staffing count." },
+      { id: "p22", part: "part1", topic: "Dual diagnosis", type: "mcq", prompt: "Best practice for dual diagnosis is usually:", options: ["Treat AOD only for one year", "Integrated care addressing both", "Ignore mental health", "Separate plans with no communication"], correct: 1, explanation: "Correct: integrated care. Wrong: splitting or ignoring one condition worsens outcomes." },
+      { id: "p23", part: "part1", topic: "Harm minimisation", type: "mcq", prompt: "Naloxone training in the community is mainly:", options: ["Supply reduction", "Overdose harm reduction", "Alcohol screening", "Peak body lobbying"], correct: 1, explanation: "Correct: overdose harm reduction. Wrong: supply is availability; naloxone is not AUDIT or policy-only work." },
+      { id: "p24", part: "part1", topic: "Harm minimisation", type: "mcq", prompt: "RSA (responsible service of alcohol) mainly targets:", options: ["Harm in licensed venues", "Diagnosing dependence", "Writing law", "ASSIST scoring"], correct: 0, explanation: "Correct: acute venue-related harm. Wrong: RSA is not diagnosis or legislation." },
+      { id: "p25", part: "part1", topic: "Screening tools", type: "mcq", prompt: "Why combine AUDIT with DASS-21?", options: ["To avoid talking to the client", "To see alcohol risk and emotional distress", "To replace consent", "To diagnose instantly"], correct: 1, explanation: "Correct: substance + mood picture. Wrong: tools complement conversation; diagnosis needs broader assessment." },
+      { id: "p26", part: "part1", topic: "Stigma", type: "mcq", prompt: "Recovery stories in public campaigns can reduce stigma by:", options: ["Increasing stereotypes", "Humanising lived experience", "Replacing evidence", "Banning treatment"], correct: 1, explanation: "Correct: human connection challenges stereotypes. Wrong: other options are backwards." },
+      { id: "p27", part: "part1", topic: "Models of addiction", type: "mcq", prompt: "Using only a moral model of addiction risks:", options: ["More blame and poorer engagement", "Better integrated care", "Automatic trauma recovery", "Higher naloxone use"], correct: 0, explanation: "Correct: blame reduces help-seeking. Wrong: moral-only framing is clinically limited." },
+      { id: "p28", part: "part1", topic: "Stages of change", type: "mcq", prompt: "Contemplation stage is characterised by:", options: ["No awareness of any issue", "Weighing pros and cons of change", "Five years abstinence", "Police-mandated abstinence"], correct: 1, explanation: "Correct: ambivalence and weighing change. Wrong: pre-contemplation lacks insight; maintenance is sustained change." },
+      { id: "p29", part: "part1", topic: "Treatment", type: "mcq", prompt: "Detox (withdrawal management) mainly aims to:", options: ["Cure addiction in one week", "Manage withdrawal safely", "Replace all counselling", "Lobby government"], correct: 1, explanation: "Correct: medical safety in withdrawal. Wrong: detox alone rarely equals full recovery." },
+      { id: "p30", part: "part1", topic: "Treatment", type: "mcq", prompt: "CBT in AOD often focuses on:", options: ["Triggers, thoughts, and coping skills", "Supply chain mapping", "Blood alcohol only", "Court sentencing"], correct: 0, explanation: "Correct: cognitive-behavioural coping. Wrong: CBT is not logistics or legal sentencing." },
+      { id: "p31", part: "part1", topic: "Treatment", type: "mcq", prompt: "Relapse prevention planning includes:", options: ["Only willpower slogans", "Identifying triggers and coping strategies", "Ignoring high-risk situations", "Stopping all follow-up"], correct: 1, explanation: "Correct: skills and planning. Wrong: vague willpower-only plans fail often." },
+      { id: "p32", part: "part1", topic: "Treatment", type: "mcq", prompt: "Stepped care means:", options: ["Same intensity for everyone", "Match intervention level to need", "Hospital only", "No brief intervention"], correct: 1, explanation: "Correct: least intensive effective care first. Wrong: one-size-fits-all misses efficiency." },
+      { id: "p33", part: "part1", topic: "Trauma-informed care", type: "mcq", prompt: "A client dissociates when discussing trauma. Best response:", options: ["Force full story immediately", "Slow down, ground, and prioritise safety", "Ignore dissociation", "Increase volume of questions"], correct: 1, explanation: "Correct: regulate and stay safe. Wrong: forcing trauma detail re-traumatises." },
+      { id: "p34", part: "part1", topic: "Dual diagnosis", type: "mcq", prompt: "Anxiety and alcohol use often interact because:", options: ["Alcohol can worsen anxiety over time", "Alcohol always cures anxiety forever", "They never interact", "Only genetics matter"], correct: 0, explanation: "Correct: rebound and cycle effects. Wrong: alcohol is not a safe long-term anxiety cure." },
+      { id: "p35", part: "part1", topic: "Harm minimisation", type: "mcq", prompt: "Police seize a large shipment of illegal drugs. This fits:", options: ["Harm reduction", "Supply reduction", "Brief intervention", "AUDIT"], correct: 1, explanation: "Correct: supply reduction. Wrong: harm reduction is health-facing; seizure is enforcement." },
+      { id: "p36", part: "part1", topic: "Screening tools", type: "mcq", prompt: "Severe alcohol withdrawal signs appear during intake. First priority:", options: ["Finish every form", "Urgent medical assessment", "Book next month", "Leaflet only"], correct: 1, explanation: "Correct: withdrawal can be life-threatening. Wrong: paperwork waits behind safety." },
+      { id: "p37", part: "part1", topic: "Stigma", type: "mcq", prompt: "Labelling a client 'manipulative' in notes risks:", options: ["Better alliance", "Biased care and stigma", "Automatic recovery", "Higher AUDIT scores"], correct: 1, explanation: "Correct: stigmatising labels harm care. Wrong: labels do not improve trust." },
+      { id: "p38", part: "part1", topic: "Models of addiction", type: "mcq", prompt: "Integrating disease + biopsychosocial views helps clinicians:", options: ["Ignore social factors", "Plan medical, psychological, and social supports", "Avoid pharmacotherapy", "Remove all counselling"], correct: 1, explanation: "Correct: combined planning. Wrong: integration widens care, not narrows it." },
+      { id: "p39", part: "part1", topic: "Stages of change", type: "mcq", prompt: "Preparation stage often includes:", options: ["No intention to change", "Small planning steps toward change", "Five years sober", "Denial only"], correct: 1, explanation: "Correct: getting ready to act. Wrong: pre-contemplation denies need; maintenance is sustained." },
+      { id: "p40", part: "part1", topic: "Treatment", type: "mcq", prompt: "Pharmacotherapy (e.g. opioid treatment medication) is:", options: ["Evidence-based treatment option", "Always punishment", "Illegal in Australia", "Same as supply reduction"], correct: 0, explanation: "Correct: medication-supported treatment. Wrong: not inherently punitive or illegal." },
+      { id: "p41", part: "part1", topic: "Harm minimisation", type: "short", prompt: "In one or two sentences, explain harm minimisation and name one example.", keywords: ["harm", "reduce", "abstinence", "needle", "naloxone", "demand", "supply", "engagement", "safety"], model: "Harm minimisation reduces the harms of substance use without always requiring immediate abstinence, using strategies like demand, supply, and harm reduction (e.g. needle programs or naloxone).", explanation: "Markers want: reduce harms, realistic goals, pillars or example. Common mistake: saying it promotes drug use." },
+      { id: "p42", part: "part1", topic: "Stigma", type: "short", prompt: "Define public stigma and self-stigma in one line each.", keywords: ["public", "others", "society", "self", "internal", "shame", "guilt"], model: "Public stigma is negative attitudes from others; self-stigma is internalised shame about substance use.", explanation: "Public = others; self = inward. Common mistake: mixing them up or only defining one." },
+      { id: "p43", part: "part1", topic: "Screening tools", type: "short", prompt: "State what AUDIT and ASSIST are used for (one line each).", keywords: ["audit", "alcohol", "10", "assist", "multiple", "substance", "risk"], model: "AUDIT screens alcohol risk (10 items); ASSIST screens multiple substances and risk levels.", explanation: "AUDIT = alcohol breadth; ASSIST = poly-substance. Common mistake: saying either tool gives full diagnosis." },
+      { id: "p44", part: "part1", topic: "Dual diagnosis", type: "short", prompt: "Why is integrated care recommended for dual diagnosis?", keywords: ["both", "together", "worse", "relapse", "mental", "aod", "interaction"], model: "Because AOD and mental health affect each other, treating both together improves engagement and reduces relapse.", explanation: "Integrated = same plan/team communication. Common mistake: treating only one condition." },
+      { id: "p45", part: "part1", topic: "Trauma-informed care", type: "short", prompt: "Name two principles of trauma-informed care.", keywords: ["safety", "trust", "choice", "collaboration", "empowerment"], model: "Examples: safety, trustworthiness, choice, collaboration, empowerment — avoid re-traumatisation.", explanation: "Any two of SAMHSA-style principles score well. Common mistake: forcing trauma disclosure." },
+      { id: "p46", part: "part1", topic: "Harm minimisation", type: "mcq", prompt: "A client cuts down drinking and has fewer injuries but still drinks sometimes. In harm minimisation this shows:", options: ["No real progress", "Harm can fall without total abstinence", "Treatment failed", "Only supply reduction worked"], correct: 1, explanation: "Correct: fewer harms = progress in harm minimisation. Wrong: abstinence-only judging misses realistic gains." },
+      { id: "p47", part: "part1", topic: "Screening tools", type: "mcq", prompt: "CAGE-AID differs from CAGE mainly by:", options: ["Only counting drinks", "Including drug-related items", "Replacing ASSIST", "Measuring depression"], correct: 1, explanation: "Correct: AID extends screening to drugs. Wrong: other options misdescribe the tools." },
+      { id: "p48", part: "part1", topic: "Models of addiction", type: "mcq", prompt: "Social learning is most useful for explaining:", options: ["Only liver enzymes", "How coping and environment shape substance use", "Only genetics", "Court sentencing guidelines"], correct: 1, explanation: "Correct: learning from models and consequences. Wrong: not mainly biological or legal." },
+      { id: "p49", part: "part1", topic: "Stages of change", type: "mcq", prompt: "Maintenance stage means:", options: ["No awareness of problems", "Working to sustain change over time", "First day of withdrawal only", "Police diversion"], correct: 1, explanation: "Correct: keeping new behaviour stable. Wrong: other stages or settings." },
+      { id: "p50", part: "part1", topic: "Dual diagnosis", type: "mcq", prompt: "Integrated dual diagnosis care usually requires:", options: ["Treating only the substance first for five years", "Joint planning across AOD and mental health with consent", "Ignoring medication", "Separate workers who never communicate"], correct: 1, explanation: "Correct: coordinated integrated care. Wrong: sequential-only or siloed care harms outcomes." },
+      { id: "p51", part: "part1", topic: "Treatment", type: "mcq", prompt: "Motivational interviewing (MI) is least aligned with:", options: ["Open questions and affirmations", "Confrontational labelling and arguments", "Reflective listening", "Eliciting change talk"], correct: 1, explanation: "Correct: MI avoids confrontation. Wrong: the other three are core MI skills." },
+      { id: "h1", part: "part1", topic: "DSM-5 / Assessment", type: "mcq", prompt: "Scenario: A student lists craving, using more than planned, and repeated use despite marriage arguments. Which DSM-5 SUD cluster fits these examples best?", options: ["Pharmacological only", "Impaired control, social impairment, and risky use can all appear — here impaired control + social problems stand out", "Only withdrawal", "Only tolerance"], correct: 1, explanation: "Correct: cravings and using more = impaired control; continued use despite problems = social/role harm. Wrong: not only pharmacology; withdrawal/tolerance alone do not cover these items.", whyNot: ["Pharmacological cluster is mainly tolerance/withdrawal — the stem highlights craving, loss of control, and relationship harm.", "", "Withdrawal is not mentioned in the scenario.", "Tolerance is not mentioned — do not invent it."] },
+      { id: "h2", part: "part1", topic: "DSM-5 / Assessment", type: "mcq", prompt: "Needing higher doses for the same effect best illustrates which cluster?", options: ["Impaired control", "Social problems", "Pharmacological (tolerance)", "Risky use in hazardous settings"], correct: 2, explanation: "Correct: tolerance is pharmacological. Wrong: other clusters describe different criteria.", whyNot: ["Impaired control is about inability to cut down or craving — different criterion.", "Social impairment is about relationships/roles — not dose response.", "", "Risky use is about dangerous situations — not dose escalation."] },
+      { id: "h3", part: "part1", topic: "DSM-5 / Assessment", type: "mcq", prompt: "Using opioids in a risky dose while driving reflects which cluster most directly?", options: ["Pharmacological only", "Risky use of substance in hazardous situations", "Only tolerance", "Only withdrawal"], correct: 1, explanation: "Correct: hazardous setting = risky use criterion. Wrong: pharmacology is tolerance/withdrawal.", whyNot: ["Driving risk is behavioural hazard, not purely tolerance/withdrawal.", "", "Tolerance is not the focus of the scenario.", "Withdrawal is not described."] },
+      { id: "h4", part: "part1", topic: "Drug categories", type: "mcq", prompt: "A client mixes alcohol with heroin (opioid). The main acute risk you warn about is:", options: ["Only liver pain", "Combined CNS depression — overdose and breathing suppression", "Stimulant heart attack only", "Cannabis psychosis only"], correct: 1, explanation: "Correct: alcohol + opioids are both CNS depressants — high overdose risk. Wrong: not stimulant or cannabis-specific.", whyNot: ["Liver is a longer-term issue — acute risk here is sedation/overdose.", "", "Stimulants speed the body up — wrong drug class for this mix.", "Cannabis is a different risk profile."] },
+      { id: "h5", part: "part1", topic: "Drug categories", type: "mcq", prompt: "Methamphetamine is best classed as:", options: ["A CNS depressant", "A stimulant", "An opioid agonist", "A hallucinogen only"], correct: 1, explanation: "Correct: meth is a stimulant. Wrong: it is not a depressant or opioid.", whyNot: ["Depressants slow the CNS — meth does the opposite.", "", "Opioids act on opioid receptors — different class.", "While psychosis can occur, primary class is stimulant."] },
+      { id: "h6", part: "part1", topic: "Drug categories", type: "mcq", prompt: "Benzodiazepines + alcohol in the same evening mainly increases risk of:", options: ["Alertness and coordination", "Sedation, falls, and respiratory depression", "Pure stimulant effects", "No interaction"], correct: 1, explanation: "Correct: both depress the CNS — dangerous synergy. Wrong: other options ignore pharmacology.", whyNot: ["They reduce alertness — opposite of this option.", "", "These are not stimulants.", "Interactions are clinically important."] },
+      { id: "h7", part: "part1", topic: "Treatment", type: "mcq", prompt: "Detox (withdrawal management) differs from residential rehab mainly because detox:", options: ["Replaces all counselling forever", "Focuses on acute withdrawal safety, not long-term skills", "Always cures addiction in 3 days", "Is the same as outpatient CBT"], correct: 1, explanation: "Correct: detox is short-term medical stabilisation; rehab builds longer skills. Wrong: do not confuse length and goal.", whyNot: ["Aftercare still matters — detox does not replace all counselling.", "", "Detox does not equal full recovery.", "Outpatient CBT is different setting and intensity."] },
+      { id: "h8", part: "part1", topic: "Treatment", type: "mcq", prompt: "Outpatient AOD counselling is best described as:", options: ["Only for severe withdrawal", "Scheduled sessions while living at home — stepped care component", "Identical to emergency detox", "Illegal in Australia"], correct: 1, explanation: "Correct: outpatient means community-based regular treatment. Wrong: severe withdrawal may need inpatient medical care first.", whyNot: ["Severe withdrawal usually needs medical inpatient detox first.", "", "Detox is acute medical care — not the same as outpatient counselling.", "Outpatient AOD treatment is standard and lawful."] },
+      { id: "h9", part: "part1", topic: "Treatment", type: "mcq", prompt: "Pharmacotherapy for opioid dependence (e.g. prescribed agonist treatment) is:", options: ["The same as illegal supply reduction", "An evidence-based medical treatment option within a care plan", "Always a cure with no counselling", "Never used in Australia"], correct: 1, explanation: "Correct: medication plus psychosocial care is an established model. Wrong: do not confuse treatment with street supply.", whyNot: ["Legal treatment is supervised and clinical — not the same as trafficking.", "", "Counselling and monitoring usually continue.", "It is used in Australian programs."] },
+      { id: "h10", part: "part1", topic: "Models of addiction", type: "mcq", prompt: "A worker says 'addiction is only a bad moral choice.' This view mainly matches:", options: ["Disease model", "Moral / blame model", "Biopsychosocial integration", "Trauma-informed care"], correct: 1, explanation: "Correct: moral model blames character; clinical models are broader. Wrong: disease and biopsychosocial reduce pure blame.", whyNot: ["Disease model frames addiction as health condition — not only morality.", "", "Biopsychosocial adds biology and context — not moral-only.", "Trauma-informed care emphasises safety — not blame."] },
+      { id: "h11", part: "part1", topic: "Models of addiction", type: "mcq", prompt: "Social learning theory is most useful for:", options: ["Explaining only genetic alleles", "Modelling, reinforcement, and coping learned from the environment", "Replacing all medical care", "Court fines only"], correct: 1, explanation: "Correct: learning from others and consequences shapes use. Wrong: not genetics-only or legal-only.", whyNot: ["Genetics may contribute but social learning focuses on behaviour and environment.", "", "It complements — not replaces — medical care.", "Courts are not the focus of this theory."] },
+      { id: "h12", part: "part1", topic: "Models of addiction", type: "mcq", prompt: "Using BOTH disease model and biopsychosocial model in practice helps because:", options: ["You can ignore psychology", "You can plan medical care plus psychosocial supports together", "You must choose only one forever", "Social factors never matter"], correct: 1, explanation: "Correct: combined framing matches real complexity. Wrong: single-silo thinking fails clients.", whyNot: ["Psychology is part of biopsychosocial — do not ignore it.", "", "Clinicians integrate models — not pick one only.", "Social factors are core in biopsychosocial."] },
+      { id: "h13", part: "part1", topic: "Stages of change", type: "mcq", prompt: "Case: 'I know my drinking hurts my health, but I am not sure I can change.' Best stage:", options: ["Pre-contemplation", "Contemplation", "Action", "Maintenance"], correct: 1, explanation: "Correct: ambivalence and weighing change = contemplation. Wrong: pre-contemplation denies or minimises harm.", whyNot: ["Pre-contemplation = little/no problem recognition — this person sees harm.", "", "Action = active change steps — not described yet.", "Maintenance = sustained change over time — too advanced."] },
+      { id: "h14", part: "part1", topic: "Stages of change", type: "mcq", prompt: "Case: Books appointments, tells GP, and starts cutting down this week. Best stage:", options: ["Pre-contemplation", "Contemplation only", "Action", "Termination for everyone"], correct: 2, explanation: "Correct: concrete behaviour change attempts = action. Wrong: still weighing only would be contemplation.", whyNot: ["They are already changing behaviour — past pure pre-contemplation.", "They moved beyond ambivalence into behaviour — more than contemplation.", "", "Termination is not assumed for all — and they are early in change."] },
+      { id: "h15", part: "part1", topic: "Stages of change", type: "mcq", prompt: "Case: 'Everyone overreacts — I only drink like my mates.' Most likely stage:", options: ["Pre-contemplation", "Maintenance", "Action", "Relapse"], correct: 0, explanation: "Correct: minimisation and external comparison suggest pre-contemplation. Wrong: maintenance/action imply committed change.", whyNot: ["", "No evidence of sustained new behaviour.", "No active change plan described.", "Relapse is not a formal 'stage' in the same list."] },
+      { id: "h16", part: "part1", topic: "Dual diagnosis", type: "mcq", prompt: "Common exam mistake: treating depression only and ignoring alcohol use. Risk:", options: ["Alcohol has no effect on mood", "AOD can worsen depression and undermine antidepressant engagement", "Dual diagnosis is rare", "AOD always cures depression"], correct: 1, explanation: "Correct: integrated care — both conditions interact. Wrong: substance use often worsens mood.", whyNot: ["Alcohol is a depressant and disrupts sleep and mood.", "", "Co-occurrence is common in AOD settings.", "Alcohol is not an antidepressant."] },
+      { id: "h17", part: "part1", topic: "Dual diagnosis", type: "mcq", prompt: "A client says stopping meth will fix voices without mental health care. Best response:", options: ["Agree and ignore psychiatry", "Integrated plan — substance care plus mental health assessment for possible psychosis", "Only legal advice", "Tell them symptoms are fake"], correct: 1, explanation: "Correct: psychosis symptoms need medical assessment alongside AOD care. Wrong: splitting care dangerously.", whyNot: ["Psychiatric symptoms may need urgent assessment.", "", "Legal advice does not replace clinical care.", "Never dismiss reported symptoms."] },
+      { id: "h18", part: "part1", topic: "Trauma-informed care", type: "mcq", prompt: "Trauma-informed care in AOD means you should:", options: ["Demand full trauma story in session one", "Prioritise safety, choice, and pacing — disclosure is client-led", "Assume trauma is irrelevant", "Use punishment for trauma symptoms"], correct: 1, explanation: "Correct: empowerment and safety — no forced disclosure. Wrong: re-traumatisation risks.", whyNot: ["Forced disclosure can harm engagement and safety.", "", "Trauma often underlies AOD use — relevance is high.", "Punishment is opposite of trauma-informed approach."] },
+      { id: "h19", part: "part1", topic: "Trauma-informed care", type: "mcq", prompt: "A client flinches when door slams; worker lowers voice and checks safety. This illustrates:", options: ["Ignoring cues", "Trauma-informed environmental awareness", "Confrontation", "Supply reduction"], correct: 1, explanation: "Correct: noticing triggers and adjusting = TIC practice. Wrong: other choices miss the point.", whyNot: ["The worker noticed and adjusted — not ignoring.", "", "This is supportive — not confrontational.", "Policy supply work is unrelated."] },
+      { id: "h20", part: "part1", topic: "Screening tools", type: "mcq", prompt: "Exam trap: You need brief multi-drug screening at intake. Worst pick:", options: ["ASSIST", "AUDIT only for every drug question", "CAGE-AID as adjunct", "DASS-21 for mood alongside AOD screens"], correct: 1, explanation: "Correct: AUDIT is alcohol-focused — do not use it alone for all substances. Wrong: ASSIST is designed for breadth.", whyNot: ["ASSIST is appropriate for multiple substances.", "", "CAGE-AID is brief and can supplement — not the trap.", "DASS-21 adds emotional context — reasonable alongside AOD tools."] }
     ];
 
-    const TOPIC_LABELS = {
-      all: "All Topics",
-      exam: "Exam Practice",
-      policy: "Policy & McClelland",
-      harm: "Harm Minimisation",
-      screening: "Screening Tools",
-      treatment: "Treatment & Rehab",
-      stigma: "Stigma & Behaviour"
+    function caseSub(csId, label, topic, prompt, options, correct, explanation) {
+      return { id: csId + "-" + label, part: "part2", topic, type: "mcq", prompt, options, correct, explanation };
+    }
+
+    const CASE_STUDIES = [
+      {
+        id: "cs1",
+        scenario: "John, 34, drinks 10–14 standard drinks daily. He says he has no problem and can stop anytime. His partner reports arguments and missed work. He has anxiety, poor sleep, and sometimes drives after drinking. He uses cannabis weekends and occasionally non-prescribed benzodiazepines for stress. Childhood trauma; he avoids discussing it. No prior AOD treatment.",
+        sub: [
+          caseSub("cs1", "issues", "Case — Issues", "Key issues include:", ["Only cannabis", "High-risk alcohol, polydrug risk, mental health, trauma, safety (driving), social harm", "Only partner conflict", "No risk factors"], 1, "Correct: alcohol dependence pattern risk, benzos+alcohol, anxiety, trauma, functioning and safety. Wrong: minimising to one factor." ),
+          caseSub("cs1", "stage", "Case — Stage of change", "Most likely stage of change:", ["Pre-contemplation", "Maintenance", "Termination", "Relapse"], 0, "Correct: pre-contemplation — denies problem despite consequences. Wrong: maintenance implies sustained change." ),
+          caseSub("cs1", "assess", "Case — Assessment", "First-line screening/assessment tools:", ["IQ test only", "AUDIT, ASSIST, DASS-21 + withdrawal risk check", "Personality test only", "Blood type"], 1, "Correct: alcohol + multi-drug + mood + medical withdrawal risk. Wrong: irrelevant tests." ),
+          caseSub("cs1", "treat", "Case — Treatment", "Initial treatment plan should include:", ["Confrontation and discharge", "Rapport, safety, MI, harm reduction; consider supervised withdrawal; CBT/relapse prevention longer term", "Ignore mental health", "Police referral only"], 1, "Correct: engagement, MI, harm min, integrated dual diagnosis, relapse prevention. Wrong: shame-first or single-sector only." ),
+          caseSub("cs1", "ref", "Case — Referral", "Appropriate referrals:", ["Only internet forums", "GP/addiction medicine, AOD counselling, mental health, peer support (e.g. SMART/AA)", "No referrals", "Court only"], 1, "Correct: medical + AOD + MH + peer as appropriate. Wrong: informal-only or punitive-only." ),
+          caseSub("cs1", "app", "Case — Approach", "Overall approach:", ["Abstinence-only confrontation", "Harm minimisation, biopsychosocial, trauma-informed, person-centred, integrated dual diagnosis", "Ignore trauma", "Moral model only"], 1, "Correct: combines exam keywords. Wrong: single harsh frame ignores TIC and integration." )
+        ]
+      },
+      {
+        id: "cs2",
+        scenario: "Leah, 29, drinks 8–12 drinks most nights and uses methamphetamine some weekends. She takes non-prescribed diazepam to sleep. She says she handles stress fine. Panic symptoms, low mood, rent arrears, missed shifts. History of family violence; distressed when asked about trauma. Minor car accident after drinking. Dropped out of counselling once feeling judged.",
+        sub: [
+          caseSub("cs2", "issues", "Case — Issues", "Priority case issues:", ["Only rent", "Alcohol + stimulant + benzo risk, mental health, trauma, work/housing, safety, engagement barrier", "Only meth", "No dual diagnosis"], 1, "Correct: polydrug, sedation risk, dual diagnosis, social determinants, trauma, prior stigma in care." ),
+          caseSub("cs2", "stage", "Case — Stage of change", "Likely stage:", ["Pre-contemplation", "Contemplation / early contemplation", "Action with five years sober", "Maintenance"], 1, "Correct: minimises but has stress/consequences — ambivalence fits contemplation. Wrong: not yet committed action." ),
+          caseSub("cs2", "assess", "Case — Assessment", "Assessment should include:", ["AUDIT, ASSIST, DASS-21 and withdrawal/seizure risk (alcohol/benzo)", "Hair colour test", "Astrology", "Single yes/no"], 0, "Correct: standard screens + urgent withdrawal risk. Wrong: non-clinical tools." ),
+          caseSub("cs2", "treat", "Case — Treatment", "Treatment plan:", ["Shame and terminate", "Short-term: safety, rapport, MI, psychoeducation; long-term: integrated care, CBT, relapse prevention", "Ignore benzodiazepines", "No follow-up"], 1, "Correct: staged, MI, harm min, CBT, relapse prevention, integrated. Wrong: terminating ambivalent clients." ),
+          caseSub("cs2", "ref", "Case — Referral", "Referrals:", ["GP/specialist, AOD service, mental health, peer support with coordinated consent", "Only pharmacy", "No GP", "Solely police"], 0, "Correct: biopsychosocial referrals + coordination." ),
+          caseSub("cs2", "app", "Case — Approach", "Guiding frameworks:", ["Punishment-only", "Harm minimisation + biopsychosocial + trauma-informed + person-centred + dual diagnosis integration", "Ignore AOD", "Ignore MH"], 1, "Correct: exam-expected integration of models." )
+        ]
+      },
+      {
+        id: "cs3",
+        scenario: "Sam, 22, binge drinks 15+ standard drinks on weekends, blackout episodes. AUDIT-C flagged high risk. Uses cannabis daily 'for sleep.' No prescribed meds. First-year uni stress; feels ashamed and avoids student services. Parents have strong religious views; Sam fears disclosure. No trauma history disclosed.",
+        sub: [
+          caseSub("cs3", "issues", "Case — Issues", "Key issues:", ["Only religion", "Binge alcohol risk, cannabis sleep use, stigma/shame, help-seeking barriers, academic stress", "No alcohol issue", "Only age"], 1, "Correct: risky pattern, cannabis dependence risk, psychosocial barriers." ),
+          caseSub("cs3", "stage", "Case — Stage of change", "Stage:", ["Pre-contemplation", "Contemplation (weighing change, shame)", "Maintenance", "No stage model"], 1, "Correct: some awareness/concern but conflict and fear — contemplation." ),
+          caseSub("cs3", "assess", "Case — Assessment", "Tools:", ["Full AUDIT + ASSIST + DASS-21; discuss confidentiality; withdrawal less likely but check if daily heavy use", "No tools", "IQ only", "Police report"], 0, "Correct: extend AUDIT-C to AUDIT, ASSIST for cannabis, DASS for mood; consent talk." ),
+          caseSub("cs3", "treat", "Case — Treatment", "Plan:", ["MI + brief intervention + CBT skills + relapse prevention; harm reduction around binges", "Forced confession to parents", "Ignore cannabis", "Discharge"], 0, "Correct: stage-matched MI, BI, CBT, relapse prevention." ),
+          caseSub("cs3", "ref", "Case — Referral", "Referrals:", ["Uni counselling, GP, AOD youth-friendly service, peer support", "No services", "Only employer", "Court"], 0, "Correct: age-appropriate and low-barrier." ),
+          caseSub("cs3", "app", "Case — Approach", "Approach:", ["Stigma-aware, person-centred, harm minimisation, biopsychosocial", "Public shaming", "Abstinence contract day one only", "Ignore confidentiality"], 0, "Correct: confidentiality, stigma, harm min, biopsychosocial." )
+        ]
+      },
+      {
+        id: "cs4",
+        scenario: "Maria, 41, opioid dependence on pharmaceutical opioids after injury; also uses alcohol. She wants to reduce pain and 'get stable.' Anxiety, depression on file. Lives with supportive partner. No IV use. Interested in pharmacotherapy information.",
+        sub: [
+          caseSub("cs4", "issues", "Case — Issues", "Issues:", ["Only partner", "Opioid + alcohol risk, pain, anxiety/depression (dual diagnosis), treatment goals", "No substances", "Only pain — ignore AOD"], 1, "Correct: polydrug sedation risk, mental health, recovery goals." ),
+          caseSub("cs4", "stage", "Case — Stage of change", "Stage:", ["Pre-contemplation", "Preparation / action-oriented (seeking info and change)", "No motivation", "Random"], 1, "Correct: asking for options suggests movement toward change." ),
+          caseSub("cs4", "assess", "Case — Assessment", "Assessment:", ["ASSIST, AUDIT, DASS-21, withdrawal risk, pain and function review with GP", "Ignore alcohol", "Only urine", "No medical"], 0, "Correct: screens + medical + withdrawal." ),
+          caseSub("cs4", "treat", "Case — Treatment", "Treatment:", ["Integrated plan: pharmacotherapy discussion, alcohol reduction, MI, CBT, relapse prevention", "Opioids only — ignore alcohol", "Detox only no plan", "Punishment"], 0, "Correct: integrated, evidence-based options." ),
+          caseSub("cs4", "ref", "Case — Referral", "Referral:", ["GP, addiction medicine/pharmacotherapy prescriber, AOD counselling, mental health", "None", "Only pharmacy", "Police"], 0, "Correct: medical + psychosocial." ),
+          caseSub("cs4", "app", "Case — Approach", "Approach:", ["Person-centred, harm minimisation, biopsychosocial, dual diagnosis integration, trauma-informed if history emerges", "One-size abstinence only", "Ignore depression", "No consent"], 0, "Correct: integrated ethical care." )
+        ]
+      }
+    ];
+
+    const SESSION_PART1 = 18;
+    const SESSION_MIXED_PART1 = 12;
+    const SESSION_MIXED_CASE = 1;
+
+    let studyMode = "study";
+    let sessionQueue = [];
+    let currentIndex = 0;
+    let scoreCorrect = 0;
+    let checked = false;
+    let selectedIndex = null;
+    let outcomes = [];
+    let wrongPool = [];
+    let examTimerId = null;
+    let examDeadline = 0;
+    let examTimeExpired = false;
+    let examWarned10 = false;
+
+    const TOPIC_FOCUS = {
+      "Harm minimisation": "Drill the three pillars and 2–3 real examples (e.g. NSP, naloxone, BI, RSA).",
+      "Screening tools": "Be able to state what AUDIT, ASSIST, CAGE-AID, and DASS-21 measure — and that screen ≠ diagnosis.",
+      Stigma: "Revise public vs self-stigma and one engagement strategy (language, rapport).",
+      "Models of addiction": "Contrast disease vs biopsychosocial vs social learning vs moral blame — exam loves traps here.",
+      "Stages of change": "Practise vignettes: pre-contemplation vs contemplation vs action vs maintenance.",
+      "Trauma-informed care": "Memorise safety, choice, trust — and why forced disclosure is wrong.",
+      "Dual diagnosis": "Stress integrated care and how each condition worsens the other.",
+      Treatment: "Separate detox vs rehab vs outpatient vs pharmacotherapy — goals and limits of each.",
+      "Case — Issues": "List bio-psycho-social-risk issues before jumping to one label.",
+      "Case — Stage of change": "Match denial vs ambivalence vs active change to stages.",
+      "Case — Assessment": "Default to AUDIT + ASSIST + DASS-21 + withdrawal/safety check.",
+      "Case — Treatment": "MI + harm min + CBT/relapse prevention + integrated MH.",
+      "Case — Referral": "GP/medical + AOD + mental health + peer — coordinated consent.",
+      "Case — Approach": "Name harm minimisation + biopsychosocial + TIC + person-centred + dual diagnosis together.",
+      "DSM-5 / Assessment": "Learn the four criterion clusters and typical exam vignette mapping.",
+      "Drug categories": "Know depressant vs stimulant vs opioid interactions (especially CNS depression)."
     };
 
-    const SESSION_SIZE = 20;
-    let activeTopic = "all";
-    let questions = [];
-    let current = 0;
-    /** When set, progress line uses this instead of TOPIC_LABELS[activeTopic] (e.g. wrong-answer drill). */
-    let progressTopicLabel = null;
-
-    let examMode = false;
-    let examAnswerRevealed = false;
-    let selectedOptionIndex = null;
-
-    let quickReviewMode = false;
-    let quickReviewExplanationRevealed = false;
-
-    /** Theme label -> wrong count (first scored reveal per question only) */
-    let wrongByTheme = {};
-    /** null = not scored; 'c' = correct; 'w' = wrong */
-    let sessionOutcomes = [];
-
-    function resetSessionTracking() {
-      wrongByTheme = {};
-      sessionOutcomes = [];
-    }
-
-    /**
-     * Lock outcome on first reveal (correct or wrong). Clear + retry does not rescored.
-     */
-    function recordQuestionOutcome(isCorrect) {
-      const prev = sessionOutcomes[current];
-      if (prev === "c" || prev === "w") return;
-      sessionOutcomes[current] = isCorrect ? "c" : "w";
-      if (!isCorrect) {
-        const theme = getThemeAndScenario(questions[current]);
-        const label = theme.label;
-        wrongByTheme[label] = (wrongByTheme[label] || 0) + 1;
+    function clearExamTimer() {
+      if (examTimerId) {
+        clearInterval(examTimerId);
+        examTimerId = null;
       }
     }
 
-    /** Same bands as 0–10 / 11–15 / 16–20 on a 20-question quiz, scaled by ratio. */
-    function getScoreRating(correct, total) {
-      if (total === 0) {
-        return { text: "", className: "" };
+    function examTimeUp() {
+      if (examTimeExpired) return;
+      examTimeExpired = true;
+      clearExamTimer();
+      const wrap = document.getElementById("exam-timer-wrap");
+      if (wrap) {
+        wrap.classList.add("critical");
+        document.getElementById("exam-timer-display").textContent = "0:00";
       }
-      const goodMin = Math.ceil(0.55 * total);
-      const readyMin = Math.ceil(0.8 * total);
-      if (correct >= readyMin) {
-        return { text: "Exam ready", className: "summary-rating-ready" };
-      }
-      if (correct >= goodMin) {
-        return { text: "Good", className: "summary-rating-good" };
-      }
-      return { text: "Needs improvement", className: "summary-rating-needs" };
+      showSummary();
     }
 
-    function showSessionSummary() {
-      const overlay = document.getElementById("session-summary-overlay");
-      const body = document.getElementById("summary-body");
-      const practiceBtn = document.getElementById("practice-wrong-btn");
-      const total = questions.length;
-
-      if (quickReviewMode) {
-        body.innerHTML = `
-          <p class="summary-score summary-quick-complete">Quick review complete</p>
-          <p class="summary-focus-msg">You skimmed <strong>${total}</strong> questions with correct answers and explanations.</p>
-        `;
-        practiceBtn.hidden = true;
-        practiceBtn.disabled = true;
-        overlay.hidden = false;
-        return;
-      }
-
-      const correct = sessionOutcomes.filter((o) => o === "c").length;
-      const unanswered = sessionOutcomes.filter((o) => o === null).length;
-      const rating = getScoreRating(correct, total);
-
-      let html = `<p class="summary-score">Score: <strong>${correct}/${total}</strong></p>`;
-      if (rating.text) {
-        html += `<p class="summary-rating ${rating.className}">${escapeHtml(rating.text)}</p>`;
-        html +=
-          '<p class="summary-rating-hint">Guide for a 20-question quiz: 0–10 = Needs improvement · 11–15 = Good · 16–20 = Exam ready. Shorter or longer sessions use the same split (about 55% / 80% correct).</p>';
-      }
-      if (unanswered > 0) {
-        html += `<p class="summary-unanswered">${unanswered} question(s) had no answer checked — they are not counted as correct.</p>`;
-      }
-
-      const entries = Object.entries(wrongByTheme).filter(([, n]) => n > 0);
-      const sorted = [...entries].sort(
-        (a, b) => b[1] - a[1] || a[0].localeCompare(b[0])
-      );
-      if (entries.length === 0) {
-        html +=
-          '<p class="summary-none">No wrong answers — all topics look strong.</p>';
-      } else {
-        html +=
-          '<p class="summary-top-wrong-title">You got these topics wrong most:</p>';
-        html += '<ul class="summary-top-wrong-list">';
-        for (const [label, n] of sorted) {
-          html += `<li>${escapeHtml(label)} (${n})</li>`;
+    function startExamTimer() {
+      clearExamTimer();
+      examTimeExpired = false;
+      examWarned10 = false;
+      examDeadline = Date.now() + 120 * 60 * 1000;
+      const wrap = document.getElementById("exam-timer-wrap");
+      wrap.hidden = false;
+      wrap.classList.remove("warn", "critical");
+      function tick() {
+        const left = Math.max(0, examDeadline - Date.now());
+        const m = Math.floor(left / 60000);
+        const s = Math.floor((left % 60000) / 1000);
+        document.getElementById("exam-timer-display").textContent = m + ":" + String(s).padStart(2, "0");
+        wrap.classList.remove("warn", "critical");
+        if (left <= 10 * 60 * 1000 && left > 0) {
+          wrap.classList.add("warn");
+          if (!examWarned10) {
+            examWarned10 = true;
+            alert("10 minutes left in exam mode.");
+          }
         }
-        html += "</ul>";
-        html +=
-          '<p class="summary-focus-msg">Focus on these topics before next attempt.</p>';
+        if (left <= 3 * 60 * 1000 && left > 0) wrap.classList.add("critical");
+        if (left <= 0) examTimeUp();
       }
-
-      body.innerHTML = html;
-
-      const wrongCount = sessionOutcomes.filter((o) => o === "w").length;
-      practiceBtn.hidden = wrongCount === 0;
-      practiceBtn.disabled = wrongCount === 0;
-
-      overlay.hidden = false;
+      tick();
+      examTimerId = setInterval(tick, 1000);
     }
 
-    function startPracticeWrongQuestions() {
-      const wrongPool = questions.filter((_, i) => sessionOutcomes[i] === "w");
-      if (wrongPool.length === 0) return;
-      document.getElementById("session-summary-overlay").hidden = true;
-      progressTopicLabel = "Practice wrong answers";
-      questions = shuffle(wrongPool);
-      wrongByTheme = {};
-      sessionOutcomes = new Array(questions.length).fill(null);
-      current = 0;
-      loadQuestion();
-    }
-
-    function closeSummaryAndRestart() {
-      document.getElementById("session-summary-overlay").hidden = true;
-      startSession(activeTopic);
-    }
-
-    function shuffle(arr) {
-      const copy = [...arr];
-      for (let i = copy.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [copy[i], copy[j]] = [copy[j], copy[i]];
-      }
-      return copy;
-    }
-
-    function getTopicPool(topic) {
-      if (topic === "all") return allQuestions;
-      return allQuestions.filter((q) => q.topic === topic);
-    }
-
-    function startSession(topic) {
-      document.getElementById("session-summary-overlay").hidden = true;
-      progressTopicLabel = null;
-      activeTopic = topic;
-      resetSessionTracking();
-      const pool = getTopicPool(topic);
-      const shuffled = shuffle(pool);
-      const count =
-        topic === "exam"
-          ? shuffled.length
-          : Math.min(SESSION_SIZE, shuffled.length);
-      questions = shuffled.slice(0, count);
-      sessionOutcomes = new Array(questions.length).fill(null);
-      current = 0;
-      updateTopicButtons();
-      loadQuestion();
-    }
-
-    function updateTopicButtons() {
-      document.querySelectorAll(".topic-btn").forEach((btn) => {
-        btn.classList.toggle("active", btn.dataset.topic === activeTopic);
-      });
-    }
-
-    function escapeHtml(text) {
-      const div = document.createElement("div");
-      div.textContent = text;
-      return div.innerHTML;
+    function topicBadgeClass(topic) {
+      const t = topic || "";
+      if (t.includes("Case")) return "badge badge-cat-case";
+      if (t.includes("DSM")) return "badge badge-cat-dsm";
+      if (t.includes("Drug")) return "badge badge-cat-drugs";
+      if (t.startsWith("Harm")) return "badge badge-cat-harm";
+      if (t.includes("Screening")) return "badge badge-cat-screening";
+      if (t === "Stigma") return "badge badge-cat-stigma";
+      if (t.includes("Models")) return "badge badge-cat-models";
+      if (t.includes("Stages")) return "badge badge-cat-stages";
+      if (t.includes("Trauma")) return "badge badge-cat-trauma";
+      if (t.includes("Dual")) return "badge badge-cat-dual";
+      if (t.includes("Treatment")) return "badge badge-cat-treatment";
+      return "badge";
     }
 
     function escapeRegExp(s) {
       return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     }
 
-    /** Curated exam clues only — longest phrases first for regex alternation */
-    const SCENARIO_KEYWORD_PHRASES = [
-      "motivational interviewing",
-      "responsible service of alcohol",
-      "needle and syringe",
-      "withdrawal management",
-      "brief intervention",
-      "harm minimisation",
-      "harm reduction",
-      "supply reduction",
-      "demand reduction",
-      "recovery capital",
-      "dual diagnosis",
-      "trauma-informed",
-      "policy influence",
-      "policy window",
-      "daily drinking",
-      "peak organisation",
-      "advisory boards",
-      "advisory board",
-      "peak body",
-      "culturally safe",
-      "cultural safety",
-      "codependent rescuing",
-      "self-stigma",
-      "drama triangle",
-      "CAGE-AID",
-      "McClelland",
-      "DASS-21",
-      "pharmacotherapy",
-      "rehabilitation",
-      "confidentiality",
-      "naloxone",
-      "methadone",
-      "overdose",
-      "opioids",
-      "opioid",
-      "withdrawal",
-      "relapse",
-      "stigma",
-      "screening",
-      "advocacy",
-      "AUDIT",
-      "ASSIST",
-      "CAGE",
-      "detox",
-      "RSA",
-      "consent"
-    ];
-
-    let scenarioKeywordPattern = null;
-
-    function getScenarioKeywordRegex() {
-      if (scenarioKeywordPattern) return scenarioKeywordPattern;
-      const sorted = [...SCENARIO_KEYWORD_PHRASES].sort(
-        (a, b) => b.length - a.length
-      );
-      const body = sorted
-        .map((kw) => {
-          const esc = escapeRegExp(kw);
-          return /\s/.test(kw)
-            ? `(?<![\\w])${esc}(?![\\w])`
-            : `\\b${esc}\\b`;
-        })
-        .join("|");
-      scenarioKeywordPattern = new RegExp(`(${body})`, "gi");
-      return scenarioKeywordPattern;
-    }
-
-    function highlightScenarioKeywords(text) {
-      const safe = escapeHtml(text);
-      return safe.replace(
-        getScenarioKeywordRegex(),
-        '<strong class="scenario-keyword">$1</strong>'
-      );
-    }
-
-    /**
-     * Theme from leading [Tag] in scenario (exam items), else from q.topic.
-     * Returns badge class key, display label, and scenario text without duplicate tag.
-     */
-    function getThemeAndScenario(q) {
-      const bracketMatch = q.scenario.match(/^\s*\[([^\]]+)\]\s*(.*)$/);
-      if (bracketMatch) {
-        const inner = bracketMatch[1].toLowerCase();
-        const rest = bracketMatch[2].trim();
-        let badgeKey = "mixed";
-        let label = "Topic";
-        if (inner.includes("harm")) {
-          badgeKey = "harm";
-          label = "Harm Minimisation";
-        } else if (inner.includes("policy")) {
-          badgeKey = "policy";
-          label = "Policy";
-        } else if (inner.includes("screening")) {
-          badgeKey = "screening";
-          label = "Screening";
-        } else if (inner.includes("stigma")) {
-          badgeKey = "stigma";
-          label = "Stigma";
-        } else if (inner.includes("treatment")) {
-          badgeKey = "treatment";
-          label = "Treatment";
+    function levenshtein(a, b) {
+      const m = a.length;
+      const n = b.length;
+      if (m === 0) return n;
+      if (n === 0) return m;
+      const dp = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
+      for (let i = 0; i <= m; i++) dp[i][0] = i;
+      for (let j = 0; j <= n; j++) dp[0][j] = j;
+      for (let i = 1; i <= m; i++) {
+        for (let j = 1; j <= n; j++) {
+          const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+          dp[i][j] = Math.min(dp[i - 1][j] + 1, dp[i][j - 1] + 1, dp[i - 1][j - 1] + cost);
         }
-        return {
-          badgeKey,
-          label,
-          scenarioText: rest || q.scenario
-        };
       }
-
-      const byTopic = {
-        harm: { badgeKey: "harm", label: "Harm Minimisation" },
-        screening: { badgeKey: "screening", label: "Screening" },
-        treatment: { badgeKey: "treatment", label: "Treatment" },
-        stigma: { badgeKey: "stigma", label: "Stigma" },
-        policy: { badgeKey: "policy", label: "Policy" },
-        exam: { badgeKey: "mixed", label: "Exam" },
-        all: { badgeKey: "mixed", label: "Mixed" }
-      };
-      const t = byTopic[q.topic] || { badgeKey: "mixed", label: "Topic" };
-      return { badgeKey: t.badgeKey, label: t.label, scenarioText: q.scenario };
+      return dp[m][n];
     }
 
-    function syncModeBar() {
-      const cheat = document.getElementById("cheat-sheet");
-      const checkBtn = document.getElementById("check-answer-btn");
-      const hint = document.getElementById("mode-bar-hint");
-      const examToggle = document.getElementById("exam-mode-toggle");
-      const quickToggle = document.getElementById("quick-review-toggle");
-
-      cheat.hidden = examMode && !quickReviewMode;
-      const showCheck = examMode && !quickReviewMode;
-      checkBtn.style.display = showCheck ? "inline-block" : "none";
-      if (!showCheck) {
-        checkBtn.disabled = true;
-      } else {
-        checkBtn.disabled = selectedOptionIndex === null || examAnswerRevealed;
-      }
-
-      examToggle.disabled = quickReviewMode;
-      quickToggle.disabled = examMode;
-
-      if (quickReviewMode) {
-        hint.textContent =
-          "Quick review: only the correct answer is shown. Tap the dashed box to reveal the explanation.";
-      } else if (examMode) {
-        hint.textContent =
-          "Exam mode: cheat sheet hidden. Choose an answer, then tap Check Answer for feedback.";
-      } else {
-        hint.textContent =
-          "Study: cheat sheet on; tap an option for instant feedback.";
-      }
+    function normalizeAnswerText(s) {
+      return s
+        .toLowerCase()
+        .replace(/[^a-z0-9\s]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
     }
 
-    function updateCheckAnswerButton() {
-      const checkBtn = document.getElementById("check-answer-btn");
-      if (!examMode || quickReviewMode) return;
-      checkBtn.disabled = selectedOptionIndex === null || examAnswerRevealed;
+    function wordMatchesKeyword(word, keyword) {
+      const kw = keyword.toLowerCase();
+      const w = word.toLowerCase();
+      if (w.includes(kw) || kw.includes(w)) return true;
+      if (kw.length >= 4 && levenshtein(w, kw) <= 1) return true;
+      if (kw.length >= 6 && levenshtein(w, kw) <= 2) return true;
+      return false;
     }
 
-    function revealQuickReviewExplanation() {
-      if (!quickReviewMode || quickReviewExplanationRevealed) return;
-      quickReviewExplanationRevealed = true;
-      const q = questions[current];
-      document.getElementById("explanation").innerText = q.explanation;
-      const tap = document.getElementById("quick-review-tap");
-      if (tap) tap.hidden = true;
-    }
-
-    function loadQuestion() {
-      const q = questions[current];
-      examAnswerRevealed = false;
-      selectedOptionIndex = null;
-      quickReviewExplanationRevealed = false;
-
-      const progressLabel = progressTopicLabel ?? TOPIC_LABELS[activeTopic];
-      const modeSuffix = quickReviewMode ? " · Quick review" : "";
-      document.getElementById("progress").innerText = `${progressLabel} — Question ${current + 1} of ${questions.length}${modeSuffix}`;
-
-      const theme = getThemeAndScenario(q);
-      const badgeClass =
-        theme.badgeKey === "mixed" ? "badge-mixed" : `badge-${theme.badgeKey}`;
-      document.getElementById("theme-badge-row").innerHTML = `<span class="topic-caption-label">Topic:</span> <span class="badge ${badgeClass}" role="status">${escapeHtml(theme.label)}</span>`;
-      document.getElementById("scenario").innerHTML =
-        highlightScenarioKeywords(theme.scenarioText);
-      document.getElementById("question").innerText = q.question;
-
-      const optionsDiv = document.getElementById("options");
-      optionsDiv.innerHTML = "";
-      document.getElementById("feedback").innerText = "";
-      document.getElementById("explanation").innerText = "";
-
-      document.querySelector(".actions .clear").innerText = quickReviewMode
-        ? "Hide explanation"
-        : "Clear Selection";
-
-      if (quickReviewMode) {
-        const panel = document.createElement("div");
-        panel.className = "quick-review-panel";
-        const lab = document.createElement("p");
-        lab.className = "quick-review-correct-label";
-        lab.textContent = "Correct answer";
-        const ans = document.createElement("div");
-        ans.className = "quick-review-correct";
-        ans.textContent = q.options[q.correct];
-        const tap = document.createElement("button");
-        tap.type = "button";
-        tap.className = "quick-review-tap";
-        tap.id = "quick-review-tap";
-        tap.textContent = "Tap to show explanation";
-        tap.addEventListener("click", revealQuickReviewExplanation);
-        panel.appendChild(lab);
-        panel.appendChild(ans);
-        panel.appendChild(tap);
-        optionsDiv.appendChild(panel);
-        updateCheckAnswerButton();
-        syncModeBar();
-        return;
+    function keywordHitInAnswer(normText, words, keyword) {
+      const kn = normalizeAnswerText(keyword);
+      if (kn.length < 2) return false;
+      if (normText.includes(kn)) return true;
+      const parts = kn.split(" ").filter((p) => p.length > 1);
+      const toMatch = parts.length ? parts : [kn];
+      for (const part of toMatch) {
+        if (normText.includes(part)) return true;
+        for (const w of words) {
+          if (wordMatchesKeyword(w, part)) return true;
+        }
       }
+      return false;
+    }
 
-      q.options.forEach((opt, i) => {
-        const div = document.createElement("div");
-        div.className = "option";
-        div.innerText = opt;
-        div.onclick = () => selectAnswer(i);
-        optionsDiv.appendChild(div);
+    function splitExplanationParts(explanation) {
+      const exp = explanation || "";
+      const wrongIdx = exp.search(/\bWrong:\s*/i);
+      let correctPart = wrongIdx >= 0 ? exp.slice(0, wrongIdx).trim() : exp.trim();
+      correctPart = correctPart.replace(/^Correct:\s*/i, "").replace(/\s*Why:\s*/i, " — ");
+      const wrongPart = wrongIdx >= 0 ? exp.slice(wrongIdx).replace(/^\s*Wrong:\s*/i, "").trim() : "";
+      return { correctPart: correctPart || exp, wrongPart };
+    }
+
+    function legacyDistractorMap(q) {
+      const wrongPart = splitExplanationParts(q.explanation).wrongPart;
+      if (!wrongPart) return null;
+      const segments = wrongPart
+        .split(/;\s+|(?<=\.)\s+(?=[A-Za-z])/)
+        .map((s) => s.trim())
+        .filter(Boolean);
+      const wrongIx = [0, 1, 2, 3].filter((i) => i !== q.correct);
+      if (segments.length === 0) return null;
+      const map = {};
+      wrongIx.forEach((ix, j) => {
+        map[ix] = segments[Math.min(j, segments.length - 1)];
       });
-
-      updateCheckAnswerButton();
-      syncModeBar();
+      return map;
     }
 
-    function selectAnswer(i) {
-      if (quickReviewMode) return;
-      const q = questions[current];
-      const opts = document.querySelectorAll(".option");
+    function buildMcqFeedbackHtml(q) {
+      const parts = splitExplanationParts(q.explanation);
+      let correctWhy = parts.correctPart;
+      if (q.explanationCorrect) correctWhy = q.explanationCorrect;
+      const legacy = q.whyNot ? null : legacyDistractorMap(q);
+      let html =
+        "<p><strong>Why the correct answer is right:</strong> " + escapeHtml(correctWhy) + "</p>";
+      q.options.forEach((opt, i) => {
+        if (i === q.correct) return;
+        const letter = String.fromCharCode(97 + i);
+        const line =
+          (q.whyNot && q.whyNot[i]) ||
+          (legacy && legacy[i]) ||
+          "Common exam trap: sounds related but does not match the best-supported choice for this stem.";
+        html +=
+          "<p class='why-not'><strong>Why not " +
+          letter +
+          ":</strong> " +
+          escapeHtml(line) +
+          "</p>";
+      });
+      return html;
+    }
 
-      if (examMode) {
-        if (examAnswerRevealed) return;
-        opts.forEach((o) => o.classList.remove("selected", "correct", "wrong"));
-        opts[i].classList.add("selected");
-        selectedOptionIndex = i;
-        document.getElementById("feedback").innerText = "";
-        document.getElementById("explanation").innerText = "";
-        updateCheckAnswerButton();
-        return;
+    function highlightKeyTermsInModel(model, q) {
+      if (!model) return "";
+      const terms = [
+        ...new Set([...(q.keywords || []), ...(q.highlightTerms || [])])
+      ].filter((t) => String(t).length >= 3);
+      terms.sort((a, b) => b.length - a.length);
+      let safe = escapeHtml(model);
+      for (const term of terms) {
+        const re = new RegExp(escapeRegExp(term), "gi");
+        safe = safe.replace(re, (m) => "<mark class=\"kterm\">" + m + "</mark>");
       }
+      return safe;
+    }
 
-      opts.forEach((o) => o.classList.remove("correct", "wrong", "selected"));
+    function buildShortFeedbackHtml(q, isCorrect, quickMode) {
+      const modelHtml = q.model
+        ? "<div class=\"model-block\"><strong>Full model answer:</strong><br>" +
+          highlightKeyTermsInModel(q.model, q) +
+          "</div>"
+        : "";
+      if (quickMode) {
+        return (
+          "<p><strong>Quick review — memorise this:</strong></p><p>" +
+          escapeHtml(q.explanation) +
+          "</p>" +
+          modelHtml
+        );
+      }
+      const head =
+        (isCorrect ? "<p><strong>Good coverage of key ideas.</strong></p>" : "<p><strong>Keep practising — markers want these ideas in your own words.</strong></p>") +
+        "<p>" +
+        escapeHtml(q.explanation) +
+        "</p>";
+      return head + modelHtml;
+    }
 
-      if (i === q.correct) {
-        opts[i].classList.add("correct");
-        document.getElementById("feedback").innerText = "Correct";
-        document.getElementById("feedback").style.color = "#15803d";
-        recordQuestionOutcome(true);
+    function shuffle(arr) {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    function flattenCaseQuestions(cs) {
+      return cs.sub.map((q) => ({ ...q, _caseScenario: cs.scenario, _caseId: cs.id }));
+    }
+
+    function buildSession(topic) {
+      const queue = [];
+      if (topic === "part1") {
+        const pick = shuffle(PART1_POOL).slice(0, Math.min(SESSION_PART1, PART1_POOL.length));
+        pick.forEach((q) => queue.push({ kind: "single", q: { ...q } }));
+      } else if (topic === "part2") {
+        const cs = CASE_STUDIES[Math.floor(Math.random() * CASE_STUDIES.length)];
+        flattenCaseQuestions(cs).forEach((q) => queue.push({ kind: "single", q: { ...q } }));
       } else {
-        opts[i].classList.add("wrong");
-        opts[q.correct].classList.add("correct");
-        document.getElementById("feedback").innerText = "Incorrect";
-        document.getElementById("feedback").style.color = "#b91c1c";
-        recordQuestionOutcome(false);
+        const p1 = shuffle(PART1_POOL).slice(0, SESSION_MIXED_PART1);
+        p1.forEach((q) => queue.push({ kind: "single", q: { ...q } }));
+        const cs = CASE_STUDIES[Math.floor(Math.random() * CASE_STUDIES.length)];
+        flattenCaseQuestions(cs).forEach((q) => queue.push({ kind: "single", q: { ...q } }));
+      }
+      return queue;
+    }
+
+    function getCurrentItem() {
+      return sessionQueue[currentIndex];
+    }
+
+    function getCurrentQ() {
+      const item = getCurrentItem();
+      return item ? item.q : null;
+    }
+
+    function updateProgressUI() {
+      const n = sessionQueue.length;
+      const i = currentIndex + 1;
+      document.getElementById("progress-text").textContent = "Question " + i + " of " + n;
+      const done = currentIndex + (checked ? 1 : 0);
+      document.getElementById("progress-fill").style.width = n ? Math.min(100, (done / n) * 100) + "%" : "0%";
+      const graded = outcomes.filter((o) => o === "c" || o === "w").length;
+      document.getElementById("score-live").textContent = "Score: " + scoreCorrect + " / " + graded;
+    }
+
+    function renderQuestion() {
+      const item = getCurrentItem();
+      if (!item) return;
+      const q = item.q;
+      const panel = document.getElementById("question-panel");
+      panel.classList.remove("fade");
+      void panel.offsetWidth;
+      panel.classList.add("fade");
+
+      const tb = document.getElementById("topic-badge");
+      tb.textContent = "[" + q.topic + "]";
+      tb.className = topicBadgeClass(q.topic);
+      document.getElementById("part-label").textContent = q.part === "part2" ? "Part II — Case study" : "Part I";
+
+      const caseWrap = document.getElementById("case-scenario-wrap");
+      if (q._caseScenario) {
+        caseWrap.hidden = false;
+        document.getElementById("case-scenario-text").textContent = q._caseScenario;
+      } else {
+        caseWrap.hidden = true;
       }
 
-      document.getElementById("explanation").innerText = q.explanation;
+      document.getElementById("question-text").textContent = q.prompt;
+      const caseGuide = document.getElementById("case-answer-guide");
+      const isCaseStudyQ = q.part === "part2" || Boolean(q._caseScenario);
+      if (caseGuide) caseGuide.hidden = !isCaseStudyQ;
+
+      const mcqWrap = document.getElementById("mcq-wrap");
+      const shortWrap = document.getElementById("short-wrap");
+      const fb = document.getElementById("feedback");
+      fb.className = "feedback";
+      fb.textContent = "";
+      fb.classList.remove("show", "ok", "bad", "neutral");
+
+      const saved = item.saved;
+
+      if (studyMode !== "quick" && saved && saved.checked) {
+        checked = true;
+        selectedIndex = saved.selectedIndex != null ? saved.selectedIndex : null;
+        document.getElementById("short-text").value = saved.shortText || "";
+      } else {
+        checked = studyMode === "quick";
+        selectedIndex = null;
+        document.getElementById("short-text").value = "";
+      }
+
+      if (q.type === "mcq") {
+        shortWrap.hidden = true;
+        mcqWrap.hidden = false;
+        mcqWrap.innerHTML = "";
+        q.options.forEach((opt, idx) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "opt";
+          btn.innerHTML =
+            '<span class="opt-index">' + String.fromCharCode(97 + idx) + ".</span><span>" + escapeHtml(opt) + "</span>";
+          btn.dataset.index = idx;
+          if (studyMode === "quick") {
+            btn.disabled = true;
+            if (idx === q.correct) btn.classList.add("correct");
+          } else if (saved && saved.checked) {
+            btn.disabled = true;
+            if (idx === q.correct) btn.classList.add("correct");
+            else if (saved.selectedIndex === idx && idx !== q.correct) btn.classList.add("wrong");
+            if (saved.selectedIndex === idx) btn.classList.add("selected");
+          } else {
+            btn.addEventListener("click", () => selectOption(idx));
+            if (selectedIndex === idx) btn.classList.add("selected");
+          }
+          mcqWrap.appendChild(btn);
+        });
+        if (studyMode === "quick") {
+          showFeedbackQuickMCQ(q);
+        } else if (saved && saved.checked) {
+          fb.className = "feedback show " + (saved.isCorrect ? "ok" : "bad");
+          fb.innerHTML =
+            "<p><strong>" +
+            (saved.isCorrect ? "Correct." : "Incorrect.") +
+            "</strong></p>" +
+            buildMcqFeedbackHtml(q);
+        }
+      } else {
+        mcqWrap.hidden = true;
+        shortWrap.hidden = false;
+        if (studyMode === "quick") {
+          document.getElementById("short-text").disabled = true;
+          showFeedbackQuickShort(q);
+        } else if (saved && saved.checked) {
+          document.getElementById("short-text").disabled = true;
+          fb.className = "feedback show " + (saved.isCorrect ? "ok" : "bad");
+          fb.innerHTML = buildShortFeedbackHtml(q, saved.isCorrect);
+        } else {
+          document.getElementById("short-text").disabled = false;
+        }
+      }
+
+      const retryBtn = document.getElementById("btn-retry-wrong");
+      if (retryBtn) {
+        const showRetry =
+          studyMode !== "quick" &&
+          studyMode !== "exam" &&
+          saved &&
+          saved.checked &&
+          !saved.isCorrect &&
+          q.type === "mcq";
+        retryBtn.hidden = !showRetry;
+      }
+
+      updateNavButtons();
+      updateProgressUI();
+    }
+
+    function showFeedbackQuickMCQ(q) {
+      checked = true;
+      const fb = document.getElementById("feedback");
+      fb.className = "feedback show neutral";
+      fb.innerHTML =
+        "<p><strong>Answer:</strong> " +
+        String.fromCharCode(97 + q.correct) +
+        ") " +
+        escapeHtml(q.options[q.correct]) +
+        "</p>" +
+        buildMcqFeedbackHtml(q);
+    }
+
+    function showFeedbackQuickShort(q) {
+      checked = true;
+      const fb = document.getElementById("feedback");
+      fb.className = "feedback show neutral";
+      fb.innerHTML = buildShortFeedbackHtml(q, true, true);
+    }
+
+    function escapeHtml(t) {
+      const d = document.createElement("div");
+      d.textContent = t;
+      return d.innerHTML;
+    }
+
+    function selectOption(idx) {
+      if (checked) return;
+      const q = getCurrentQ();
+      if (!q || q.type !== "mcq") return;
+      selectedIndex = idx;
+      document.querySelectorAll("#mcq-wrap .opt").forEach((el) => {
+        el.classList.remove("selected");
+        if (parseInt(el.dataset.index, 10) === idx) el.classList.add("selected");
+      });
+      if (studyMode === "study") {
+        /* optional: could auto-check; spec says check button */
+      }
+    }
+
+    function checkShortAnswer(q, text) {
+      const norm = normalizeAnswerText(text);
+      const words = norm.split(" ").filter(Boolean);
+      const keys = q.keywords || [];
+      if (!keys.length) return { ok: text.trim().length > 12, hits: 0, need: 0 };
+      let hits = 0;
+      for (const k of keys) {
+        if (keywordHitInAnswer(norm, words, k)) hits++;
+      }
+      const need = Math.min(keys.length, Math.max(1, Math.ceil(keys.length * 0.35)));
+      return { ok: hits >= need, hits, need };
+    }
+
+    function applyMCQStyles(isCorrect) {
+      const q = getCurrentQ();
+      document.querySelectorAll("#mcq-wrap .opt").forEach((el) => {
+        const i = parseInt(el.dataset.index, 10);
+        el.disabled = true;
+        if (i === q.correct) el.classList.add("correct");
+        else if (selectedIndex === i && !isCorrect) el.classList.add("wrong");
+      });
     }
 
     function checkAnswer() {
-      if (!examMode || quickReviewMode || examAnswerRevealed || selectedOptionIndex === null) return;
-      const q = questions[current];
-      const opts = document.querySelectorAll(".option");
+      const q = getCurrentQ();
+      if (!q || checked) return;
 
-      examAnswerRevealed = true;
-      const i = selectedOptionIndex;
-      opts.forEach((o) => o.classList.remove("selected"));
-
-      if (i === q.correct) {
-        opts[i].classList.add("correct");
-        document.getElementById("feedback").innerText = "Correct";
-        document.getElementById("feedback").style.color = "#15803d";
-        recordQuestionOutcome(true);
+      if (q.type === "mcq") {
+        if (selectedIndex === null) {
+          alert("Select an answer first.");
+          return;
+        }
+        const isCorrect = selectedIndex === q.correct;
+        checked = true;
+        applyMCQStyles(isCorrect);
+        if (isCorrect) scoreCorrect++;
+        outcomes[currentIndex] = isCorrect ? "c" : "w";
+        getCurrentItem().saved = {
+          checked: true,
+          selectedIndex,
+          shortText: "",
+          isCorrect
+        };
+        if (!isCorrect) wrongPool.push({ kind: "single", q: { ...q } });
+        const fb = document.getElementById("feedback");
+        fb.className = "feedback show " + (isCorrect ? "ok" : "bad");
+        fb.innerHTML =
+          "<p><strong>" +
+          (isCorrect ? "Correct." : "Incorrect.") +
+          "</strong></p>" +
+          buildMcqFeedbackHtml(q);
+        const retryBtn = document.getElementById("btn-retry-wrong");
+        if (retryBtn) retryBtn.hidden = studyMode === "exam" || isCorrect;
       } else {
-        opts[i].classList.add("wrong");
-        opts[q.correct].classList.add("correct");
-        document.getElementById("feedback").innerText = "Incorrect";
-        document.getElementById("feedback").style.color = "#b91c1c";
-        recordQuestionOutcome(false);
+        const text = document.getElementById("short-text").value.trim();
+        if (text.length < 5) {
+          alert("Write a short answer first.");
+          return;
+        }
+        const res = checkShortAnswer(q, text);
+        checked = true;
+        const isCorrect = res.ok;
+        if (isCorrect) scoreCorrect++;
+        outcomes[currentIndex] = isCorrect ? "c" : "w";
+        getCurrentItem().saved = {
+          checked: true,
+          selectedIndex: null,
+          shortText: text,
+          isCorrect
+        };
+        if (!isCorrect) wrongPool.push({ kind: "single", q: { ...q } });
+        const fb = document.getElementById("feedback");
+        fb.className = "feedback show " + (isCorrect ? "ok" : "bad");
+        fb.innerHTML = buildShortFeedbackHtml(q, isCorrect);
+        document.getElementById("short-text").disabled = true;
+        const retryBtn = document.getElementById("btn-retry-wrong");
+        if (retryBtn) retryBtn.hidden = true;
       }
+      updateProgressUI();
+      updateNavButtons();
+    }
 
-      document.getElementById("explanation").innerText = q.explanation;
-      updateCheckAnswerButton();
+    function updateNavButtons() {
+      const q = getCurrentQ();
+      const quick = studyMode === "quick";
+      const atStart = currentIndex === 0;
+      const needCheck = !quick && !checked;
+
+      document.getElementById("btn-prev").disabled = atStart || studyMode === "exam";
+      document.getElementById("btn-next").disabled = needCheck;
+
+      document.getElementById("btn-check").disabled = checked || quick || !q;
     }
 
     function clearSelection() {
-      if (quickReviewMode) {
-        quickReviewExplanationRevealed = false;
-        document.getElementById("explanation").innerText = "";
-        const tap = document.getElementById("quick-review-tap");
-        if (tap) tap.hidden = false;
+      if (checked) return;
+      const q = getCurrentQ();
+      if (q && q.type === "mcq") {
+        selectedIndex = null;
+        document.querySelectorAll("#mcq-wrap .opt").forEach((el) => el.classList.remove("selected"));
+      } else if (q && q.type === "short") {
+        document.getElementById("short-text").value = "";
+      }
+    }
+
+    document.getElementById("btn-prev").addEventListener("click", () => {
+      if (studyMode === "exam") return;
+      if (currentIndex > 0) {
+        currentIndex--;
+        renderQuestion();
+      }
+    });
+
+    function showSummary() {
+      clearExamTimer();
+      const n = sessionQueue.length;
+      const wrap = document.getElementById("summary-weak-wrap");
+      const timeNote = document.getElementById("summary-time-note");
+      const focusTip = document.getElementById("summary-focus-tip");
+
+      if (studyMode === "quick") {
+        document.getElementById("summary-score").textContent =
+          "Quick Review: you viewed " + n + " item(s). This mode is for memorisation — not scored.";
+        wrap.innerHTML =
+          "<p><strong>Tip:</strong> Switch to Study or Exam mode to track score and weak topics.</p>";
+        document.getElementById("btn-practice-wrong").hidden = true;
+        if (timeNote) timeNote.hidden = true;
+        if (focusTip) focusTip.hidden = true;
+        document.getElementById("summary-overlay").hidden = false;
         return;
       }
-      const opts = document.querySelectorAll(".option");
-      opts.forEach((o) => o.classList.remove("correct", "wrong", "selected"));
-      document.getElementById("feedback").innerText = "";
-      document.getElementById("explanation").innerText = "";
-      if (examMode) {
-        examAnswerRevealed = false;
-        selectedOptionIndex = null;
-        updateCheckAnswerButton();
-      }
-    }
 
-    function nextQuestion() {
-      if (current < questions.length - 1) {
-        current++;
-        loadQuestion();
+      const answered = outcomes.filter((o) => o === "c" || o === "w").length;
+      document.getElementById("summary-score").textContent =
+        "You scored " + scoreCorrect + " out of " + answered + " answered (" + n + " questions in this session).";
+
+      if (timeNote) {
+        timeNote.hidden = !examTimeExpired;
+        timeNote.textContent = examTimeExpired
+          ? "Exam time ended — session closed automatically. Unanswered items were not marked correct."
+          : "";
+      }
+
+      const wrongByTopic = {};
+      sessionQueue.forEach((item, i) => {
+        if (outcomes[i] === "w") {
+          const t = item.q.topic;
+          wrongByTopic[t] = (wrongByTopic[t] || 0) + 1;
+        }
+      });
+      const sorted = Object.entries(wrongByTopic).sort((a, b) => b[1] - a[1]);
+      if (sorted.length === 0) {
+        wrap.innerHTML = "<p><strong>No weak topics flagged — great work.</strong></p>";
+        if (focusTip) focusTip.hidden = true;
       } else {
-        showSessionSummary();
+        wrap.innerHTML =
+          "<p><strong>All topics to review (most errors first):</strong></p><ul class=\"weak-list\" id=\"summary-weak\"></ul>";
+        const ul2 = document.getElementById("summary-weak");
+        sorted.forEach(([t, c]) => {
+          const li = document.createElement("li");
+          li.textContent = t + " (" + c + " wrong)";
+          ul2.appendChild(li);
+        });
+        const top3 = sorted.slice(0, 3);
+        if (focusTip) {
+          focusTip.hidden = false;
+          let html = "<strong>Top 3 weak areas — focus next:</strong><ol style=\"margin:8px 0 0 18px; padding:0;\">";
+          top3.forEach(([t]) => {
+            const tip = TOPIC_FOCUS[t] || "Re-read lecture notes and do more " + t + " questions in Mixed mode.";
+            html += "<li style=\"margin:6px 0;\"><strong>" + escapeHtml(t) + ":</strong> " + escapeHtml(tip) + "</li>";
+          });
+          html += "</ol>";
+          focusTip.innerHTML = html;
+        }
       }
+
+      const wrongCount = outcomes.filter((o) => o === "w").length;
+      document.getElementById("btn-practice-wrong").hidden = wrongCount === 0;
+
+      document.getElementById("summary-overlay").hidden = false;
     }
 
-    document.getElementById("dashboard").addEventListener("click", (event) => {
-      const btn = event.target.closest(".topic-btn");
+    function startSessionFromPool(queue, mode) {
+      clearExamTimer();
+      examTimeExpired = false;
+      studyMode = mode;
+      sessionQueue = queue;
+      currentIndex = 0;
+      scoreCorrect = 0;
+      checked = false;
+      selectedIndex = null;
+      outcomes = sessionQueue.map(() => null);
+      wrongPool = [];
+      document.getElementById("start-screen").hidden = true;
+      document.getElementById("quiz-screen").hidden = false;
+      document.getElementById("summary-overlay").hidden = true;
+      const timerWrap = document.getElementById("exam-timer-wrap");
+      timerWrap.classList.remove("warn", "critical");
+      if (mode === "exam") {
+        timerWrap.hidden = false;
+        startExamTimer();
+      } else {
+        timerWrap.hidden = true;
+      }
+      const sn = document.getElementById("summary-time-note");
+      if (sn) sn.hidden = true;
+      const ft = document.getElementById("summary-focus-tip");
+      if (ft) ft.hidden = true;
+      const rb = document.getElementById("btn-retry-wrong");
+      if (rb) rb.hidden = true;
+      renderQuestion();
+    }
+
+    document.getElementById("mode-btns").addEventListener("click", (e) => {
+      const btn = e.target.closest("button[data-mode]");
       if (!btn) return;
-      startSession(btn.dataset.topic);
+      document.querySelectorAll("#mode-btns button").forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
     });
 
-    document.getElementById("exam-mode-toggle").addEventListener("change", (e) => {
-      examMode = e.target.checked;
-      if (examMode) {
-        quickReviewMode = false;
-        document.getElementById("quick-review-toggle").checked = false;
+    document.getElementById("btn-start").addEventListener("click", () => {
+      const topic = document.getElementById("topic-select").value;
+      const modeBtn = document.querySelector("#mode-btns button.active");
+      const mode = modeBtn ? modeBtn.dataset.mode : "study";
+      const queue = buildSession(topic);
+      startSessionFromPool(queue, mode);
+    });
+
+    document.getElementById("btn-check").addEventListener("click", checkAnswer);
+    document.getElementById("btn-clear").addEventListener("click", clearSelection);
+    document.getElementById("btn-next").addEventListener("click", () => {
+      if (studyMode !== "quick" && !checked) {
+        alert("Press Check Answer before Next.");
+        return;
       }
-      syncModeBar();
-      loadQuestion();
-    });
-
-    document.getElementById("quick-review-toggle").addEventListener("change", (e) => {
-      quickReviewMode = e.target.checked;
-      if (quickReviewMode) {
-        examMode = false;
-        document.getElementById("exam-mode-toggle").checked = false;
+      if (currentIndex < sessionQueue.length - 1) {
+        currentIndex++;
+        renderQuestion();
+      } else {
+        if (studyMode !== "quick" && sessionQueue.length && outcomes[currentIndex] === null) {
+          const q = getCurrentQ();
+          if (q && q.type === "mcq" && selectedIndex === null) {
+            alert("Select an answer and press Check before finishing.");
+            return;
+          }
+          if (q && q.type === "short" && document.getElementById("short-text").value.trim().length < 5) {
+            alert("Write an answer and press Check before finishing.");
+            return;
+          }
+          if (!checked) checkAnswer();
+          if (!checked) return;
+        }
+        showSummary();
       }
-      syncModeBar();
-      loadQuestion();
     });
 
-    syncModeBar();
-    startSession("all");
+    document.getElementById("btn-practice-wrong").addEventListener("click", () => {
+      if (wrongPool.length === 0) return;
+      document.getElementById("summary-overlay").hidden = true;
+      const unique = [];
+      const seen = new Set();
+      wrongPool.forEach((item) => {
+        if (!seen.has(item.q.id)) {
+          seen.add(item.q.id);
+          unique.push({ kind: "single", q: { ...item.q } });
+        }
+      });
+      const modeForPractice = studyMode === "exam" ? "study" : studyMode;
+      startSessionFromPool(shuffle(unique), modeForPractice);
+    });
+
+    document.getElementById("btn-new-session").addEventListener("click", () => {
+      clearExamTimer();
+      examTimeExpired = false;
+      document.getElementById("summary-overlay").hidden = true;
+      document.getElementById("quiz-screen").hidden = true;
+      document.getElementById("start-screen").hidden = false;
+      document.getElementById("summary-weak-wrap").innerHTML =
+        "<p><strong>Review these topics:</strong></p><ul class=\"weak-list\" id=\"summary-weak\"></ul>";
+      const sn = document.getElementById("summary-time-note");
+      if (sn) {
+        sn.hidden = true;
+        sn.textContent = "";
+      }
+      const ft = document.getElementById("summary-focus-tip");
+      if (ft) {
+        ft.hidden = true;
+        ft.innerHTML = "";
+      }
+    });
+
+    document.getElementById("btn-retry-wrong").addEventListener("click", () => {
+      const item = getCurrentItem();
+      const q = getCurrentQ();
+      if (!item || !q || q.type !== "mcq" || studyMode === "exam") return;
+      wrongPool = wrongPool.filter((w) => w.q.id !== q.id);
+      outcomes[currentIndex] = null;
+      delete item.saved;
+      checked = false;
+      selectedIndex = null;
+      document.getElementById("btn-retry-wrong").hidden = true;
+      renderQuestion();
+    });
   </script>
 </body>
 </html>
